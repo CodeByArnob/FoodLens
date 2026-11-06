@@ -238,34 +238,11 @@ class PuterBridgeService {
       await initializeBridge();
     }
 
-    final isAiAction =
-        action.startsWith('analyze_') ||
-        action.startsWith('generate_') ||
-        action == 'compare_foods';
-    if (isAiAction) {
-      final cachedToken = _storageService.getPuterToken();
-      if (cachedToken == null || cachedToken.trim().isEmpty) {
-        throw PuterAuthException(
-          'Please log in with your Puter account to scan food and analyze nutrition.',
-        );
-      }
-      final safeToken = cachedToken
-          .trim()
-          .replaceAll(r'\', r'\\')
-          .replaceAll("'", r"\'")
-          .replaceAll('"', r'\"');
-      await _webViewController?.runJavaScript('''
-        try {
-          if (!puter.authToken || puter.authToken !== '$safeToken') {
-            if (typeof puter.setAuthToken === 'function') {
-              puter.setAuthToken('$safeToken');
-            }
-            puter.authToken = '$safeToken';
-            if (puter.auth) puter.auth.token = '$safeToken';
-          }
-        } catch (_) {}
-      ''');
-    }
+    // Puter web sign-in authenticates the SDK inside this WebView. That valid
+    // SDK session does not necessarily expose a raw token to Flutter storage.
+    // Do not require a separately stored token or overwrite the SDK session
+    // before AI calls. The JavaScript bridge checks puter.auth.isSignedIn()
+    // and lets the official SDK authorize the request in its own context.
 
     final String requestId = const Uuid().v4();
     final completer = Completer<dynamic>();
@@ -413,21 +390,18 @@ class PuterBridgeService {
   }
 
   Future<void> signOut() async {
-    // 1. Immediately wipe stored tokens and credentials from local storage
     try {
       await _storageService.clearAuth();
     } catch (e) {
       debugPrint('[PuterBridge] Error clearing local auth: $e');
     }
 
-    // 2. Clear WebView cookies
     try {
       await WebViewCookieManager().clearCookies();
     } catch (e) {
       debugPrint('[PuterBridge] Error clearing cookies: $e');
     }
 
-    // 3. Clear bridge JS session (with non-blocking timeout)
     try {
       if (_webViewController != null && _isBridgeReady) {
         await _executeCommand('sign_out', timeout: const Duration(seconds: 3));
@@ -436,7 +410,6 @@ class PuterBridgeService {
       debugPrint('[PuterBridge] Non-critical sign_out command error: $e');
     }
 
-    // 4. Force reset in WebView JS context directly to guarantee token revocation
     try {
       await _webViewController?.runJavaScript('''
         try {
@@ -457,11 +430,10 @@ class PuterBridgeService {
     } catch (_) {}
   }
 
-  // Direct REST token validation fallback
   Future<PuterUser?> validatePuterTokenViaRest(String token) async {
     final cleanToken = token
         .trim()
-        .replaceFirst(RegExp(r'^Bearer\s+', caseSensitive: false), '')
+        .replaceFirst(RegExp(r'^Bearer\\s+', caseSensitive: false), '')
         .replaceAll('"', '')
         .replaceAll("'", "");
 
@@ -583,7 +555,7 @@ class PuterBridgeService {
       if (res is Map<String, dynamic>) {
         return LabelAnalysisResult.fromJson(res);
       }
-      throw AppException('Unexpected AI label response format');
+      throw AppException('Unexpected AI response format');
     } catch (e) {
       if (e is PuterInsufficientFundsException) rethrow;
       debugPrint('[PuterBridge] analyzeNutritionLabel error: $e');

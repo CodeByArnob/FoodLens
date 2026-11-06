@@ -238,34 +238,11 @@ class PuterBridgeService {
       await initializeBridge();
     }
 
-    final isAiAction =
-        action.startsWith('analyze_') ||
-        action.startsWith('generate_') ||
-        action == 'compare_foods';
-    if (isAiAction) {
-      final cachedToken = _storageService.getPuterToken();
-      if (cachedToken == null || cachedToken.trim().isEmpty) {
-        throw PuterAuthException(
-          'Please log in with your Puter account to scan food and analyze nutrition.',
-        );
-      }
-      final safeToken = cachedToken
-          .trim()
-          .replaceAll(r'\', r'\\')
-          .replaceAll("'", r"\'")
-          .replaceAll('"', r'\"');
-      await _webViewController?.runJavaScript('''
-        try {
-          if (!puter.authToken || puter.authToken !== '$safeToken') {
-            if (typeof puter.setAuthToken === 'function') {
-              puter.setAuthToken('$safeToken');
-            }
-            puter.authToken = '$safeToken';
-            if (puter.auth) puter.auth.token = '$safeToken';
-          }
-        } catch (_) {}
-      ''');
-    }
+    // Puter web sign-in authenticates the SDK inside this WebView. That valid
+    // SDK session does not necessarily expose a raw token to Flutter storage.
+    // Do not require a separately stored token or overwrite the SDK session
+    // before AI calls. The JavaScript bridge checks puter.auth.isSignedIn()
+    // and lets the official SDK authorize the request in its own context.
 
     final String requestId = const Uuid().v4();
     final completer = Completer<dynamic>();

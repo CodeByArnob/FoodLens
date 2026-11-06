@@ -77,7 +77,9 @@ jobs:
       - name: Generate Localizations
         run: flutter gen-l10n
 
-      - name: Build Universal Android APK
+      - name: Build Debug-Signed Verification APK
+        env:
+          FOODLENS_ALLOW_DEBUG_SIGNING: "true"
         run: flutter build apk --release
 
       - name: Upload Verification APK Artifact

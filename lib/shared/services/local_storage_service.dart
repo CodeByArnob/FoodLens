@@ -1,29 +1,80 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../core/constants/app_constants.dart';
 import '../../features/scanner/models/food_analysis_result.dart';
 import '../../features/nutrition_tracking/models/daily_log.dart';
 
 class LocalStorageService {
   final SharedPreferences _prefs;
+  final FlutterSecureStorage _secureStorage;
+  String? _cachedPuterToken;
 
-  LocalStorageService(this._prefs);
+  LocalStorageService(this._prefs, this._secureStorage);
 
   SharedPreferences get prefs => _prefs;
 
   static Future<LocalStorageService> init() async {
     final prefs = await SharedPreferences.getInstance();
-    return LocalStorageService(prefs);
+    const secureStorage = FlutterSecureStorage(
+      aOptions: AndroidOptions(migrateWithBackup: true),
+    );
+    final service = LocalStorageService(prefs, secureStorage);
+    await service._migrateLegacyPuterToken();
+    return service;
   }
 
-  // Puter Auth
-  String? getPuterToken() => _prefs.getString(AppConstants.keyPuterToken);
-  Future<bool> setPuterToken(String? token) async {
-    if (token == null) {
-      return _prefs.remove(AppConstants.keyPuterToken);
+  // Puter credentials are stored in Android Keystore-backed encrypted storage.
+  // The in-memory cache preserves the existing synchronous getter API.
+  String? getPuterToken() => _cachedPuterToken;
+
+  Future<void> _migrateLegacyPuterToken() async {
+    final secureToken = await _secureStorage.read(key: AppConstants.keyPuterToken);
+    if (secureToken != null && secureToken.isNotEmpty) {
+      _cachedPuterToken = secureToken;
+      await _prefs.remove(AppConstants.keyPuterToken);
+      return;
     }
-    return _prefs.setString(AppConstants.keyPuterToken, token);
+
+    final legacyToken = _prefs.getString(AppConstants.keyPuterToken);
+    if (legacyToken == null || legacyToken.isEmpty) return;
+
+    await _secureStorage.write(
+      key: AppConstants.keyPuterToken,
+      value: legacyToken,
+    );
+    final migratedToken = await _secureStorage.read(
+      key: AppConstants.keyPuterToken,
+    );
+    if (migratedToken != legacyToken) {
+      throw StateError('Puter credential migration verification failed.');
+    }
+    _cachedPuterToken = migratedToken;
+    await _prefs.remove(AppConstants.keyPuterToken);
+  }
+
+  Future<bool> setPuterToken(String? token) async {
+    if (token == null || token.trim().isEmpty) {
+      await _secureStorage.delete(key: AppConstants.keyPuterToken);
+      _cachedPuterToken = null;
+      await _prefs.remove(AppConstants.keyPuterToken);
+      return true;
+    }
+    final cleanToken = token.trim();
+    await _secureStorage.write(
+      key: AppConstants.keyPuterToken,
+      value: cleanToken,
+    );
+    final storedToken = await _secureStorage.read(
+      key: AppConstants.keyPuterToken,
+    );
+    if (storedToken != cleanToken) {
+      throw StateError('Puter credential secure-storage verification failed.');
+    }
+    _cachedPuterToken = storedToken;
+    await _prefs.remove(AppConstants.keyPuterToken);
+    return true;
   }
 
   String? getPuterUsername() => _prefs.getString(AppConstants.keyPuterUsername);
@@ -43,6 +94,8 @@ class LocalStorageService {
   }
 
   Future<void> clearAuth() async {
+    await _secureStorage.delete(key: AppConstants.keyPuterToken);
+    _cachedPuterToken = null;
     await _prefs.remove(AppConstants.keyPuterToken);
     await _prefs.remove(AppConstants.keyPuterUsername);
     await _prefs.remove(AppConstants.keyPuterUuid);

@@ -30,7 +30,8 @@ class ScannerScreen extends ConsumerWidget {
         }
       } else if (scannerState.errorMessage != null && context.mounted) {
         final err = scannerState.errorMessage!;
-        final isAuthRequired = err.contains('Unauthorized') ||
+        final isAuthRequired =
+            err.contains('Unauthorized') ||
             err.contains('auth_required') ||
             err.contains('authentication required') ||
             err.contains('Puter account authentication required') ||
@@ -43,7 +44,8 @@ class ScannerScreen extends ConsumerWidget {
         } else if (isAuthRequired) {
           PuterAuthRequiredModal.show(context, message: err);
         } else if (!err.contains('cancelled')) {
-          final isNonFood = err.contains('food') ||
+          final isNonFood =
+              err.contains('food') ||
               err.contains('খাবার') ||
               err.contains('طعام');
 
@@ -52,15 +54,29 @@ class ScannerScreen extends ConsumerWidget {
               context: context,
               builder: (ctx) => AlertDialog(
                 backgroundColor: AppColors.darkSurface,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                icon: const Icon(Icons.no_meals_rounded, color: AppColors.error, size: 40),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                icon: const Icon(
+                  Icons.no_meals_rounded,
+                  color: AppColors.error,
+                  size: 40,
+                ),
                 title: const Text(
                   'No Food Detected',
-                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
                 ),
                 content: Text(
                   err,
-                  style: const TextStyle(color: AppColors.textSecondaryDark, fontSize: 13, height: 1.4),
+                  style: const TextStyle(
+                    color: AppColors.textSecondaryDark,
+                    fontSize: 13,
+                    height: 1.4,
+                  ),
                   textAlign: TextAlign.center,
                 ),
                 actions: [
@@ -73,10 +89,18 @@ class ScannerScreen extends ConsumerWidget {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primary,
                         foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 24,
+                          vertical: 10,
+                        ),
                       ),
-                      child: const Text('Try Another Image', style: TextStyle(fontWeight: FontWeight.bold)),
+                      child: const Text(
+                        'Try Another Image',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                 ],
@@ -84,10 +108,7 @@ class ScannerScreen extends ConsumerWidget {
             );
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(err),
-                backgroundColor: AppColors.error,
-              ),
+              SnackBar(content: Text(err), backgroundColor: AppColors.error),
             );
           }
         }
@@ -131,7 +152,9 @@ class ScannerScreen extends ConsumerWidget {
                     decoration: BoxDecoration(
                       color: Colors.black.withValues(alpha: 0.6),
                       borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: Colors.white.withValues(alpha: 0.15)),
+                      border: Border.all(
+                        color: Colors.white.withValues(alpha: 0.15),
+                      ),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -148,16 +171,22 @@ class ScannerScreen extends ConsumerWidget {
                         ),
                         _ModePill(
                           label: 'Label OCR',
-                          isSelected: scannerState.mode == ScanMode.nutritionLabel,
-                          onTap: () => scannerNotifier.setMode(ScanMode.nutritionLabel),
+                          isSelected:
+                              scannerState.mode == ScanMode.nutritionLabel,
+                          onTap: () =>
+                              scannerNotifier.setMode(ScanMode.nutritionLabel),
                         ),
                       ],
                     ),
                   ),
                   IconButton(
                     icon: Icon(
-                      scannerState.isFlashOn ? Icons.flash_on_rounded : Icons.flash_off_rounded,
-                      color: scannerState.isFlashOn ? AppColors.tertiary : Colors.white,
+                      scannerState.isFlashOn
+                          ? Icons.flash_on_rounded
+                          : Icons.flash_off_rounded,
+                      color: scannerState.isFlashOn
+                          ? AppColors.tertiary
+                          : Colors.white,
                     ),
                     onPressed: () {
                       HapticHelper.lightImpact();
@@ -180,7 +209,10 @@ class ScannerScreen extends ConsumerWidget {
                 children: [
                   // Informative Stage Progress Feedback
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
                     margin: const EdgeInsets.symmetric(horizontal: 24),
                     decoration: BoxDecoration(
                       color: Colors.black.withValues(alpha: 0.8),
@@ -200,7 +232,9 @@ class ScannerScreen extends ConsumerWidget {
                             height: 14,
                             child: CircularProgressIndicator(
                               strokeWidth: 2,
-                              valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                AppColors.primary,
+                              ),
                             ),
                           ),
                           const SizedBox(width: 8),
@@ -208,16 +242,21 @@ class ScannerScreen extends ConsumerWidget {
                         Flexible(
                           child: Text(
                             scannerState.isScanning
-                                ? (scannerState.currentStageMessage ?? 'Analyzing visual food features...')
+                                ? (scannerState.currentStageMessage ??
+                                      'Analyzing visual food features...')
                                 : scannerState.mode == ScanMode.dish
-                                    ? 'Align plate inside the frame for best accuracy'
-                                    : scannerState.mode == ScanMode.menu
-                                        ? 'Capture restaurant menu items & prices'
-                                        : 'Align packaged food nutrition table',
+                                ? 'Align plate inside the frame for best accuracy'
+                                : scannerState.mode == ScanMode.menu
+                                ? 'Capture restaurant menu items & prices'
+                                : 'Align packaged food nutrition table',
                             style: TextStyle(
                               fontSize: 12,
-                              color: scannerState.isScanning ? AppColors.primaryLight : Colors.white70,
-                              fontWeight: scannerState.isScanning ? FontWeight.w600 : FontWeight.normal,
+                              color: scannerState.isScanning
+                                  ? AppColors.primaryLight
+                                  : Colors.white70,
+                              fontWeight: scannerState.isScanning
+                                  ? FontWeight.w600
+                                  : FontWeight.normal,
                             ),
                             textAlign: TextAlign.center,
                             overflow: TextOverflow.ellipsis,
@@ -231,14 +270,21 @@ class ScannerScreen extends ConsumerWidget {
                               scannerNotifier.cancelScan();
                             },
                             child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 3,
+                              ),
                               decoration: BoxDecoration(
                                 color: Colors.white.withValues(alpha: 0.15),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: const Text(
                                 'Cancel',
-                                style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w600),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                             ),
                           ),
@@ -259,9 +305,15 @@ class ScannerScreen extends ConsumerWidget {
                           onPressed: scannerState.isScanning
                               ? null
                               : () => triggerScan(ImageSource.gallery),
-                          icon: const Icon(Icons.photo_library_rounded, color: Colors.white, size: 28),
+                          icon: const Icon(
+                            Icons.photo_library_rounded,
+                            color: Colors.white,
+                            size: 28,
+                          ),
                           style: IconButton.styleFrom(
-                            backgroundColor: Colors.white.withValues(alpha: 0.15),
+                            backgroundColor: Colors.white.withValues(
+                              alpha: 0.15,
+                            ),
                             padding: const EdgeInsets.all(14),
                           ),
                         ),
@@ -284,7 +336,9 @@ class ScannerScreen extends ConsumerWidget {
                                 gradient: AppColors.primaryGradient,
                                 boxShadow: [
                                   BoxShadow(
-                                    color: AppColors.primary.withValues(alpha: 0.5),
+                                    color: AppColors.primary.withValues(
+                                      alpha: 0.5,
+                                    ),
                                     blurRadius: 16,
                                   ),
                                 ],
@@ -314,13 +368,21 @@ class ScannerScreen extends ConsumerWidget {
                             HapticHelper.lightImpact();
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                content: Text('Puter Multimodal Vision Engine Active. Tips: Ensure direct lighting & avoid extreme angles.'),
+                                content: Text(
+                                  'Puter Multimodal Vision Engine Active. Tips: Ensure direct lighting & avoid extreme angles.',
+                                ),
                               ),
                             );
                           },
-                          icon: const Icon(Icons.help_outline_rounded, color: Colors.white, size: 28),
+                          icon: const Icon(
+                            Icons.help_outline_rounded,
+                            color: Colors.white,
+                            size: 28,
+                          ),
                           style: IconButton.styleFrom(
-                            backgroundColor: Colors.white.withValues(alpha: 0.15),
+                            backgroundColor: Colors.white.withValues(
+                              alpha: 0.15,
+                            ),
                             padding: const EdgeInsets.all(14),
                           ),
                         ),

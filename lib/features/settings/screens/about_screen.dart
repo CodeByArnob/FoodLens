@@ -15,15 +15,17 @@ class AboutScreen extends StatelessWidget {
       if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Could not open https://github.com/CodeByArnob')),
+            const SnackBar(
+              content: Text('Could not open https://github.com/CodeByArnob'),
+            ),
           );
         }
       }
     } catch (e) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error opening link: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error opening link: $e')));
       }
     }
   }
@@ -74,11 +76,12 @@ class AboutScreen extends StatelessWidget {
                           'assets/icons/foodlens_master_1024.png',
                           width: 80,
                           height: 80,
-                          errorBuilder: (context, error, stackTrace) => const Icon(
-                            Icons.restaurant_rounded,
-                            size: 48,
-                            color: AppColors.primaryLight,
-                          ),
+                          errorBuilder: (context, error, stackTrace) =>
+                              const Icon(
+                                Icons.restaurant_rounded,
+                                size: 48,
+                                color: AppColors.primaryLight,
+                              ),
                         ),
                       ),
                     ),
@@ -105,11 +108,16 @@ class AboutScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 6),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 4,
+                    ),
                     decoration: BoxDecoration(
                       color: AppColors.primary.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: AppColors.primary.withValues(alpha: 0.3)),
+                      border: Border.all(
+                        color: AppColors.primary.withValues(alpha: 0.3),
+                      ),
                     ),
                     child: const Text(
                       'v1.0.0 (Production Release)',
@@ -139,7 +147,11 @@ class AboutScreen extends StatelessWidget {
                           color: AppColors.primary.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: const Icon(Icons.code_rounded, color: AppColors.primary, size: 22),
+                        child: const Icon(
+                          Icons.code_rounded,
+                          color: AppColors.primary,
+                          size: 22,
+                        ),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
@@ -171,7 +183,11 @@ class AboutScreen extends StatelessWidget {
                   const Text(
                     'Architected and engineered as a modern, high-performance global food intelligence '
                     'ecosystem using Flutter, Puter.js serverless AI, and full multilingual localization.',
-                    style: TextStyle(fontSize: 13, color: AppColors.textSecondaryDark, height: 1.4),
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: AppColors.textSecondaryDark,
+                      height: 1.4,
+                    ),
                   ),
                   const SizedBox(height: 16),
                   // Clickable GitHub Button
@@ -179,15 +195,24 @@ class AboutScreen extends StatelessWidget {
                     onTap: () => _openGitHub(context),
                     borderRadius: BorderRadius.circular(12),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 12,
+                      ),
                       decoration: BoxDecoration(
                         color: Colors.black.withValues(alpha: 0.4),
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: AppColors.primary.withValues(alpha: 0.4)),
+                        border: Border.all(
+                          color: AppColors.primary.withValues(alpha: 0.4),
+                        ),
                       ),
                       child: Row(
                         children: const [
-                          Icon(Icons.link_rounded, color: AppColors.primaryLight, size: 20),
+                          Icon(
+                            Icons.link_rounded,
+                            color: AppColors.primaryLight,
+                            size: 20,
+                          ),
                           SizedBox(width: 10),
                           Expanded(
                             child: Text(
@@ -199,7 +224,11 @@ class AboutScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Icon(Icons.open_in_new_rounded, color: AppColors.primaryLight, size: 16),
+                          Icon(
+                            Icons.open_in_new_rounded,
+                            color: AppColors.primaryLight,
+                            size: 16,
+                          ),
                         ],
                       ),
                     ),
@@ -217,31 +246,39 @@ class AboutScreen extends StatelessWidget {
                 children: [
                   const Text(
                     'Key Capabilities',
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Colors.white),
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
                   ),
                   const SizedBox(height: 12),
                   _FeatureRow(
                     icon: Icons.camera_alt_rounded,
                     title: 'AI Food Vision & Macro Analysis',
-                    subtitle: 'Estimates calories, protein, carbs, fat, fiber & sodium from food photos',
+                    subtitle:
+                        'Estimates calories, protein, carbs, fat, fiber & sodium from food photos',
                   ),
                   const Divider(color: AppColors.darkBorder, height: 18),
                   _FeatureRow(
                     icon: Icons.restaurant_menu_rounded,
                     title: 'Restaurant Menu Intelligence',
-                    subtitle: 'OCR menu scanner with real exchange-rate currency conversion',
+                    subtitle:
+                        'OCR menu scanner with real exchange-rate currency conversion',
                   ),
                   const Divider(color: AppColors.darkBorder, height: 18),
                   _FeatureRow(
                     icon: Icons.language_rounded,
                     title: 'Global Localization & RTL Support',
-                    subtitle: 'Native English, Bengali (বাংলা), Arabic (العربية), and 5+ world languages',
+                    subtitle:
+                        'Native English, Bengali (বাংলা), Arabic (العربية), and 5+ world languages',
                   ),
                   const Divider(color: AppColors.darkBorder, height: 18),
                   _FeatureRow(
                     icon: Icons.cloud_done_rounded,
                     title: 'Puter.js Cloud Authentication',
-                    subtitle: 'Secure serverless user profiles, AI allowance & persistent storage',
+                    subtitle:
+                        'Secure serverless user profiles, AI allowance & persistent storage',
                   ),
                 ],
               ),
@@ -256,7 +293,11 @@ class AboutScreen extends StatelessWidget {
                 children: [
                   const Text(
                     'Technology Stack',
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Colors.white),
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
                   ),
                   const SizedBox(height: 12),
                   Wrap(
@@ -295,7 +336,10 @@ class AboutScreen extends StatelessWidget {
                   SizedBox(height: 6),
                   Text(
                     '© 2026 FoodLens Ecosystem • All Rights Reserved',
-                    style: TextStyle(fontSize: 11, color: AppColors.textMutedDark),
+                    style: TextStyle(
+                      fontSize: 11,
+                      color: AppColors.textMutedDark,
+                    ),
                   ),
                 ],
               ),
@@ -339,12 +383,20 @@ class _FeatureRow extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: Colors.white),
+                style: const TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                ),
               ),
               const SizedBox(height: 2),
               Text(
                 subtitle,
-                style: const TextStyle(fontSize: 11, color: AppColors.textSecondaryDark, height: 1.3),
+                style: const TextStyle(
+                  fontSize: 11,
+                  color: AppColors.textSecondaryDark,
+                  height: 1.3,
+                ),
               ),
             ],
           ),

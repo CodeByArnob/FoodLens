@@ -15,7 +15,11 @@ import '../../auth/providers/auth_provider.dart';
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
-  void _showLanguageSelector(BuildContext context, WidgetRef ref, SettingsState settings) {
+  void _showLanguageSelector(
+    BuildContext context,
+    WidgetRef ref,
+    SettingsState settings,
+  ) {
     HapticHelper.lightImpact();
     final l10n = AppLocalizations.of(context);
 
@@ -49,19 +53,41 @@ class SettingsScreen extends ConsumerWidget {
                   children: [
                     Text(
                       l10n.selectLanguage,
-                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: Colors.white),
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.white,
+                      ),
                     ),
                     TextButton.icon(
                       onPressed: () {
-                        final locale = View.of(context).platformDispatcher.locale;
-                        ref.read(settingsProvider.notifier).autoDetectLocale(locale);
+                        final locale = View.of(
+                          context,
+                        ).platformDispatcher.locale;
+                        ref
+                            .read(settingsProvider.notifier)
+                            .autoDetectLocale(locale);
                         Navigator.pop(ctx);
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('${l10n.suggestedLocale}: ${locale.languageCode}')),
+                          SnackBar(
+                            content: Text(
+                              '${l10n.suggestedLocale}: ${locale.languageCode}',
+                            ),
+                          ),
                         );
                       },
-                      icon: const Icon(Icons.auto_awesome, size: 16, color: AppColors.primaryLight),
-                      label: Text(l10n.suggestedLocale, style: const TextStyle(fontSize: 12, color: AppColors.primaryLight)),
+                      icon: const Icon(
+                        Icons.auto_awesome,
+                        size: 16,
+                        color: AppColors.primaryLight,
+                      ),
+                      label: Text(
+                        l10n.suggestedLocale,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: AppColors.primaryLight,
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -70,32 +96,52 @@ class SettingsScreen extends ConsumerWidget {
                   child: ListView.separated(
                     shrinkWrap: true,
                     itemCount: DietaryConstants.supportedLanguages.length,
-                    separatorBuilder: (context, index) => const Divider(color: AppColors.darkBorder, height: 1),
+                    separatorBuilder: (context, index) =>
+                        const Divider(color: AppColors.darkBorder, height: 1),
                     itemBuilder: (context, index) {
                       final item = DietaryConstants.supportedLanguages[index];
                       final isSelected = settings.language == item['code'];
 
                       return ListTile(
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                        leading: Text(item['flag'] ?? '🌐', style: const TextStyle(fontSize: 24)),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 2,
+                        ),
+                        leading: Text(
+                          item['flag'] ?? '🌐',
+                          style: const TextStyle(fontSize: 24),
+                        ),
                         title: Text(
                           item['nativeName'] ?? item['name']!,
                           style: TextStyle(
                             fontSize: 15,
-                            fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
-                            color: isSelected ? AppColors.primaryLight : Colors.white,
+                            fontWeight: isSelected
+                                ? FontWeight.w800
+                                : FontWeight.w600,
+                            color: isSelected
+                                ? AppColors.primaryLight
+                                : Colors.white,
                           ),
                         ),
                         subtitle: Text(
                           item['name']!,
-                          style: const TextStyle(fontSize: 12, color: AppColors.textMutedDark),
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: AppColors.textMutedDark,
+                          ),
                         ),
                         trailing: isSelected
-                            ? const Icon(Icons.check_circle_rounded, color: AppColors.primary, size: 22)
+                            ? const Icon(
+                                Icons.check_circle_rounded,
+                                color: AppColors.primary,
+                                size: 22,
+                              )
                             : null,
                         onTap: () {
                           HapticHelper.selectionClick();
-                          ref.read(settingsProvider.notifier).setLanguage(item['code']!);
+                          ref
+                              .read(settingsProvider.notifier)
+                              .setLanguage(item['code']!);
                           Navigator.pop(ctx);
                         },
                       );
@@ -110,7 +156,11 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
-  void _showCurrencySelector(BuildContext context, WidgetRef ref, SettingsState settings) {
+  void _showCurrencySelector(
+    BuildContext context,
+    WidgetRef ref,
+    SettingsState settings,
+  ) {
     HapticHelper.lightImpact();
     final l10n = AppLocalizations.of(context);
 
@@ -140,7 +190,10 @@ class SettingsScreen extends ConsumerWidget {
               maxChildSize: 0.9,
               builder: (sheetContext, scrollController) {
                 return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 16,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -149,7 +202,9 @@ class SettingsScreen extends ConsumerWidget {
                           width: 40,
                           height: 4,
                           decoration: BoxDecoration(
-                            color: AppColors.textMutedDark.withValues(alpha: 0.4),
+                            color: AppColors.textMutedDark.withValues(
+                              alpha: 0.4,
+                            ),
                             borderRadius: BorderRadius.circular(2),
                           ),
                         ),
@@ -157,7 +212,11 @@ class SettingsScreen extends ConsumerWidget {
                       const SizedBox(height: 16),
                       Text(
                         l10n.selectCurrency,
-                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: Colors.white),
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w800,
+                          color: Colors.white,
+                        ),
                       ),
                       const SizedBox(height: 6),
                       Row(
@@ -165,26 +224,45 @@ class SettingsScreen extends ConsumerWidget {
                           Container(
                             width: 8,
                             height: 8,
-                            decoration: const BoxDecoration(color: AppColors.primary, shape: BoxShape.circle),
+                            decoration: const BoxDecoration(
+                              color: AppColors.primary,
+                              shape: BoxShape.circle,
+                            ),
                           ),
                           const SizedBox(width: 6),
                           Text(
                             'Rates synced: ${CurrencyService.providerName}',
-                            style: const TextStyle(fontSize: 11, color: AppColors.textMutedDark),
+                            style: const TextStyle(
+                              fontSize: 11,
+                              color: AppColors.textMutedDark,
+                            ),
                           ),
                         ],
                       ),
                       const SizedBox(height: 12),
                       // Search Bar
                       TextField(
-                        style: const TextStyle(color: Colors.white, fontSize: 14),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                        ),
                         decoration: InputDecoration(
                           hintText: 'Search currency or country...',
-                          hintStyle: const TextStyle(color: AppColors.textMutedDark, fontSize: 13),
-                          prefixIcon: const Icon(Icons.search_rounded, color: AppColors.textMutedDark, size: 20),
+                          hintStyle: const TextStyle(
+                            color: AppColors.textMutedDark,
+                            fontSize: 13,
+                          ),
+                          prefixIcon: const Icon(
+                            Icons.search_rounded,
+                            color: AppColors.textMutedDark,
+                            size: 20,
+                          ),
                           filled: true,
                           fillColor: AppColors.darkSurfaceHighlight,
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 14,
+                            vertical: 10,
+                          ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                             borderSide: BorderSide.none,
@@ -201,16 +279,26 @@ class SettingsScreen extends ConsumerWidget {
                         child: ListView.separated(
                           controller: scrollController,
                           itemCount: currencies.length,
-                          separatorBuilder: (context, index) => const Divider(color: AppColors.darkBorder, height: 1),
+                          separatorBuilder: (context, index) => const Divider(
+                            color: AppColors.darkBorder,
+                            height: 1,
+                          ),
                           itemBuilder: (context, index) {
                             final item = currencies[index];
                             final code = item['code']!;
                             final isSelected = settings.currencyCode == code;
-                            final rate = CurrencyService.fallbackRates[code] ?? 1.0;
+                            final rate =
+                                CurrencyService.fallbackRates[code] ?? 1.0;
 
                             return ListTile(
-                              contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                              leading: Text(item['flag'] ?? '🌐', style: const TextStyle(fontSize: 24)),
+                              contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 2,
+                              ),
+                              leading: Text(
+                                item['flag'] ?? '🌐',
+                                style: const TextStyle(fontSize: 24),
+                              ),
                               title: Row(
                                 children: [
                                   Text(
@@ -218,33 +306,51 @@ class SettingsScreen extends ConsumerWidget {
                                     style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w800,
-                                      color: isSelected ? AppColors.primaryLight : Colors.white,
+                                      color: isSelected
+                                          ? AppColors.primaryLight
+                                          : Colors.white,
                                     ),
                                   ),
                                   const SizedBox(width: 8),
                                   Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 6,
+                                      vertical: 2,
+                                    ),
                                     decoration: BoxDecoration(
                                       color: AppColors.darkSurfaceHighlight,
                                       borderRadius: BorderRadius.circular(6),
                                     ),
                                     child: Text(
                                       item['symbol']!,
-                                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
                                 ],
                               ),
                               subtitle: Text(
                                 '${item['name']} • 1 USD = ${rate.toStringAsFixed(code == 'JPY' ? 0 : 2)} $code',
-                                style: const TextStyle(fontSize: 11, color: AppColors.textMutedDark),
+                                style: const TextStyle(
+                                  fontSize: 11,
+                                  color: AppColors.textMutedDark,
+                                ),
                               ),
                               trailing: isSelected
-                                  ? const Icon(Icons.check_circle_rounded, color: AppColors.primary, size: 22)
+                                  ? const Icon(
+                                      Icons.check_circle_rounded,
+                                      color: AppColors.primary,
+                                      size: 22,
+                                    )
                                   : null,
                               onTap: () {
                                 HapticHelper.selectionClick();
-                                ref.read(settingsProvider.notifier).setCurrency(code);
+                                ref
+                                    .read(settingsProvider.notifier)
+                                    .setCurrency(code);
                                 Navigator.pop(ctx);
                               },
                             );
@@ -262,7 +368,11 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
-  void _showCountrySelector(BuildContext context, WidgetRef ref, SettingsState settings) {
+  void _showCountrySelector(
+    BuildContext context,
+    WidgetRef ref,
+    SettingsState settings,
+  ) {
     HapticHelper.lightImpact();
     final l10n = AppLocalizations.of(context);
 
@@ -293,39 +403,66 @@ class SettingsScreen extends ConsumerWidget {
                 const SizedBox(height: 16),
                 Text(
                   l10n.countryRegion,
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: Colors.white),
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.white,
+                  ),
                 ),
                 const SizedBox(height: 12),
                 Flexible(
                   child: ListView.separated(
                     shrinkWrap: true,
                     itemCount: DietaryConstants.supportedCountries.length,
-                    separatorBuilder: (context, index) => const Divider(color: AppColors.darkBorder, height: 1),
+                    separatorBuilder: (context, index) =>
+                        const Divider(color: AppColors.darkBorder, height: 1),
                     itemBuilder: (context, index) {
                       final item = DietaryConstants.supportedCountries[index];
                       final isSelected = settings.country == item['name'];
 
                       return ListTile(
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                        leading: Text(item['flag'] ?? '🌐', style: const TextStyle(fontSize: 24)),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 2,
+                        ),
+                        leading: Text(
+                          item['flag'] ?? '🌐',
+                          style: const TextStyle(fontSize: 24),
+                        ),
                         title: Text(
                           item['name']!,
                           style: TextStyle(
                             fontSize: 15,
-                            fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
-                            color: isSelected ? AppColors.primaryLight : Colors.white,
+                            fontWeight: isSelected
+                                ? FontWeight.w800
+                                : FontWeight.w600,
+                            color: isSelected
+                                ? AppColors.primaryLight
+                                : Colors.white,
                           ),
                         ),
                         subtitle: Text(
                           'Currency: ${item['currency']} • Default: ${item['language']}',
-                          style: const TextStyle(fontSize: 12, color: AppColors.textMutedDark),
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: AppColors.textMutedDark,
+                          ),
                         ),
                         trailing: isSelected
-                            ? const Icon(Icons.check_circle_rounded, color: AppColors.primary, size: 22)
+                            ? const Icon(
+                                Icons.check_circle_rounded,
+                                color: AppColors.primary,
+                                size: 22,
+                              )
                             : null,
                         onTap: () {
                           HapticHelper.selectionClick();
-                          ref.read(settingsProvider.notifier).setCountry(item['name']!, autoAdjustCurrency: true);
+                          ref
+                              .read(settingsProvider.notifier)
+                              .setCountry(
+                                item['name']!,
+                                autoAdjustCurrency: true,
+                              );
                           Navigator.pop(ctx);
                         },
                       );
@@ -360,7 +497,12 @@ class SettingsScreen extends ConsumerWidget {
             // Section 1: Localization & International Preferences
             Text(
               l10n.localizationSection,
-              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.textMutedDark, letterSpacing: 0.5),
+              style: const TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w700,
+                color: AppColors.textMutedDark,
+                letterSpacing: 0.5,
+              ),
             ),
             const SizedBox(height: 8),
             GlassCard(
@@ -374,7 +516,14 @@ class SettingsScreen extends ConsumerWidget {
                     valueWidget: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(settings.languageNativeName, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.primaryLight)),
+                        Text(
+                          settings.languageNativeName,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.primaryLight,
+                          ),
+                        ),
                         const SizedBox(width: 6),
                         const DirectionalChevron(),
                       ],
@@ -390,8 +539,14 @@ class SettingsScreen extends ConsumerWidget {
                     valueWidget: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text('${settings.currencyFlag} ${settings.currencyCode} (${settings.currencySymbol})',
-                            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.primaryLight)),
+                        Text(
+                          '${settings.currencyFlag} ${settings.currencyCode} (${settings.currencySymbol})',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.primaryLight,
+                          ),
+                        ),
                         const SizedBox(width: 6),
                         const DirectionalChevron(),
                       ],
@@ -407,7 +562,14 @@ class SettingsScreen extends ConsumerWidget {
                     valueWidget: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(settings.country, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.white)),
+                        Text(
+                          settings.country,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                          ),
+                        ),
                         const SizedBox(width: 6),
                         const DirectionalChevron(),
                       ],
@@ -424,9 +586,20 @@ class SettingsScreen extends ConsumerWidget {
                       children: [
                         Row(
                           children: [
-                            const Icon(Icons.straighten_rounded, color: AppColors.textSecondaryDark, size: 20),
+                            const Icon(
+                              Icons.straighten_rounded,
+                              color: AppColors.textSecondaryDark,
+                              size: 20,
+                            ),
                             const SizedBox(width: 12),
-                            Text(l10n.measurementSystem, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.white)),
+                            Text(
+                              l10n.measurementSystem,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
+                            ),
                           ],
                         ),
                         const SizedBox(height: 12),
@@ -468,7 +641,12 @@ class SettingsScreen extends ConsumerWidget {
             // Section 2: Dietary Preferences & Target
             Text(
               l10n.dietarySection,
-              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.textMutedDark, letterSpacing: 0.5),
+              style: const TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w700,
+                color: AppColors.textMutedDark,
+                letterSpacing: 0.5,
+              ),
             ),
             const SizedBox(height: 8),
             GlassCard(
@@ -479,8 +657,22 @@ class SettingsScreen extends ConsumerWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(l10n.dailyCalorieGoal, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.white)),
-                      Text('${settings.dailyCalorieTarget} kcal', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: AppColors.primaryLight)),
+                      Text(
+                        l10n.dailyCalorieGoal,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Text(
+                        '${settings.dailyCalorieTarget} kcal',
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w800,
+                          color: AppColors.primaryLight,
+                        ),
+                      ),
                     ],
                   ),
                   Slider(
@@ -495,7 +687,14 @@ class SettingsScreen extends ConsumerWidget {
                     },
                   ),
                   const SizedBox(height: 10),
-                  Text(l10n.dietaryFilters, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Colors.white)),
+                  Text(
+                    l10n.dietaryFilters,
+                    style: const TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+                  ),
                   const SizedBox(height: 8),
                   Wrap(
                     spacing: 8,
@@ -509,15 +708,21 @@ class SettingsScreen extends ConsumerWidget {
                           HapticHelper.selectionClick();
                           settingsNotifier.toggleDietaryFilter(pref);
                         },
-                        selectedColor: AppColors.primary.withValues(alpha: 0.25),
+                        selectedColor: AppColors.primary.withValues(
+                          alpha: 0.25,
+                        ),
                         checkmarkColor: AppColors.primary,
                         labelStyle: TextStyle(
                           fontSize: 11,
                           fontWeight: FontWeight.w600,
-                          color: isSelected ? AppColors.primaryLight : AppColors.textSecondaryDark,
+                          color: isSelected
+                              ? AppColors.primaryLight
+                              : AppColors.textSecondaryDark,
                         ),
                         side: BorderSide(
-                          color: isSelected ? AppColors.primary : AppColors.darkBorder,
+                          color: isSelected
+                              ? AppColors.primary
+                              : AppColors.darkBorder,
                         ),
                         backgroundColor: AppColors.darkSurfaceCard,
                       );
@@ -531,7 +736,12 @@ class SettingsScreen extends ConsumerWidget {
             // Section 3: About & Creator Branding (CodeByArnob)
             Text(
               l10n.aboutFoodLens,
-              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.textMutedDark, letterSpacing: 0.5),
+              style: const TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w700,
+                color: AppColors.textMutedDark,
+                letterSpacing: 0.5,
+              ),
             ),
             const SizedBox(height: 8),
             GlassCard(
@@ -549,7 +759,11 @@ class SettingsScreen extends ConsumerWidget {
                       color: AppColors.primary.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Icon(Icons.info_outline_rounded, color: AppColors.primary, size: 24),
+                    child: const Icon(
+                      Icons.info_outline_rounded,
+                      color: AppColors.primary,
+                      size: 24,
+                    ),
                   ),
                   const SizedBox(width: 14),
                   Expanded(
@@ -558,12 +772,20 @@ class SettingsScreen extends ConsumerWidget {
                       children: const [
                         Text(
                           'FoodLens v1.0.0',
-                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: Colors.white),
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w800,
+                            color: Colors.white,
+                          ),
                         ),
                         SizedBox(height: 2),
                         Text(
                           'Created & Developed by CodeByArnob',
-                          style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.primaryLight),
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.primaryLight,
+                          ),
                         ),
                       ],
                     ),
@@ -577,7 +799,12 @@ class SettingsScreen extends ConsumerWidget {
             // Section 4: Data Management
             Text(
               l10n.dataManagement,
-              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.textMutedDark, letterSpacing: 0.5),
+              style: const TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w700,
+                color: AppColors.textMutedDark,
+                letterSpacing: 0.5,
+              ),
             ),
             const SizedBox(height: 8),
             GlassCard(
@@ -587,22 +814,33 @@ class SettingsScreen extends ConsumerWidget {
                   context: context,
                   builder: (ctx) => AlertDialog(
                     backgroundColor: AppColors.darkSurface,
-                    title: Text(l10n.clearCache, style: const TextStyle(color: Colors.white)),
+                    title: Text(
+                      l10n.clearCache,
+                      style: const TextStyle(color: Colors.white),
+                    ),
                     content: const Text(
                       'This will erase all cached scan history and reset temporary files.',
                       style: TextStyle(color: AppColors.textSecondaryDark),
                     ),
                     actions: [
-                      TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.cancel)),
+                      TextButton(
+                        onPressed: () => Navigator.pop(ctx),
+                        child: Text(l10n.cancel),
+                      ),
                       TextButton(
                         onPressed: () {
-                          ref.read(historyFavoritesProvider.notifier).clearAllHistory();
+                          ref
+                              .read(historyFavoritesProvider.notifier)
+                              .clearAllHistory();
                           Navigator.pop(ctx);
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text(l10n.cacheCleared)),
                           );
                         },
-                        child: Text(l10n.clear, style: const TextStyle(color: AppColors.error)),
+                        child: Text(
+                          l10n.clear,
+                          style: const TextStyle(color: AppColors.error),
+                        ),
                       ),
                     ],
                   ),
@@ -610,10 +848,21 @@ class SettingsScreen extends ConsumerWidget {
               },
               child: Row(
                 children: [
-                  const Icon(Icons.delete_sweep_outlined, color: AppColors.error, size: 20),
+                  const Icon(
+                    Icons.delete_sweep_outlined,
+                    color: AppColors.error,
+                    size: 20,
+                  ),
                   const SizedBox(width: 14),
                   Expanded(
-                    child: Text(l10n.clearCache, style: const TextStyle(fontSize: 14, color: AppColors.error, fontWeight: FontWeight.w600)),
+                    child: Text(
+                      l10n.clearCache,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: AppColors.error,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ),
                   const DirectionalChevron(size: 18),
                 ],
@@ -642,8 +891,12 @@ class SettingsScreen extends ConsumerWidget {
                       Row(
                         children: [
                           Icon(
-                            authState.isAuthenticated ? Icons.cloud_done_rounded : Icons.cloud_off_rounded,
-                            color: authState.isAuthenticated ? AppColors.primary : AppColors.textMutedDark,
+                            authState.isAuthenticated
+                                ? Icons.cloud_done_rounded
+                                : Icons.cloud_off_rounded,
+                            color: authState.isAuthenticated
+                                ? AppColors.primary
+                                : AppColors.textMutedDark,
                             size: 20,
                           ),
                           const SizedBox(width: 12),
@@ -653,15 +906,23 @@ class SettingsScreen extends ConsumerWidget {
                               children: [
                                 Text(
                                   authState.isAuthenticated
-                                      ? (authState.user?.username ?? 'Connected User')
+                                      ? (authState.user?.username ??
+                                            'Connected User')
                                       : 'Puter Guest / Offline',
-                                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Colors.white),
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white,
+                                  ),
                                 ),
                                 Text(
                                   authState.isAuthenticated
                                       ? 'User-Pays compute active'
                                       : 'Not connected to Puter cloud',
-                                  style: const TextStyle(fontSize: 11, color: AppColors.textMutedDark),
+                                  style: const TextStyle(
+                                    fontSize: 11,
+                                    color: AppColors.textMutedDark,
+                                  ),
                                 ),
                               ],
                             ),
@@ -679,19 +940,38 @@ class SettingsScreen extends ConsumerWidget {
                               context: context,
                               builder: (ctx) => AlertDialog(
                                 backgroundColor: AppColors.darkSurface,
-                                title: const Text('Sign Out of Puter', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                                title: const Text(
+                                  'Sign Out of Puter',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                                 content: const Text(
                                   'Are you sure you want to disconnect your Puter account and clear the saved session?',
-                                  style: TextStyle(color: AppColors.textSecondaryDark),
+                                  style: TextStyle(
+                                    color: AppColors.textSecondaryDark,
+                                  ),
                                 ),
                                 actions: [
                                   TextButton(
                                     onPressed: () => Navigator.pop(ctx, false),
-                                    child: const Text('Cancel', style: TextStyle(color: AppColors.textMutedDark)),
+                                    child: const Text(
+                                      'Cancel',
+                                      style: TextStyle(
+                                        color: AppColors.textMutedDark,
+                                      ),
+                                    ),
                                   ),
                                   TextButton(
                                     onPressed: () => Navigator.pop(ctx, true),
-                                    child: const Text('Sign Out', style: TextStyle(color: AppColors.error, fontWeight: FontWeight.bold)),
+                                    child: const Text(
+                                      'Sign Out',
+                                      style: TextStyle(
+                                        color: AppColors.error,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -701,7 +981,9 @@ class SettingsScreen extends ConsumerWidget {
                               await ref.read(authProvider.notifier).signOut();
                               if (context.mounted) {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Successfully signed out.')),
+                                  const SnackBar(
+                                    content: Text('Successfully signed out.'),
+                                  ),
                                 );
                                 context.go('/auth');
                               }
@@ -716,17 +998,25 @@ class SettingsScreen extends ConsumerWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(
-                                authState.isAuthenticated ? Icons.logout_rounded : Icons.login_rounded,
+                                authState.isAuthenticated
+                                    ? Icons.logout_rounded
+                                    : Icons.login_rounded,
                                 size: 16,
-                                color: authState.isAuthenticated ? AppColors.error : AppColors.primaryLight,
+                                color: authState.isAuthenticated
+                                    ? AppColors.error
+                                    : AppColors.primaryLight,
                               ),
                               const SizedBox(width: 8),
                               Text(
-                                authState.isAuthenticated ? 'Sign Out of Puter' : 'Connect Puter Account',
+                                authState.isAuthenticated
+                                    ? 'Sign Out of Puter'
+                                    : 'Connect Puter Account',
                                 style: TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w700,
-                                  color: authState.isAuthenticated ? AppColors.error : AppColors.primaryLight,
+                                  color: authState.isAuthenticated
+                                      ? AppColors.error
+                                      : AppColors.primaryLight,
                                 ),
                               ),
                             ],
@@ -829,7 +1119,14 @@ class _SettingItemTile extends StatelessWidget {
             Icon(icon, color: AppColors.textSecondaryDark, size: 20),
             const SizedBox(width: 12),
             Expanded(
-              child: Text(title, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.white)),
+              child: Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                ),
+              ),
             ),
             valueWidget,
           ],

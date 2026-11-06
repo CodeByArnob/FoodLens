@@ -57,7 +57,9 @@ class ProfileScreen extends ConsumerWidget {
                 ],
               ),
               child: Icon(
-                authState.isAuthenticated ? Icons.person : Icons.person_outline_rounded,
+                authState.isAuthenticated
+                    ? Icons.person
+                    : Icons.person_outline_rounded,
                 color: Colors.white,
                 size: 40,
               ),
@@ -67,7 +69,11 @@ class ProfileScreen extends ConsumerWidget {
               authState.isAuthenticated
                   ? (user?.username ?? 'Puter Food Explorer')
                   : 'Not Connected',
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800, color: Colors.white),
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w800,
+                color: Colors.white,
+              ),
             ),
             const SizedBox(height: 4),
             Row(
@@ -77,7 +83,9 @@ class ProfileScreen extends ConsumerWidget {
                   width: 8,
                   height: 8,
                   decoration: BoxDecoration(
-                    color: authState.isAuthenticated ? AppColors.primary : AppColors.textMutedDark,
+                    color: authState.isAuthenticated
+                        ? AppColors.primary
+                        : AppColors.textMutedDark,
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -88,7 +96,9 @@ class ProfileScreen extends ConsumerWidget {
                       : 'Puter Account Not Connected',
                   style: TextStyle(
                     fontSize: 12,
-                    color: authState.isAuthenticated ? AppColors.primaryLight : AppColors.textMutedDark,
+                    color: authState.isAuthenticated
+                        ? AppColors.primaryLight
+                        : AppColors.textMutedDark,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -115,7 +125,11 @@ class ProfileScreen extends ConsumerWidget {
                       color: AppColors.puterBlue.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Icon(Icons.bolt_rounded, color: AppColors.puterBlue, size: 24),
+                    child: const Icon(
+                      Icons.bolt_rounded,
+                      color: AppColors.puterBlue,
+                      size: 24,
+                    ),
                   ),
                   const SizedBox(width: 14),
                   Expanded(
@@ -124,15 +138,22 @@ class ProfileScreen extends ConsumerWidget {
                       children: [
                         const Text(
                           'Puter AI Allowance',
-                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Colors.white),
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                          ),
                         ),
                         Text(
                           authState.isAuthenticated
                               ? (usage != null
-                                  ? 'Remaining: ${usage.remainingCreditsFormatted} of ${usage.totalCreditsFormatted}'
-                                  : 'Active Personal Puter Account')
+                                    ? 'Remaining: ${usage.remainingCreditsFormatted} of ${usage.totalCreditsFormatted}'
+                                    : 'Active Personal Puter Account')
                               : 'Tap to connect Puter account for AI scanning',
-                          style: const TextStyle(fontSize: 12, color: AppColors.textMutedDark),
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: AppColors.textMutedDark,
+                          ),
                         ),
                       ],
                     ),
@@ -151,35 +172,60 @@ class ProfileScreen extends ConsumerWidget {
                 children: [
                   const Text(
                     'Daily Calorie Target',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Colors.white),
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     '${settings.dailyCalorieTarget} kcal/day',
-                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: AppColors.primaryLight),
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w800,
+                      color: AppColors.primaryLight,
+                    ),
                   ),
                   const Divider(color: AppColors.darkBorder, height: 20),
                   const Text(
                     'Active Dietary Filters',
-                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Colors.white),
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
                   ),
                   const SizedBox(height: 8),
                   if (settings.dietaryFilters.isEmpty)
-                    const Text('No dietary filters enabled.', style: TextStyle(fontSize: 12, color: AppColors.textMutedDark))
+                    const Text(
+                      'No dietary filters enabled.',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: AppColors.textMutedDark,
+                      ),
+                    )
                   else
                     Wrap(
                       spacing: 6,
                       runSpacing: 6,
                       children: settings.dietaryFilters.map((f) {
                         return Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 4,
+                          ),
                           decoration: BoxDecoration(
                             color: AppColors.primary.withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
                             f,
-                            style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.primaryLight),
+                            style: const TextStyle(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.primaryLight,
+                            ),
                           ),
                         );
                       }).toList(),
@@ -223,9 +269,13 @@ class ProfileScreen extends ConsumerWidget {
 
             // Sign Out / Reconnect Button
             CustomButton(
-              text: authState.isAuthenticated ? 'Sign Out of Puter' : 'Connect Puter Account',
+              text: authState.isAuthenticated
+                  ? 'Sign Out of Puter'
+                  : 'Connect Puter Account',
               isSecondary: true,
-              icon: authState.isAuthenticated ? Icons.logout_rounded : Icons.login_rounded,
+              icon: authState.isAuthenticated
+                  ? Icons.logout_rounded
+                  : Icons.login_rounded,
               onPressed: () async {
                 HapticHelper.mediumImpact();
                 if (authState.isAuthenticated) {
@@ -233,7 +283,13 @@ class ProfileScreen extends ConsumerWidget {
                     context: context,
                     builder: (ctx) => AlertDialog(
                       backgroundColor: AppColors.darkSurface,
-                      title: const Text('Sign Out', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                      title: const Text(
+                        'Sign Out',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       content: const Text(
                         'Are you sure you want to sign out and disconnect your Puter account?',
                         style: TextStyle(color: AppColors.textSecondaryDark),
@@ -241,11 +297,20 @@ class ProfileScreen extends ConsumerWidget {
                       actions: [
                         TextButton(
                           onPressed: () => Navigator.pop(ctx, false),
-                          child: const Text('Cancel', style: TextStyle(color: AppColors.textMutedDark)),
+                          child: const Text(
+                            'Cancel',
+                            style: TextStyle(color: AppColors.textMutedDark),
+                          ),
                         ),
                         TextButton(
                           onPressed: () => Navigator.pop(ctx, true),
-                          child: const Text('Sign Out', style: TextStyle(color: AppColors.error, fontWeight: FontWeight.bold)),
+                          child: const Text(
+                            'Sign Out',
+                            style: TextStyle(
+                              color: AppColors.error,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -255,7 +320,9 @@ class ProfileScreen extends ConsumerWidget {
                     await ref.read(authProvider.notifier).signOut();
                     if (context.mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Successfully signed out of Puter.')),
+                        const SnackBar(
+                          content: Text('Successfully signed out of Puter.'),
+                        ),
                       );
                       context.go('/auth');
                     }
@@ -299,7 +366,11 @@ class _ProfileLinkItem extends StatelessWidget {
           Expanded(
             child: Text(
               title,
-              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.white),
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+              ),
             ),
           ),
           const DirectionalChevron(),

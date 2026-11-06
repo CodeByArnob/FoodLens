@@ -13,15 +13,18 @@ class AppConstants {
   static const String keyPuterToken = 'foodlens_puter_token';
   static const String keyPuterUsername = 'foodlens_puter_username';
   static const String keyPuterUuid = 'foodlens_puter_uuid';
-  static const String keyHasCompletedOnboarding = 'foodlens_onboarding_completed';
+  static const String keyHasCompletedOnboarding =
+      'foodlens_onboarding_completed';
   static const String keyScanHistory = 'foodlens_scan_history';
   static const String keyFavorites = 'foodlens_favorites';
   static const String keyDailyLogs = 'foodlens_daily_logs';
   static const String keyActiveMealPlan = 'foodlens_active_meal_plan';
   static const String keyUserPreferences = 'foodlens_user_preferences';
   static const String keySelectedCurrency = 'foodlens_currency';
-  static const String keyUnitSystem = 'foodlens_unit_system'; // 'metric' or 'imperial'
-  static const String keyThemeMode = 'foodlens_theme_mode'; // 'system', 'light', 'dark'
+  static const String keyUnitSystem =
+      'foodlens_unit_system'; // 'metric' or 'imperial'
+  static const String keyThemeMode =
+      'foodlens_theme_mode'; // 'system', 'light', 'dark'
   static const String keySelectedLanguage = 'foodlens_language';
   static const String keyDailyCalorieTarget = 'foodlens_daily_calorie_target';
 

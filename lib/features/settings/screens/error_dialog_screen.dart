@@ -23,16 +23,29 @@ class CustomErrorScreen extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(Icons.cloud_off_rounded, color: AppColors.error, size: 54),
+                const Icon(
+                  Icons.cloud_off_rounded,
+                  color: AppColors.error,
+                  size: 54,
+                ),
                 const SizedBox(height: 16),
                 const Text(
                   'Connection or AI Error',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: Colors.white),
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.white,
+                  ),
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  errorMessage ?? 'An unexpected error occurred while communicating with the Puter intelligence bridge.',
-                  style: const TextStyle(fontSize: 13, color: AppColors.textSecondaryDark, height: 1.4),
+                  errorMessage ??
+                      'An unexpected error occurred while communicating with the Puter intelligence bridge.',
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: AppColors.textSecondaryDark,
+                    height: 1.4,
+                  ),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 24),

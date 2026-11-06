@@ -83,10 +83,7 @@ class AppColors {
   );
 
   static const LinearGradient darkCardGradient = LinearGradient(
-    colors: [
-      Color(0xFF161F30),
-      Color(0xFF0F172A),
-    ],
+    colors: [Color(0xFF161F30), Color(0xFF0F172A)],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
   );

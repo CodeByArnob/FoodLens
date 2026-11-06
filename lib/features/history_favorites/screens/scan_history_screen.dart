@@ -23,25 +23,37 @@ class ScanHistoryScreen extends ConsumerWidget {
         actions: [
           if (state.history.isNotEmpty)
             IconButton(
-              icon: const Icon(Icons.delete_sweep_outlined, color: AppColors.textMutedDark),
+              icon: const Icon(
+                Icons.delete_sweep_outlined,
+                color: AppColors.textMutedDark,
+              ),
               onPressed: () {
                 showDialog(
                   context: context,
                   builder: (ctx) => AlertDialog(
                     backgroundColor: AppColors.darkSurface,
-                    title: const Text('Clear Scan History?', style: TextStyle(color: Colors.white)),
+                    title: const Text(
+                      'Clear Scan History?',
+                      style: TextStyle(color: Colors.white),
+                    ),
                     content: const Text(
                       'This will permanently delete all previously cached scan logs from local storage.',
                       style: TextStyle(color: AppColors.textSecondaryDark),
                     ),
                     actions: [
-                      TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+                      TextButton(
+                        onPressed: () => Navigator.pop(ctx),
+                        child: const Text('Cancel'),
+                      ),
                       TextButton(
                         onPressed: () {
                           notifier.clearAllHistory();
                           Navigator.pop(ctx);
                         },
-                        child: const Text('Clear All', style: TextStyle(color: AppColors.error)),
+                        child: const Text(
+                          'Clear All',
+                          style: TextStyle(color: AppColors.error),
+                        ),
                       ),
                     ],
                   ),
@@ -60,8 +72,15 @@ class ScanHistoryScreen extends ConsumerWidget {
               style: const TextStyle(fontSize: 13, color: Colors.white),
               decoration: InputDecoration(
                 hintText: 'Search scanned foods, cuisines...',
-                hintStyle: const TextStyle(color: AppColors.textMutedDark, fontSize: 13),
-                prefixIcon: const Icon(Icons.search, color: AppColors.textMutedDark, size: 20),
+                hintStyle: const TextStyle(
+                  color: AppColors.textMutedDark,
+                  fontSize: 13,
+                ),
+                prefixIcon: const Icon(
+                  Icons.search,
+                  color: AppColors.textMutedDark,
+                  size: 20,
+                ),
                 filled: true,
                 fillColor: AppColors.darkSurfaceCard,
                 contentPadding: const EdgeInsets.symmetric(vertical: 10),
@@ -85,16 +104,30 @@ class ScanHistoryScreen extends ConsumerWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: const [
-                        Icon(Icons.history_toggle_off_rounded, size: 54, color: AppColors.textMutedDark),
+                        Icon(
+                          Icons.history_toggle_off_rounded,
+                          size: 54,
+                          color: AppColors.textMutedDark,
+                        ),
                         SizedBox(height: 12),
-                        Text('No history items found', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
+                        Text(
+                          'No history items found',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
                       ],
                     ),
                   )
                 : ListView.separated(
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 8,
+                    ),
                     itemCount: state.filteredHistory.length,
-                    separatorBuilder: (context, index) => const SizedBox(height: 10),
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 10),
                     itemBuilder: (context, index) {
                       final item = state.filteredHistory[index];
                       return Dismissible(
@@ -107,7 +140,10 @@ class ScanHistoryScreen extends ConsumerWidget {
                           ),
                           alignment: Alignment.centerRight,
                           padding: const EdgeInsets.only(right: 20),
-                          child: const Icon(Icons.delete_outline, color: AppColors.error),
+                          child: const Icon(
+                            Icons.delete_outline,
+                            color: AppColors.error,
+                          ),
                         ),
                         onDismissed: (_) {
                           notifier.deleteHistoryItem(item.id);
@@ -134,27 +170,41 @@ class ScanHistoryScreen extends ConsumerWidget {
                                   children: [
                                     Text(
                                       item.foodName,
-                                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Colors.white),
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.white,
+                                      ),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                     const SizedBox(height: 2),
                                     Text(
                                       '${item.calories} kcal • ${item.cuisine}',
-                                      style: const TextStyle(fontSize: 11, color: AppColors.textMutedDark),
+                                      style: const TextStyle(
+                                        fontSize: 11,
+                                        color: AppColors.textMutedDark,
+                                      ),
                                     ),
                                   ],
                                 ),
                               ),
                               Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 3,
+                                ),
                                 decoration: BoxDecoration(
                                   color: AppColors.darkSurfaceHighlight,
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: Text(
                                   'Score ${item.healthScore}',
-                                  style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.white),
+                                  style: const TextStyle(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             ],

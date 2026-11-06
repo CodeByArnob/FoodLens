@@ -6,11 +6,7 @@ class DisclaimerBanner extends StatelessWidget {
   final String? customText;
   final bool isCompact;
 
-  const DisclaimerBanner({
-    super.key,
-    this.customText,
-    this.isCompact = false,
-  });
+  const DisclaimerBanner({super.key, this.customText, this.isCompact = false});
 
   @override
   Widget build(BuildContext context) {

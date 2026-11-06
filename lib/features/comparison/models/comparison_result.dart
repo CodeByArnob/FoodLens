@@ -55,12 +55,15 @@ class ComparisonResult {
       proteinDiff: (json['protein_diff'] as num?)?.toDouble() ?? 0.0,
       sugarDiff: (json['sugar_diff'] as num?)?.toDouble() ?? 0.0,
       sodiumDiff: (json['sodium_diff'] as num?)?.toDouble() ?? 0.0,
-      comparisonPoints: (json['comparison_points'] as List<dynamic>?)
+      comparisonPoints:
+          (json['comparison_points'] as List<dynamic>?)
               ?.map((e) => ComparisonPoint.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
-      recommendationByGoal: (json['recommendation_by_goal'] as Map<String, dynamic>?)
-              ?.map((k, v) => MapEntry(k, v.toString())) ??
+      recommendationByGoal:
+          (json['recommendation_by_goal'] as Map<String, dynamic>?)?.map(
+            (k, v) => MapEntry(k, v.toString()),
+          ) ??
           {},
     );
   }

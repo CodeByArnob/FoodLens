@@ -39,13 +39,18 @@ class CustomButton extends StatelessWidget {
                 },
           style: OutlinedButton.styleFrom(
             side: const BorderSide(color: AppColors.primary, width: 1.5),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
           ),
           child: isLoading
               ? const SizedBox(
                   width: 22,
                   height: 22,
-                  child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.primary),
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: AppColors.primary,
+                  ),
                 )
               : Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -73,7 +78,9 @@ class CustomButton extends StatelessWidget {
       height: height,
       decoration: BoxDecoration(
         gradient: onPressed == null
-            ? const LinearGradient(colors: [Color(0xFF334155), Color(0xFF1E293B)])
+            ? const LinearGradient(
+                colors: [Color(0xFF334155), Color(0xFF1E293B)],
+              )
             : (gradient ?? AppColors.primaryGradient),
         borderRadius: BorderRadius.circular(16),
         boxShadow: onPressed == null
@@ -101,7 +108,10 @@ class CustomButton extends StatelessWidget {
                 ? const SizedBox(
                     width: 22,
                     height: 22,
-                    child: CircularProgressIndicator(strokeWidth: 2.2, color: Colors.white),
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2.2,
+                      color: Colors.white,
+                    ),
                   )
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.center,

@@ -15,7 +15,8 @@ class DailyLog {
   double get totalProtein => meals.fold(0.0, (sum, m) => sum + m.protein);
   double get totalCarbs => meals.fold(0.0, (sum, m) => sum + m.carbohydrates);
   double get totalFat => meals.fold(0.0, (sum, m) => sum + m.fat);
-  double get totalFiber => meals.fold(0.0, (sum, m) => sum + (m.carbohydrates * 0.12));
+  double get totalFiber =>
+      meals.fold(0.0, (sum, m) => sum + (m.carbohydrates * 0.12));
 
   List<MealLogItem> get breakfastMeals =>
       meals.where((m) => m.mealType == MealType.breakfast).toList();
@@ -29,7 +30,8 @@ class DailyLog {
   factory DailyLog.fromJson(Map<String, dynamic> json) {
     return DailyLog(
       dateKey: json['date_key'] as String? ?? '2026-11-05',
-      meals: (json['meals'] as List<dynamic>?)
+      meals:
+          (json['meals'] as List<dynamic>?)
               ?.map((e) => MealLogItem.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],

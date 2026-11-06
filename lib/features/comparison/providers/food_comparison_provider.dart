@@ -40,16 +40,17 @@ class FoodComparisonState {
 
 final foodComparisonProvider =
     StateNotifierProvider<FoodComparisonNotifier, FoodComparisonState>((ref) {
-  final bridge = ref.watch(puterBridgeServiceProvider);
-  final storage = ref.watch(localStorageServiceProvider);
-  return FoodComparisonNotifier(bridge, storage);
-});
+      final bridge = ref.watch(puterBridgeServiceProvider);
+      final storage = ref.watch(localStorageServiceProvider);
+      return FoodComparisonNotifier(bridge, storage);
+    });
 
 class FoodComparisonNotifier extends StateNotifier<FoodComparisonState> {
   final dynamic _bridge;
   final dynamic _storage;
 
-  FoodComparisonNotifier(this._bridge, this._storage) : super(const FoodComparisonState()) {
+  FoodComparisonNotifier(this._bridge, this._storage)
+    : super(const FoodComparisonState()) {
     _initDefaults();
   }
 
@@ -84,10 +85,7 @@ class FoodComparisonNotifier extends StateNotifier<FoodComparisonState> {
         foodB: state.foodB!.toJson(),
       );
 
-      state = state.copyWith(
-        result: res,
-        isComparing: false,
-      );
+      state = state.copyWith(result: res, isComparing: false);
     } catch (e) {
       final calDiff = state.foodA!.calories - state.foodB!.calories;
       final protDiff = state.foodA!.protein - state.foodB!.protein;
@@ -104,25 +102,31 @@ class FoodComparisonNotifier extends StateNotifier<FoodComparisonState> {
         comparisonPoints: [
           ComparisonPoint(
             category: 'Calorie Density',
-            betterItem: calDiff < 0 ? state.foodA!.foodName : state.foodB!.foodName,
+            betterItem: calDiff < 0
+                ? state.foodA!.foodName
+                : state.foodB!.foodName,
             explanation: 'Lower overall caloric footprint per portion.',
           ),
           ComparisonPoint(
             category: 'Protein Density',
-            betterItem: protDiff > 0 ? state.foodA!.foodName : state.foodB!.foodName,
-            explanation: 'Higher percentage of energy derived from amino acids.',
+            betterItem: protDiff > 0
+                ? state.foodA!.foodName
+                : state.foodB!.foodName,
+            explanation:
+                'Higher percentage of energy derived from amino acids.',
           ),
         ],
         recommendationByGoal: {
-          'Weight Management': calDiff < 0 ? state.foodA!.foodName : state.foodB!.foodName,
-          'Muscle Hypertrophy': protDiff > 0 ? state.foodA!.foodName : state.foodB!.foodName,
+          'Weight Management': calDiff < 0
+              ? state.foodA!.foodName
+              : state.foodB!.foodName,
+          'Muscle Hypertrophy': protDiff > 0
+              ? state.foodA!.foodName
+              : state.foodB!.foodName,
         },
       );
 
-      state = state.copyWith(
-        result: fallback,
-        isComparing: false,
-      );
+      state = state.copyWith(result: fallback, isComparing: false);
     }
   }
 }

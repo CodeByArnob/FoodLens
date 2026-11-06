@@ -45,20 +45,104 @@ class CurrencyService {
   };
 
   static const List<CurrencyInfo> supportedCurrencies = [
-    CurrencyInfo(code: 'USD', symbol: '\$', name: 'US Dollar', flag: '🇺🇸', defaultCountry: 'United States'),
-    CurrencyInfo(code: 'BDT', symbol: '৳', name: 'Bangladeshi Taka', flag: '🇧🇩', defaultCountry: 'Bangladesh'),
-    CurrencyInfo(code: 'EUR', symbol: '€', name: 'Euro', flag: '🇪🇺', defaultCountry: 'European Union'),
-    CurrencyInfo(code: 'GBP', symbol: '£', name: 'British Pound', flag: '🇬🇧', defaultCountry: 'United Kingdom'),
-    CurrencyInfo(code: 'INR', symbol: '₹', name: 'Indian Rupee', flag: '🇮🇳', defaultCountry: 'India'),
-    CurrencyInfo(code: 'SAR', symbol: 'ر.س', name: 'Saudi Riyal', flag: '🇸🇦', defaultCountry: 'Saudi Arabia'),
-    CurrencyInfo(code: 'AED', symbol: 'د.إ', name: 'UAE Dirham', flag: '🇦🇪', defaultCountry: 'United Arab Emirates'),
-    CurrencyInfo(code: 'CAD', symbol: 'CA\$', name: 'Canadian Dollar', flag: '🇨🇦', defaultCountry: 'Canada'),
-    CurrencyInfo(code: 'AUD', symbol: 'A\$', name: 'Australian Dollar', flag: '🇦🇺', defaultCountry: 'Australia'),
-    CurrencyInfo(code: 'JPY', symbol: '¥', name: 'Japanese Yen', flag: '🇯🇵', defaultCountry: 'Japan'),
-    CurrencyInfo(code: 'SGD', symbol: 'S\$', name: 'Singapore Dollar', flag: '🇸🇬', defaultCountry: 'Singapore'),
-    CurrencyInfo(code: 'CHF', symbol: 'CHF', name: 'Swiss Franc', flag: '🇨🇭', defaultCountry: 'Switzerland'),
-    CurrencyInfo(code: 'MYR', symbol: 'RM', name: 'Malaysian Ringgit', flag: '🇲🇾', defaultCountry: 'Malaysia'),
-    CurrencyInfo(code: 'THB', symbol: '฿', name: 'Thai Baht', flag: '🇹🇭', defaultCountry: 'Thailand'),
+    CurrencyInfo(
+      code: 'USD',
+      symbol: '\$',
+      name: 'US Dollar',
+      flag: '🇺🇸',
+      defaultCountry: 'United States',
+    ),
+    CurrencyInfo(
+      code: 'BDT',
+      symbol: '৳',
+      name: 'Bangladeshi Taka',
+      flag: '🇧🇩',
+      defaultCountry: 'Bangladesh',
+    ),
+    CurrencyInfo(
+      code: 'EUR',
+      symbol: '€',
+      name: 'Euro',
+      flag: '🇪🇺',
+      defaultCountry: 'European Union',
+    ),
+    CurrencyInfo(
+      code: 'GBP',
+      symbol: '£',
+      name: 'British Pound',
+      flag: '🇬🇧',
+      defaultCountry: 'United Kingdom',
+    ),
+    CurrencyInfo(
+      code: 'INR',
+      symbol: '₹',
+      name: 'Indian Rupee',
+      flag: '🇮🇳',
+      defaultCountry: 'India',
+    ),
+    CurrencyInfo(
+      code: 'SAR',
+      symbol: 'ر.س',
+      name: 'Saudi Riyal',
+      flag: '🇸🇦',
+      defaultCountry: 'Saudi Arabia',
+    ),
+    CurrencyInfo(
+      code: 'AED',
+      symbol: 'د.إ',
+      name: 'UAE Dirham',
+      flag: '🇦🇪',
+      defaultCountry: 'United Arab Emirates',
+    ),
+    CurrencyInfo(
+      code: 'CAD',
+      symbol: 'CA\$',
+      name: 'Canadian Dollar',
+      flag: '🇨🇦',
+      defaultCountry: 'Canada',
+    ),
+    CurrencyInfo(
+      code: 'AUD',
+      symbol: 'A\$',
+      name: 'Australian Dollar',
+      flag: '🇦🇺',
+      defaultCountry: 'Australia',
+    ),
+    CurrencyInfo(
+      code: 'JPY',
+      symbol: '¥',
+      name: 'Japanese Yen',
+      flag: '🇯🇵',
+      defaultCountry: 'Japan',
+    ),
+    CurrencyInfo(
+      code: 'SGD',
+      symbol: 'S\$',
+      name: 'Singapore Dollar',
+      flag: '🇸🇬',
+      defaultCountry: 'Singapore',
+    ),
+    CurrencyInfo(
+      code: 'CHF',
+      symbol: 'CHF',
+      name: 'Swiss Franc',
+      flag: '🇨🇭',
+      defaultCountry: 'Switzerland',
+    ),
+    CurrencyInfo(
+      code: 'MYR',
+      symbol: 'RM',
+      name: 'Malaysian Ringgit',
+      flag: '🇲🇾',
+      defaultCountry: 'Malaysia',
+    ),
+    CurrencyInfo(
+      code: 'THB',
+      symbol: '฿',
+      name: 'Thai Baht',
+      flag: '🇹🇭',
+      defaultCountry: 'Thailand',
+    ),
   ];
 
   final LocalStorageService _storage;
@@ -112,8 +196,14 @@ class CurrencyService {
           _liveRates = updated;
           _lastUpdated = DateTime.now();
 
-          await _storage.prefs.setString('cached_exchange_rates', jsonEncode(_liveRates));
-          await _storage.prefs.setString('cached_exchange_rates_time', _lastUpdated.toIso8601String());
+          await _storage.prefs.setString(
+            'cached_exchange_rates',
+            jsonEncode(_liveRates),
+          );
+          await _storage.prefs.setString(
+            'cached_exchange_rates_time',
+            _lastUpdated.toIso8601String(),
+          );
           debugPrint('[CurrencyService] Live rates fetched successfully.');
         }
       }
@@ -123,19 +213,31 @@ class CurrencyService {
   }
 
   double convert(double amountInUsd, String targetCurrency) {
-    final rate = _liveRates[targetCurrency] ?? fallbackRates[targetCurrency] ?? 1.0;
+    final rate =
+        _liveRates[targetCurrency] ?? fallbackRates[targetCurrency] ?? 1.0;
     return amountInUsd * rate;
   }
 
   String getSymbol(String currencyCode) {
     final match = supportedCurrencies.firstWhere(
       (c) => c.code == currencyCode,
-      orElse: () => CurrencyInfo(code: currencyCode, symbol: currencyCode, name: currencyCode, flag: '🌐', defaultCountry: ''),
+      orElse: () => CurrencyInfo(
+        code: currencyCode,
+        symbol: currencyCode,
+        name: currencyCode,
+        flag: '🌐',
+        defaultCountry: '',
+      ),
     );
     return match.symbol;
   }
 
-  String formatPrice(double amountInUsd, String targetCurrency, {bool showOriginal = false, String locale = 'en'}) {
+  String formatPrice(
+    double amountInUsd,
+    String targetCurrency, {
+    bool showOriginal = false,
+    String locale = 'en',
+  }) {
     final converted = convert(amountInUsd, targetCurrency);
     final symbol = getSymbol(targetCurrency);
 
@@ -152,7 +254,10 @@ class CurrencyService {
     final formatted = formatter.format(converted).trim();
 
     if (showOriginal && targetCurrency != 'USD') {
-      final origFormatter = NumberFormat.currency(symbol: '\$ ', decimalDigits: 2);
+      final origFormatter = NumberFormat.currency(
+        symbol: '\$ ',
+        decimalDigits: 2,
+      );
       return '$formatted (${origFormatter.format(amountInUsd).trim()})';
     }
 

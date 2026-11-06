@@ -19,7 +19,9 @@ class MacroDonutChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final totalGrams = proteinGrams + carbsGrams + fatGrams;
-    final pPct = totalGrams > 0 ? (proteinGrams / totalGrams * 100).round() : 33;
+    final pPct = totalGrams > 0
+        ? (proteinGrams / totalGrams * 100).round()
+        : 33;
     final cPct = totalGrams > 0 ? (carbsGrams / totalGrams * 100).round() : 33;
     final fPct = totalGrams > 0 ? (fatGrams / totalGrams * 100).round() : 34;
 

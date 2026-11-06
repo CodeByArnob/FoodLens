@@ -65,7 +65,8 @@ class ScannerService {
         await scansDir.create(recursive: true);
       }
       final ext = file.path.contains('.') ? file.path.split('.').last : 'jpg';
-      final targetPath = '${scansDir.path}/scan_${DateTime.now().millisecondsSinceEpoch}.$ext';
+      final targetPath =
+          '${scansDir.path}/scan_${DateTime.now().millisecondsSinceEpoch}.$ext';
       await File(file.path).copy(targetPath);
       return targetPath;
     } catch (e) {
@@ -132,7 +133,8 @@ class ScannerService {
 
     // Stage 2, 3 & 4: Strict validation & rejection check
     if (!result.isFoodRelated || result.foodName == 'Non-Food Item') {
-      final String localizedRejection = result.rejectionReason ??
+      final String localizedRejection =
+          result.rejectionReason ??
           'No recognizable food detected. Please upload a clear food photograph.';
       throw NonFoodImageException(
         localizedRejection,
@@ -141,7 +143,10 @@ class ScannerService {
     }
 
     // Guardrail: Never fabricate nutrition for non-viable scans
-    if (result.foodName.trim().isEmpty || (result.calories == 0 && result.protein == 0 && result.carbohydrates == 0)) {
+    if (result.foodName.trim().isEmpty ||
+        (result.calories == 0 &&
+            result.protein == 0 &&
+            result.carbohydrates == 0)) {
       throw NonFoodImageException(
         result.rejectionReason ??
             'Could not recognize identifiable food or ingredients. Please take a clearer photo with direct lighting.',

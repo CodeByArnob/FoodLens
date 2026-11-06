@@ -5,7 +5,9 @@ class DashboardLocalizationHelper {
   /// Contextual time-of-day greeting
   static String getGreeting(String lang, String? userName, {int? hour}) {
     final currentHour = hour ?? DateTime.now().hour;
-    final name = (userName != null && userName.isNotEmpty) ? userName : _getDefaultUserTitle(lang);
+    final name = (userName != null && userName.isNotEmpty)
+        ? userName
+        : _getDefaultUserTitle(lang);
 
     if (currentHour >= 5 && currentHour < 12) {
       switch (lang) {

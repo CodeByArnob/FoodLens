@@ -1,0 +1,55 @@
+name: "🔐 Authentication Problem (Puter.js / Account)"
+description: "Report issues related to Puter.js sign-in, token storage, quota limits, or bridge communication."
+title: "[AUTH]: "
+labels: ["authentication", "bug", "help wanted"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template to report issues with **Puter.js authentication**, session persistence, quota allowances, or the JavaScript-to-Flutter bridge.
+  - type: dropdown
+    id: auth_method
+    attributes:
+      label: "Authentication Flow"
+      description: "Which authentication flow was being attempted?"
+      options:
+        - "In-App Puter WebView Login (https://puter.com)"
+        - "External Browser Redirect / Web Auth"
+        - "Puter Token Restoration from SharedPreferences"
+        - "Puter AI Allowance / Quota Retrieval (puter.os.getMonthlyUsage)"
+        - "Other"
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: "Environment Details"
+      description: "Operating System, device model, Android WebView version, and network conditions."
+      placeholder: "e.g., Android 13, Realme 8, Chrome System WebView 128.0"
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: "Steps to Reproduce"
+      description: "Step-by-step instructions to reproduce the authentication failure."
+      placeholder: |
+        1. Open FoodLens
+        2. Tap 'Sign in with Puter' on Onboarding/Settings
+        3. Enter Puter credentials or tap Sign In
+        4. Observe the failure/spinner/redirect loop
+    validations:
+      required: true
+  - type: textarea
+    id: actual_behavior
+    attributes:
+      label: "Actual Behavior"
+      description: "What actually happens (e.g., blank screen, bridge timeout, session not persisted, 403 Forbidden)?"
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: "Puter Bridge / Console Logs"
+      description: "Paste JavascriptChannel or ADB console output."
+      render: shell

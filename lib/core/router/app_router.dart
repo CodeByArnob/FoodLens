@@ -31,14 +31,10 @@ final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 final appRouter = GoRouter(
   navigatorKey: _rootNavigatorKey,
   initialLocation: '/',
-  errorBuilder: (context, state) => CustomErrorScreen(
-    errorMessage: state.error?.toString(),
-  ),
+  errorBuilder: (context, state) =>
+      CustomErrorScreen(errorMessage: state.error?.toString()),
   routes: [
-    GoRoute(
-      path: '/',
-      builder: (context, state) => const SplashScreen(),
-    ),
+    GoRoute(path: '/', builder: (context, state) => const SplashScreen()),
     GoRoute(
       path: '/onboarding',
       builder: (context, state) => const OnboardingScreen(),

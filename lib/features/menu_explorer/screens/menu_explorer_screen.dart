@@ -28,7 +28,8 @@ class MenuExplorerScreen extends ConsumerWidget {
           MenuItemDish(
             id: 'm1',
             name: 'Penne all\'Arrabbiata',
-            description: 'San Marzano tomatoes, garlic, extra virgin olive oil, fresh chili',
+            description:
+                'San Marzano tomatoes, garlic, extra virgin olive oil, fresh chili',
             priceRaw: '$currencySymbol 14.50',
             priceValue: 14.50,
             estimatedCalories: 480,
@@ -41,7 +42,8 @@ class MenuExplorerScreen extends ConsumerWidget {
           MenuItemDish(
             id: 'm2',
             name: 'Grilled Branzino with Herbs',
-            description: 'Fresh sea bass, charred lemon, wild oregano, roasted zucchini',
+            description:
+                'Fresh sea bass, charred lemon, wild oregano, roasted zucchini',
             priceRaw: '$currencySymbol 26.00',
             priceValue: 26.00,
             estimatedCalories: 380,
@@ -54,7 +56,8 @@ class MenuExplorerScreen extends ConsumerWidget {
           MenuItemDish(
             id: 'm3',
             name: 'Tiramisu Tradizionale',
-            description: 'Espresso-soaked savoiardi, mascarpone cream, dark cocoa dust',
+            description:
+                'Espresso-soaked savoiardi, mascarpone cream, dark cocoa dust',
             priceRaw: '$currencySymbol 9.00',
             priceValue: 9.00,
             estimatedCalories: 420,
@@ -74,7 +77,8 @@ class MenuExplorerScreen extends ConsumerWidget {
           MenuItemDish(
             id: 'k1',
             name: 'Salmon & Avocado Chirashi Bowl',
-            description: 'Sashimi-grade salmon, Haas avocado, nori, seasoned brown rice',
+            description:
+                'Sashimi-grade salmon, Haas avocado, nori, seasoned brown rice',
             priceRaw: '$currencySymbol 18.50',
             priceValue: 18.50,
             estimatedCalories: 510,
@@ -124,7 +128,11 @@ class MenuExplorerScreen extends ConsumerWidget {
                       shape: BoxShape.circle,
                       gradient: AppColors.primaryGradient,
                     ),
-                    child: const Icon(Icons.document_scanner_rounded, color: Colors.white, size: 24),
+                    child: const Icon(
+                      Icons.document_scanner_rounded,
+                      color: Colors.white,
+                      size: 24,
+                    ),
                   ),
                   const SizedBox(width: 14),
                   Expanded(
@@ -133,12 +141,19 @@ class MenuExplorerScreen extends ConsumerWidget {
                       children: const [
                         Text(
                           'Scan a Physical Menu',
-                          style: TextStyle(fontSize: 15, fontWeight: FontWeight.w800, color: Colors.white),
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w800,
+                            color: Colors.white,
+                          ),
                         ),
                         SizedBox(height: 2),
                         Text(
                           'Point at any paper menu or wine list to extract dishes & nutritional estimates.',
-                          style: TextStyle(fontSize: 11, color: AppColors.textMutedDark),
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: AppColors.textMutedDark,
+                          ),
                         ),
                       ],
                     ),
@@ -153,7 +168,9 @@ class MenuExplorerScreen extends ConsumerWidget {
               onPressed: () async {
                 HapticHelper.mediumImpact();
                 ref.read(scannerProvider.notifier).setMode(ScanMode.menu);
-                final success = await ref.read(scannerProvider.notifier).captureAndScan(ImageSource.camera);
+                final success = await ref
+                    .read(scannerProvider.notifier)
+                    .captureAndScan(ImageSource.camera);
                 if (success && context.mounted) {
                   context.push('/menu-analysis');
                 }
@@ -163,7 +180,11 @@ class MenuExplorerScreen extends ConsumerWidget {
 
             const Text(
               'Curated Menus & OCR Demos',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Colors.white),
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+              ),
             ),
             const SizedBox(height: 12),
 
@@ -185,18 +206,29 @@ class MenuExplorerScreen extends ConsumerWidget {
                           Expanded(
                             child: Text(
                               menu.restaurantName,
-                              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.white),
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w800,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 3,
+                            ),
                             decoration: BoxDecoration(
                               color: AppColors.primary.withValues(alpha: 0.15),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Text(
                               '${menu.dishes.length} Dishes',
-                              style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.primaryLight),
+                              style: const TextStyle(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.primaryLight,
+                              ),
                             ),
                           ),
                         ],
@@ -204,7 +236,10 @@ class MenuExplorerScreen extends ConsumerWidget {
                       const SizedBox(height: 4),
                       Text(
                         menu.cuisineType,
-                        style: const TextStyle(fontSize: 12, color: AppColors.textMutedDark),
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: AppColors.textMutedDark,
+                        ),
                       ),
                       const SizedBox(height: 12),
                       Row(
@@ -219,7 +254,11 @@ class MenuExplorerScreen extends ConsumerWidget {
                           const SizedBox(width: 6),
                           const Text(
                             'Explore full menu & nutrition breakdown',
-                            style: TextStyle(fontSize: 12, color: AppColors.primaryLight, fontWeight: FontWeight.w600),
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: AppColors.primaryLight,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ],
                       ),

@@ -37,9 +37,16 @@ class AppTheme {
     );
   }
 
-  static TextTheme _buildTextTheme({required String language, required bool isDark}) {
-    final primaryColor = isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight;
-    final secondaryColor = isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight;
+  static TextTheme _buildTextTheme({
+    required String language,
+    required bool isDark,
+  }) {
+    final primaryColor = isDark
+        ? AppColors.textPrimaryDark
+        : AppColors.textPrimaryLight;
+    final secondaryColor = isDark
+        ? AppColors.textSecondaryDark
+        : AppColors.textSecondaryLight;
 
     return TextTheme(
       displayLarge: _fontStyle(
@@ -101,8 +108,8 @@ class AppTheme {
     final fontFam = language == 'bn'
         ? GoogleFonts.hindSiliguri().fontFamily
         : (language == 'ar'
-            ? GoogleFonts.cairo().fontFamily
-            : GoogleFonts.plusJakartaSans().fontFamily);
+              ? GoogleFonts.cairo().fontFamily
+              : GoogleFonts.plusJakartaSans().fontFamily);
 
     return ThemeData(
       useMaterial3: true,
@@ -165,8 +172,8 @@ class AppTheme {
     final fontFam = language == 'bn'
         ? GoogleFonts.hindSiliguri().fontFamily
         : (language == 'ar'
-            ? GoogleFonts.cairo().fontFamily
-            : GoogleFonts.plusJakartaSans().fontFamily);
+              ? GoogleFonts.cairo().fontFamily
+              : GoogleFonts.plusJakartaSans().fontFamily);
 
     return ThemeData(
       useMaterial3: true,

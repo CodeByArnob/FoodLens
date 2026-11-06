@@ -8,24 +8,26 @@ class RecommendedDish {
   final FoodAnalysisResult food;
   final String localizedReason;
 
-  const RecommendedDish({
-    required this.food,
-    required this.localizedReason,
-  });
+  const RecommendedDish({required this.food, required this.localizedReason});
 }
 
 final dashboardRecommendationsProvider =
-    StateNotifierProvider<DashboardRecommendationsNotifier, List<RecommendedDish>>((ref) {
-  final storage = ref.watch(localStorageServiceProvider);
-  final settings = ref.watch(settingsProvider);
-  return DashboardRecommendationsNotifier(storage, settings.language);
-});
+    StateNotifierProvider<
+      DashboardRecommendationsNotifier,
+      List<RecommendedDish>
+    >((ref) {
+      final storage = ref.watch(localStorageServiceProvider);
+      final settings = ref.watch(settingsProvider);
+      return DashboardRecommendationsNotifier(storage, settings.language);
+    });
 
-class DashboardRecommendationsNotifier extends StateNotifier<List<RecommendedDish>> {
+class DashboardRecommendationsNotifier
+    extends StateNotifier<List<RecommendedDish>> {
   final LocalStorageService _storage;
   final String _lang;
 
-  DashboardRecommendationsNotifier(this._storage, this._lang) : super(const []) {
+  DashboardRecommendationsNotifier(this._storage, this._lang)
+    : super(const []) {
     loadRecommendations();
   }
 
@@ -86,7 +88,9 @@ class DashboardRecommendationsNotifier extends StateNotifier<List<RecommendedDis
         default:
           return 'Heart-healthy monounsaturated fats & high-bioavailability choline.';
       }
-    } else if (lower.contains('greek') || lower.contains('salad') || lower.contains('chicken')) {
+    } else if (lower.contains('greek') ||
+        lower.contains('salad') ||
+        lower.contains('chicken')) {
       switch (lang) {
         case 'bn':
           return '৩৪ গ্রাম লীন প্রোটিন ও মাত্র ১৪ গ্রাম কার্বস সমৃদ্ধ লো-কার্ব খাবার।';
@@ -106,7 +110,9 @@ class DashboardRecommendationsNotifier extends StateNotifier<List<RecommendedDis
         default:
           return 'Lean 34g poultry protein with low carbs (14g) and crisp micronutrients.';
       }
-    } else if (lower.contains('lentil') || lower.contains('dahl') || lower.contains('spinach')) {
+    } else if (lower.contains('lentil') ||
+        lower.contains('dahl') ||
+        lower.contains('spinach')) {
       switch (lang) {
         case 'bn':
           return '১১.৫ গ্রাম ফাইবার, আয়রন ও অ্যান্টিঅক্সিডেন্ট সমৃদ্ধ স্বাস্থ্যকর ডাল।';

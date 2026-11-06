@@ -22,8 +22,10 @@ class PuterBridgeService {
   Completer<void>? _bridgeReadyCompleter;
 
   final Map<String, Completer<dynamic>> _pendingRequests = {};
-  final StreamController<PuterUsage> _usageStreamController = StreamController<PuterUsage>.broadcast();
-  final StreamController<PuterInsufficientFundsException> _insufficientFundsStreamController =
+  final StreamController<PuterUsage> _usageStreamController =
+      StreamController<PuterUsage>.broadcast();
+  final StreamController<PuterInsufficientFundsException>
+  _insufficientFundsStreamController =
       StreamController<PuterInsufficientFundsException>.broadcast();
   final StreamController<Map<String, dynamic>> _aiChunkStreamController =
       StreamController<Map<String, dynamic>>.broadcast();
@@ -35,9 +37,12 @@ class PuterBridgeService {
   Stream<PuterUsage> get usageStream => _usageStreamController.stream;
   Stream<PuterInsufficientFundsException> get insufficientFundsStream =>
       _insufficientFundsStreamController.stream;
-  Stream<Map<String, dynamic>> get aiChunkStream => _aiChunkStreamController.stream;
-  Stream<Map<String, dynamic>> get aiStageStream => _aiStageStreamController.stream;
-  Stream<bool> get authModalStateStream => _authModalStateStreamController.stream;
+  Stream<Map<String, dynamic>> get aiChunkStream =>
+      _aiChunkStreamController.stream;
+  Stream<Map<String, dynamic>> get aiStageStream =>
+      _aiStageStreamController.stream;
+  Stream<bool> get authModalStateStream =>
+      _authModalStateStreamController.stream;
 
   bool get isBridgeReady => _isBridgeReady;
   WebViewController? get webViewController => _webViewController;
@@ -56,7 +61,9 @@ class PuterBridgeService {
       final controller = WebViewController();
       await controller.setJavaScriptMode(JavaScriptMode.unrestricted);
       await controller.setBackgroundColor(const Color(0xFF0C121E));
-      await controller.setUserAgent('Mozilla/5.0 (Linux; Android 13; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36');
+      await controller.setUserAgent(
+        'Mozilla/5.0 (Linux; Android 13; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36',
+      );
 
       await controller.addJavaScriptChannel(
         'FlutterBridge',
@@ -72,7 +79,9 @@ class PuterBridgeService {
             final cachedToken = _storageService.getPuterToken();
             if (cachedToken != null && cachedToken.isNotEmpty) {
               setAuthToken(cachedToken).catchError((e) {
-                debugPrint('[PuterBridge] Non-blocking initial token set error: $e');
+                debugPrint(
+                  '[PuterBridge] Non-blocking initial token set error: $e',
+                );
                 return false;
               });
             }
@@ -83,7 +92,9 @@ class PuterBridgeService {
         ),
       );
 
-      final htmlString = await rootBundle.loadString('assets/html/puter_bridge.html');
+      final htmlString = await rootBundle.loadString(
+        'assets/html/puter_bridge.html',
+      );
       await controller.loadHtmlString(htmlString, baseUrl: 'https://puter.com');
       _webViewController = controller;
 
@@ -91,7 +102,9 @@ class PuterBridgeService {
       await _bridgeReadyCompleter!.future.timeout(
         const Duration(milliseconds: 3500),
         onTimeout: () {
-          debugPrint('[PuterBridge] Bridge initialization timed out, marking ready anyway.');
+          debugPrint(
+            '[PuterBridge] Bridge initialization timed out, marking ready anyway.',
+          );
           _isBridgeReady = true;
         },
       );
@@ -112,14 +125,16 @@ class PuterBridgeService {
 
       if (type == 'bridge_ready') {
         _isBridgeReady = true;
-        if (_bridgeReadyCompleter != null && !_bridgeReadyCompleter!.isCompleted) {
+        if (_bridgeReadyCompleter != null &&
+            !_bridgeReadyCompleter!.isCompleted) {
           _bridgeReadyCompleter!.complete();
         }
         return;
       }
 
       if (type == 'auth_modal_state') {
-        final bool isOpen = data is Map<String, dynamic> && data['open'] == true;
+        final bool isOpen =
+            data is Map<String, dynamic> && data['open'] == true;
         _authModalStateStreamController.add(isOpen);
         return;
       }
@@ -139,15 +154,21 @@ class PuterBridgeService {
       }
 
       if (type == 'error') {
-        final Map<String, dynamic> errData = data is Map<String, dynamic> ? data : {};
-        final bool isInsufficientFunds = errData['isInsufficientFunds'] == true ||
+        final Map<String, dynamic> errData = data is Map<String, dynamic>
+            ? data
+            : {};
+        final bool isInsufficientFunds =
+            errData['isInsufficientFunds'] == true ||
             errData['code'] == 'insufficient_funds' ||
             errData['code'] == 402;
 
         if (isInsufficientFunds) {
           final exc = PuterInsufficientFundsException(
-            message: errData['message'] as String? ?? 'Monthly Puter AI allowance exhausted.',
-            upgradeUrl: errData['upgradeUrl'] as String? ?? 'https://puter.com/account',
+            message:
+                errData['message'] as String? ??
+                'Monthly Puter AI allowance exhausted.',
+            upgradeUrl:
+                errData['upgradeUrl'] as String? ?? 'https://puter.com/account',
           );
           _insufficientFundsStreamController.add(exc);
           if (requestId != null && _pendingRequests.containsKey(requestId)) {
@@ -156,17 +177,25 @@ class PuterBridgeService {
           return;
         }
 
-        final bool isAuthError = errData['isAuthError'] == true ||
+        final bool isAuthError =
+            errData['isAuthError'] == true ||
             errData['code'] == 'auth_required' ||
             errData['code'] == 401 ||
             errData['code'] == 403 ||
-            (errData['message'] as String? ?? '').toLowerCase().contains('unauthorized') ||
-            (errData['message'] as String? ?? '').toLowerCase().contains('auth_required') ||
-            (errData['message'] as String? ?? '').toLowerCase().contains('authentication required');
+            (errData['message'] as String? ?? '').toLowerCase().contains(
+              'unauthorized',
+            ) ||
+            (errData['message'] as String? ?? '').toLowerCase().contains(
+              'auth_required',
+            ) ||
+            (errData['message'] as String? ?? '').toLowerCase().contains(
+              'authentication required',
+            );
 
         if (isAuthError) {
           final exc = PuterAuthException(
-            errData['message'] as String? ?? 'Puter authentication required. Please connect your Puter account.',
+            errData['message'] as String? ??
+                'Puter authentication required. Please connect your Puter account.',
             code: 'auth_required',
           );
           if (requestId != null && _pendingRequests.containsKey(requestId)) {
@@ -176,8 +205,13 @@ class PuterBridgeService {
         }
 
         if (requestId != null && _pendingRequests.containsKey(requestId)) {
-          _pendingRequests.remove(requestId)!.completeError(
-                AppException(errData['message'] as String? ?? 'Puter Bridge error', code: errData['code']?.toString()),
+          _pendingRequests
+              .remove(requestId)!
+              .completeError(
+                AppException(
+                  errData['message'] as String? ?? 'Puter Bridge error',
+                  code: errData['code']?.toString(),
+                ),
               );
         }
         return;
@@ -204,7 +238,8 @@ class PuterBridgeService {
       await initializeBridge();
     }
 
-    final isAiAction = action.startsWith('analyze_') ||
+    final isAiAction =
+        action.startsWith('analyze_') ||
         action.startsWith('generate_') ||
         action == 'compare_foods';
     if (isAiAction) {
@@ -239,7 +274,8 @@ class PuterBridgeService {
     final paramsJson = jsonEncode(params ?? {});
     final paramsStringEscaped = jsonEncode(paramsJson);
 
-    final jsCall = '''
+    final jsCall =
+        '''
       (function() {
         try {
           if (window.FoodLensBridge && typeof window.FoodLensBridge.executeCommand === 'function') {
@@ -270,7 +306,9 @@ class PuterBridgeService {
       timeout,
       onTimeout: () {
         _pendingRequests.remove(requestId);
-        throw AppException('Operation timed out. Please check your internet connection.');
+        throw AppException(
+          'Operation timed out. Please check your internet connection.',
+        );
       },
     );
   }
@@ -288,17 +326,23 @@ class PuterBridgeService {
 
   // --- Auth & Session ---
 
-  Future<Map<String, dynamic>> checkSession({Duration timeout = const Duration(seconds: 4)}) async {
+  Future<Map<String, dynamic>> checkSession({
+    Duration timeout = const Duration(seconds: 4),
+  }) async {
     try {
       final res = await _executeCommand('get_session', timeout: timeout);
-      return res is Map<String, dynamic> ? res : {'isSignedIn': false, 'user': null, 'usage': null};
+      return res is Map<String, dynamic>
+          ? res
+          : {'isSignedIn': false, 'user': null, 'usage': null};
     } catch (e) {
       debugPrint('[PuterBridge] checkSession non-blocking fallback: $e');
       return {'isSignedIn': false, 'user': null, 'usage': null};
     }
   }
 
-  Future<PuterUser?> getUser({Duration timeout = const Duration(seconds: 5)}) async {
+  Future<PuterUser?> getUser({
+    Duration timeout = const Duration(seconds: 5),
+  }) async {
     try {
       final res = await _executeCommand('get_user', timeout: timeout);
       if (res is Map<String, dynamic> && res['user'] != null) {
@@ -310,7 +354,9 @@ class PuterBridgeService {
     return null;
   }
 
-  Future<PuterUsage> getMonthlyUsage({Duration timeout = const Duration(seconds: 6)}) async {
+  Future<PuterUsage> getMonthlyUsage({
+    Duration timeout = const Duration(seconds: 6),
+  }) async {
     try {
       final res = await _executeCommand('get_monthly_usage', timeout: timeout);
       if (res is Map<String, dynamic>) {
@@ -325,9 +371,16 @@ class PuterBridgeService {
     return PuterUsage.defaultFreeTier();
   }
 
-  Future<bool> setAuthToken(String token, {Duration timeout = const Duration(seconds: 5)}) async {
+  Future<bool> setAuthToken(
+    String token, {
+    Duration timeout = const Duration(seconds: 5),
+  }) async {
     try {
-      final res = await _executeCommand('set_token', params: {'token': token}, timeout: timeout);
+      final res = await _executeCommand(
+        'set_token',
+        params: {'token': token},
+        timeout: timeout,
+      );
       await _storageService.setPuterToken(token);
       if (res is Map<String, dynamic> && res['user'] != null) {
         final user = PuterUser.fromJson(res['user'] as Map<String, dynamic>);
@@ -341,7 +394,9 @@ class PuterBridgeService {
     }
   }
 
-  Future<PuterUser?> signIn({Duration timeout = const Duration(minutes: 3)}) async {
+  Future<PuterUser?> signIn({
+    Duration timeout = const Duration(minutes: 3),
+  }) async {
     try {
       final res = await _executeCommand('sign_in', timeout: timeout);
       if (res is Map<String, dynamic> && res['user'] != null) {
@@ -404,19 +459,22 @@ class PuterBridgeService {
 
   // Direct REST token validation fallback
   Future<PuterUser?> validatePuterTokenViaRest(String token) async {
-    final cleanToken = token.trim()
+    final cleanToken = token
+        .trim()
         .replaceFirst(RegExp(r'^Bearer\s+', caseSensitive: false), '')
         .replaceAll('"', '')
         .replaceAll("'", "");
 
     try {
-      final response = await http.get(
-        Uri.parse('https://api.puter.com/whoami'),
-        headers: {
-          'Authorization': 'Bearer $cleanToken',
-          'Content-Type': 'application/json',
-        },
-      ).timeout(const Duration(seconds: 8));
+      final response = await http
+          .get(
+            Uri.parse('https://api.puter.com/whoami'),
+            headers: {
+              'Authorization': 'Bearer $cleanToken',
+              'Content-Type': 'application/json',
+            },
+          )
+          .timeout(const Duration(seconds: 8));
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
@@ -424,7 +482,9 @@ class PuterBridgeService {
         await setAuthToken(cleanToken);
         return user;
       } else if (response.statusCode == 401 || response.statusCode == 403) {
-        throw PuterAuthException('Invalid Puter authorization token. Please check your credentials.');
+        throw PuterAuthException(
+          'Invalid Puter authorization token. Please check your credentials.',
+        );
       }
     } catch (e) {
       if (e is AppException) rethrow;

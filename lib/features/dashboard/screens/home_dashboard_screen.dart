@@ -48,7 +48,9 @@ class HomeDashboardScreen extends ConsumerWidget {
             HapticHelper.lightImpact();
             await ref.read(authProvider.notifier).refreshUsage();
             await ref.read(historyFavoritesProvider.notifier).refresh();
-            await ref.read(dashboardRecommendationsProvider.notifier).loadRecommendations();
+            await ref
+                .read(dashboardRecommendationsProvider.notifier)
+                .loadRecommendations();
           },
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
@@ -144,10 +146,17 @@ class HomeDashboardScreen extends ConsumerWidget {
                   },
                   onAddWater: (amount) {
                     HapticHelper.mediumImpact();
-                    ref.read(nutritionTrackerProvider.notifier).addWater(amount);
+                    ref
+                        .read(nutritionTrackerProvider.notifier)
+                        .addWater(amount);
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text(DashboardLocalizationHelper.getWaterLoggedToast(lang, amount)),
+                        content: Text(
+                          DashboardLocalizationHelper.getWaterLoggedToast(
+                            lang,
+                            amount,
+                          ),
+                        ),
                         duration: const Duration(seconds: 2),
                         backgroundColor: AppColors.secondary,
                         behavior: SnackBarBehavior.floating,
@@ -230,7 +239,10 @@ class _DashboardHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final greeting = DashboardLocalizationHelper.getGreeting(language, userName);
+    final greeting = DashboardLocalizationHelper.getGreeting(
+      language,
+      userName,
+    );
     final tagline = DashboardLocalizationHelper.getTagline(language);
 
     return Row(
@@ -256,7 +268,10 @@ class _DashboardHeader extends StatelessWidget {
                   offset: const Offset(0, 3),
                 ),
               ],
-              border: Border.all(color: Colors.white.withValues(alpha: 0.2), width: 1.5),
+              border: Border.all(
+                color: Colors.white.withValues(alpha: 0.2),
+                width: 1.5,
+              ),
             ),
             child: const Center(
               child: Icon(Icons.person_rounded, color: Colors.white, size: 22),
@@ -392,16 +407,25 @@ class _ScanFoodHeroCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
                 decoration: BoxDecoration(
                   color: AppColors.primary.withValues(alpha: 0.25),
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: AppColors.primary.withValues(alpha: 0.5)),
+                  border: Border.all(
+                    color: AppColors.primary.withValues(alpha: 0.5),
+                  ),
                 ),
                 child: const Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.auto_awesome, color: AppColors.primaryLight, size: 12),
+                    Icon(
+                      Icons.auto_awesome,
+                      color: AppColors.primaryLight,
+                      size: 12,
+                    ),
                     SizedBox(width: 4),
                     Text(
                       'AI VISION SCANNER',
@@ -415,7 +439,11 @@ class _ScanFoodHeroCard extends StatelessWidget {
                   ],
                 ),
               ),
-              const Icon(Icons.camera_alt_rounded, color: AppColors.primaryLight, size: 20),
+              const Icon(
+                Icons.camera_alt_rounded,
+                color: AppColors.primaryLight,
+                size: 20,
+              ),
             ],
           ),
           const SizedBox(height: 12),
@@ -445,12 +473,20 @@ class _ScanFoodHeroCard extends StatelessWidget {
                 child: ElevatedButton.icon(
                   onPressed: onScanCamera,
                   icon: const Icon(Icons.camera_rounded, size: 17),
-                  label: Text(cameraLabel, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                  label: Text(
+                    cameraLabel,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                    ),
+                  ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
                     foregroundColor: Colors.white,
                     elevation: 0,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(13)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(13),
+                    ),
                     padding: const EdgeInsets.symmetric(vertical: 12),
                   ),
                 ),
@@ -461,11 +497,21 @@ class _ScanFoodHeroCard extends StatelessWidget {
                 child: OutlinedButton.icon(
                   onPressed: onScanGallery,
                   icon: const Icon(Icons.photo_library_outlined, size: 16),
-                  label: Text(galleryLabel, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12)),
+                  label: Text(
+                    galleryLabel,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 12,
+                    ),
+                  ),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: Colors.white,
-                    side: BorderSide(color: AppColors.primary.withValues(alpha: 0.4)),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(13)),
+                    side: BorderSide(
+                      color: AppColors.primary.withValues(alpha: 0.4),
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(13),
+                    ),
                     padding: const EdgeInsets.symmetric(vertical: 12),
                   ),
                 ),
@@ -496,10 +542,7 @@ class _ScanMenuHeroCard extends StatelessWidget {
   final String language;
   final VoidCallback onScanMenu;
 
-  const _ScanMenuHeroCard({
-    required this.language,
-    required this.onScanMenu,
-  });
+  const _ScanMenuHeroCard({required this.language, required this.onScanMenu});
 
   @override
   Widget build(BuildContext context) {
@@ -533,16 +576,25 @@ class _ScanMenuHeroCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3.5),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 3.5,
+                ),
                 decoration: BoxDecoration(
                   color: AppColors.secondary.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: AppColors.secondary.withValues(alpha: 0.4)),
+                  border: Border.all(
+                    color: AppColors.secondary.withValues(alpha: 0.4),
+                  ),
                 ),
                 child: const Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.menu_book_rounded, color: AppColors.secondaryLight, size: 12),
+                    Icon(
+                      Icons.menu_book_rounded,
+                      color: AppColors.secondaryLight,
+                      size: 12,
+                    ),
                     SizedBox(width: 4),
                     Text(
                       'OCR MENU SCANNER',
@@ -556,7 +608,11 @@ class _ScanMenuHeroCard extends StatelessWidget {
                   ],
                 ),
               ),
-              const Icon(Icons.restaurant_menu_rounded, color: AppColors.secondaryLight, size: 18),
+              const Icon(
+                Icons.restaurant_menu_rounded,
+                color: AppColors.secondaryLight,
+                size: 18,
+              ),
             ],
           ),
           const SizedBox(height: 10),
@@ -587,12 +643,17 @@ class _ScanMenuHeroCard extends StatelessWidget {
                 backgroundColor: AppColors.secondary,
                 foregroundColor: Colors.white,
                 elevation: 0,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
                 padding: const EdgeInsets.symmetric(vertical: 11),
               ),
               child: Text(
                 btnText,
-                style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
@@ -633,7 +694,11 @@ class _HowItWorksGuide extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.lightbulb_outline_rounded, color: AppColors.tertiary, size: 16),
+              const Icon(
+                Icons.lightbulb_outline_rounded,
+                color: AppColors.tertiary,
+                size: 16,
+              ),
               const SizedBox(width: 6),
               Text(
                 title,
@@ -803,7 +868,11 @@ class _TodayNutritionSection extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(Icons.add_rounded, color: AppColors.primaryLight, size: 14),
+                    const Icon(
+                      Icons.add_rounded,
+                      color: AppColors.primaryLight,
+                      size: 14,
+                    ),
                     const SizedBox(width: 2),
                     Text(
                       l10n.logMeal,
@@ -838,7 +907,10 @@ class _TodayNutritionSection extends StatelessWidget {
                       ),
                       const SizedBox(height: 6),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 2,
+                        ),
                         decoration: BoxDecoration(
                           color: AppColors.darkSurfaceHighlight,
                           borderRadius: BorderRadius.circular(10),
@@ -894,16 +966,25 @@ class _TodayNutritionSection extends StatelessWidget {
               // Dynamic Contextual Nutrition Insight
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
                 decoration: BoxDecoration(
                   color: AppColors.darkSurfaceHighlight,
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: AppColors.darkBorder.withValues(alpha: 0.5)),
+                  border: Border.all(
+                    color: AppColors.darkBorder.withValues(alpha: 0.5),
+                  ),
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Icon(Icons.info_outline_rounded, color: AppColors.primaryLight, size: 14),
+                    const Icon(
+                      Icons.info_outline_rounded,
+                      color: AppColors.primaryLight,
+                      size: 14,
+                    ),
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
@@ -928,11 +1009,19 @@ class _TodayNutritionSection extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      const Icon(Icons.water_drop_rounded, color: AppColors.secondary, size: 16),
+                      const Icon(
+                        Icons.water_drop_rounded,
+                        color: AppColors.secondary,
+                        size: 16,
+                      ),
                       const SizedBox(width: 6),
                       Text(
                         '${l10n.waterHydration}: $waterMl / 2500 ml',
-                        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.white),
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
                       ),
                     ],
                   ),
@@ -974,7 +1063,9 @@ class _WaterQuickAddButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.secondary.withValues(alpha: 0.15),
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: AppColors.secondary.withValues(alpha: 0.35)),
+          border: Border.all(
+            color: AppColors.secondary.withValues(alpha: 0.35),
+          ),
         ),
         child: Text(
           label,
@@ -1015,11 +1106,18 @@ class _MacroLegendRow extends StatelessWidget {
           const SizedBox(width: 6),
           Text(
             '$label: ',
-            style: const TextStyle(fontSize: 10.5, color: AppColors.textMutedDark),
+            style: const TextStyle(
+              fontSize: 10.5,
+              color: AppColors.textMutedDark,
+            ),
           ),
           Text(
             '${grams.toStringAsFixed(1)}g',
-            style: const TextStyle(fontSize: 10.5, fontWeight: FontWeight.w700, color: Colors.white),
+            style: const TextStyle(
+              fontSize: 10.5,
+              fontWeight: FontWeight.w700,
+              color: Colors.white,
+            ),
           ),
         ],
       ),
@@ -1083,7 +1181,9 @@ class _AiRecommendationsSection extends StatelessWidget {
               decoration: BoxDecoration(
                 color: AppColors.tertiary.withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(6),
-                border: Border.all(color: AppColors.tertiary.withValues(alpha: 0.4)),
+                border: Border.all(
+                  color: AppColors.tertiary.withValues(alpha: 0.4),
+                ),
               ),
               child: Text(
                 badge,
@@ -1171,7 +1271,10 @@ class _RecommendationCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 6),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 5,
+                    vertical: 1,
+                  ),
                   decoration: BoxDecoration(
                     color: AppColors.protein.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(5),
@@ -1223,10 +1326,16 @@ class _QuickAccessToolsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final plannerTitle = DashboardLocalizationHelper.getMealPlannerTitle(language);
+    final plannerTitle = DashboardLocalizationHelper.getMealPlannerTitle(
+      language,
+    );
     final plannerSub = DashboardLocalizationHelper.getMealPlannerSub(language);
-    final trackerTitle = DashboardLocalizationHelper.getNutritionTrackerTitle(language);
-    final trackerSub = DashboardLocalizationHelper.getNutritionTrackerSub(language);
+    final trackerTitle = DashboardLocalizationHelper.getNutritionTrackerTitle(
+      language,
+    );
+    final trackerSub = DashboardLocalizationHelper.getNutritionTrackerSub(
+      language,
+    );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -1359,13 +1468,20 @@ class _QuickActionCard extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Colors.white),
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white,
+                  ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
                 Text(
                   subtitle,
-                  style: const TextStyle(fontSize: 9.5, color: AppColors.textMutedDark),
+                  style: const TextStyle(
+                    fontSize: 9.5,
+                    color: AppColors.textMutedDark,
+                  ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -1402,7 +1518,9 @@ class _RecentScansSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final emptyTitle = DashboardLocalizationHelper.getEmptyScansTitle(language);
     final emptyDesc = DashboardLocalizationHelper.getEmptyScansDesc(language);
-    final scanFirstBtn = DashboardLocalizationHelper.getScanFirstMealButton(language);
+    final scanFirstBtn = DashboardLocalizationHelper.getScanFirstMealButton(
+      language,
+    );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -1412,14 +1530,22 @@ class _RecentScansSection extends StatelessWidget {
           children: [
             Text(
               l10n.recentScans,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Colors.white),
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+              ),
             ),
             if (history.isNotEmpty)
               GestureDetector(
                 onTap: onViewAllTap,
                 child: Text(
                   l10n.viewAll,
-                  style: const TextStyle(fontSize: 12, color: AppColors.primaryLight, fontWeight: FontWeight.w600),
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: AppColors.primaryLight,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
           ],
@@ -1442,18 +1568,30 @@ class _RecentScansSection extends StatelessWidget {
                     color: AppColors.primary.withValues(alpha: 0.15),
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(Icons.camera_alt_outlined, color: AppColors.primaryLight, size: 28),
+                  child: const Icon(
+                    Icons.camera_alt_outlined,
+                    color: AppColors.primaryLight,
+                    size: 28,
+                  ),
                 ),
                 const SizedBox(height: 10),
                 Text(
                   emptyTitle,
-                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 13.5),
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 13.5,
+                  ),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 4),
                 Text(
                   emptyDesc,
-                  style: const TextStyle(color: AppColors.textMutedDark, fontSize: 11, height: 1.3),
+                  style: const TextStyle(
+                    color: AppColors.textMutedDark,
+                    fontSize: 11,
+                    height: 1.3,
+                  ),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 14),
@@ -1462,12 +1600,20 @@ class _RecentScansSection extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
                     foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                    padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 18,
+                      vertical: 10,
+                    ),
                   ),
                   child: Text(
                     scanFirstBtn,
-                    style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                      fontSize: 12.5,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ],
@@ -1498,10 +1644,7 @@ class _RecentScanCard extends StatelessWidget {
   final dynamic item;
   final VoidCallback onTap;
 
-  const _RecentScanCard({
-    required this.item,
-    required this.onTap,
-  });
+  const _RecentScanCard({required this.item, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -1528,7 +1671,11 @@ class _RecentScanCard extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               item.foodName as String,
-              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Colors.white),
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+              ),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
@@ -1538,17 +1685,28 @@ class _RecentScanCard extends StatelessWidget {
               children: [
                 Text(
                   '${item.calories} kcal',
-                  style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: AppColors.primaryLight),
+                  style: const TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.primaryLight,
+                  ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 5,
+                    vertical: 1,
+                  ),
                   decoration: BoxDecoration(
                     color: AppColors.primary.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: Text(
                     '${item.healthScore} pts',
-                    style: const TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: AppColors.primaryLight),
+                    style: const TextStyle(
+                      fontSize: 9,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.primaryLight,
+                    ),
                   ),
                 ),
               ],

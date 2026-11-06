@@ -7,10 +7,7 @@ import '../../../l10n/app_localizations.dart';
 class MainShellScreen extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
 
-  const MainShellScreen({
-    super.key,
-    required this.navigationShell,
-  });
+  const MainShellScreen({super.key, required this.navigationShell});
 
   void _onTap(int index) {
     HapticHelper.selectionClick();

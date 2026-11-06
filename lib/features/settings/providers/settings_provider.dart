@@ -64,10 +64,12 @@ class SettingsState {
   }
 }
 
-final settingsProvider = StateNotifierProvider<SettingsNotifier, SettingsState>((ref) {
-  final storage = ref.watch(localStorageServiceProvider);
-  return SettingsNotifier(storage);
-});
+final settingsProvider = StateNotifierProvider<SettingsNotifier, SettingsState>(
+  (ref) {
+    final storage = ref.watch(localStorageServiceProvider);
+    return SettingsNotifier(storage);
+  },
+);
 
 class SettingsNotifier extends StateNotifier<SettingsState> {
   final LocalStorageService _storage;
@@ -86,7 +88,12 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
 
     final currencyMap = DietaryConstants.supportedCurrencies.firstWhere(
       (c) => c['code'] == currency,
-      orElse: () => {'code': 'USD', 'symbol': '\$', 'name': 'US Dollar', 'flag': '🇺🇸'},
+      orElse: () => {
+        'code': 'USD',
+        'symbol': '\$',
+        'name': 'US Dollar',
+        'flag': '🇺🇸',
+      },
     );
 
     final langMap = DietaryConstants.supportedLanguages.firstWhere(
@@ -111,7 +118,12 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
   Future<void> setCurrency(String code) async {
     final currencyMap = DietaryConstants.supportedCurrencies.firstWhere(
       (c) => c['code'] == code,
-      orElse: () => {'code': 'USD', 'symbol': '\$', 'name': 'US Dollar', 'flag': '🇺🇸'},
+      orElse: () => {
+        'code': 'USD',
+        'symbol': '\$',
+        'name': 'US Dollar',
+        'flag': '🇺🇸',
+      },
     );
     await _storage.setCurrency(code);
     state = state.copyWith(
@@ -134,7 +146,10 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
     );
   }
 
-  Future<void> setCountry(String countryName, {bool autoAdjustCurrency = false}) async {
+  Future<void> setCountry(
+    String countryName, {
+    bool autoAdjustCurrency = false,
+  }) async {
     await _storage.setCountry(countryName);
     state = state.copyWith(country: countryName);
 

@@ -4,7 +4,12 @@ import '../../../core/errors/app_exception.dart';
 class NonFoodImageException extends AppException {
   final String? category;
 
-  NonFoodImageException(super.message, {super.code = 'NON_FOOD_IMAGE', this.category, super.details});
+  NonFoodImageException(
+    super.message, {
+    super.code = 'NON_FOOD_IMAGE',
+    this.category,
+    super.details,
+  });
 
   @override
   String toString() => message;
@@ -114,25 +119,31 @@ class FoodAnalysisResult {
     this.imagePath,
     DateTime? timestamp,
     this.isFavorite = false,
-  })  : id = id ?? const Uuid().v4(),
-        timestamp = timestamp ?? DateTime.now();
+  }) : id = id ?? const Uuid().v4(),
+       timestamp = timestamp ?? DateTime.now();
 
   factory FoodAnalysisResult.fromJson(Map<String, dynamic> json) {
     return FoodAnalysisResult(
       id: json['id'] as String?,
-      foodName: json['food_name'] as String? ?? json['name'] as String? ?? 'Scanned Dish',
+      foodName:
+          json['food_name'] as String? ??
+          json['name'] as String? ??
+          'Scanned Dish',
       confidenceScore: (json['confidence_score'] as num?)?.toDouble() ?? 0.90,
       isVerifiedLabel: json['is_verified_label'] as bool? ?? false,
       isFoodRelated: json['is_food_related'] as bool? ?? true,
       detectedCategory: json['detected_category'] as String? ?? 'prepared_dish',
       rejectionReason: json['rejection_reason'] as String?,
-      isArtificialOrIllustration: json['is_artificial_or_illustration'] as bool? ?? false,
+      isArtificialOrIllustration:
+          json['is_artificial_or_illustration'] as bool? ?? false,
       isAmbiguous: json['is_ambiguous'] as bool? ?? false,
-      ambiguityClarificationPrompt: json['ambiguity_clarification_prompt'] as String?,
+      ambiguityClarificationPrompt:
+          json['ambiguity_clarification_prompt'] as String?,
       confidenceExplanation: json['confidence_explanation'] as String?,
       portionSize: json['portion_size'] as String? ?? '1 standard serving',
       cuisine: json['cuisine'] as String? ?? 'Global Cuisine',
-      ingredients: (json['ingredients'] as List<dynamic>?)
+      ingredients:
+          (json['ingredients'] as List<dynamic>?)
               ?.map((e) => e.toString())
               .toList() ??
           [],
@@ -149,26 +160,34 @@ class FoodAnalysisResult {
       iron: (json['iron'] as num?)?.toDouble() ?? 0.0,
       vitaminC: (json['vitamin_c'] as num?)?.toDouble() ?? 0.0,
       healthScore: (json['health_score'] as num?)?.toInt() ?? 75,
-      healthPros: (json['health_pros'] as List<dynamic>?)
+      healthPros:
+          (json['health_pros'] as List<dynamic>?)
               ?.map((e) => e.toString())
               .toList() ??
           [],
-      healthCons: (json['health_cons'] as List<dynamic>?)
+      healthCons:
+          (json['health_cons'] as List<dynamic>?)
               ?.map((e) => e.toString())
               .toList() ??
           [],
-      allergenWarnings: (json['allergen_warnings'] as List<dynamic>?)
+      allergenWarnings:
+          (json['allergen_warnings'] as List<dynamic>?)
               ?.map((e) => e.toString())
               .toList() ??
           [],
-      dietaryTags: (json['dietary_tags'] as List<dynamic>?)
+      dietaryTags:
+          (json['dietary_tags'] as List<dynamic>?)
               ?.map((e) => e.toString())
               .toList() ??
           [],
-      disclaimer: json['disclaimer'] as String? ??
+      disclaimer:
+          json['disclaimer'] as String? ??
           'AI estimate from visual analysis. Always check with manufacturer or kitchen for severe allergies.',
-      healthierAlternatives: (json['healthier_alternatives'] as List<dynamic>?)
-              ?.map((e) => HealthierAlternative.fromJson(e as Map<String, dynamic>))
+      healthierAlternatives:
+          (json['healthier_alternatives'] as List<dynamic>?)
+              ?.map(
+                (e) => HealthierAlternative.fromJson(e as Map<String, dynamic>),
+              )
               .toList() ??
           [],
       imagePath: json['image_path'] as String?,
@@ -213,7 +232,9 @@ class FoodAnalysisResult {
       'allergen_warnings': allergenWarnings,
       'dietary_tags': dietaryTags,
       'disclaimer': disclaimer,
-      'healthier_alternatives': healthierAlternatives.map((e) => e.toJson()).toList(),
+      'healthier_alternatives': healthierAlternatives
+          .map((e) => e.toJson())
+          .toList(),
       'image_path': imagePath,
       'timestamp': timestamp.toIso8601String(),
       'is_favorite': isFavorite,
@@ -266,10 +287,13 @@ class FoodAnalysisResult {
       isFoodRelated: isFoodRelated ?? this.isFoodRelated,
       detectedCategory: detectedCategory ?? this.detectedCategory,
       rejectionReason: rejectionReason ?? this.rejectionReason,
-      isArtificialOrIllustration: isArtificialOrIllustration ?? this.isArtificialOrIllustration,
+      isArtificialOrIllustration:
+          isArtificialOrIllustration ?? this.isArtificialOrIllustration,
       isAmbiguous: isAmbiguous ?? this.isAmbiguous,
-      ambiguityClarificationPrompt: ambiguityClarificationPrompt ?? this.ambiguityClarificationPrompt,
-      confidenceExplanation: confidenceExplanation ?? this.confidenceExplanation,
+      ambiguityClarificationPrompt:
+          ambiguityClarificationPrompt ?? this.ambiguityClarificationPrompt,
+      confidenceExplanation:
+          confidenceExplanation ?? this.confidenceExplanation,
       portionSize: portionSize ?? this.portionSize,
       cuisine: cuisine ?? this.cuisine,
       ingredients: ingredients ?? this.ingredients,
@@ -291,7 +315,8 @@ class FoodAnalysisResult {
       allergenWarnings: allergenWarnings ?? this.allergenWarnings,
       dietaryTags: dietaryTags ?? this.dietaryTags,
       disclaimer: disclaimer ?? this.disclaimer,
-      healthierAlternatives: healthierAlternatives ?? this.healthierAlternatives,
+      healthierAlternatives:
+          healthierAlternatives ?? this.healthierAlternatives,
       imagePath: imagePath ?? this.imagePath,
       timestamp: timestamp ?? this.timestamp,
       isFavorite: isFavorite ?? this.isFavorite,

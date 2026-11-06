@@ -87,19 +87,30 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                           color: AppColors.primary.withValues(alpha: 0.15),
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: const Icon(Icons.center_focus_strong, color: AppColors.primary, size: 20),
+                        child: const Icon(
+                          Icons.center_focus_strong,
+                          color: AppColors.primary,
+                          size: 20,
+                        ),
                       ),
                       const SizedBox(width: 8),
                       const Text(
                         'FoodLens',
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: Colors.white),
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w800,
+                          color: Colors.white,
+                        ),
                       ),
                     ],
                   ),
                   if (_currentPage < _slides.length - 1)
                     TextButton(
                       onPressed: _onFinish,
-                      child: const Text('Skip', style: TextStyle(color: AppColors.textMutedDark)),
+                      child: const Text(
+                        'Skip',
+                        style: TextStyle(color: AppColors.textMutedDark),
+                      ),
                     ),
                 ],
               ),
@@ -120,41 +131,48 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                       children: [
                         // Slide Hero Art / Icon Card
                         Container(
-                          width: 140,
-                          height: 140,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            gradient: LinearGradient(
-                              colors: slide['gradient'] as List<Color>,
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: (slide['gradient'] as List<Color>).first.withValues(alpha: 0.4),
-                                blurRadius: 40,
-                                spreadRadius: 6,
+                              width: 140,
+                              height: 140,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                gradient: LinearGradient(
+                                  colors: slide['gradient'] as List<Color>,
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: (slide['gradient'] as List<Color>)
+                                        .first
+                                        .withValues(alpha: 0.4),
+                                    blurRadius: 40,
+                                    spreadRadius: 6,
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                          child: Icon(
-                            slide['icon'] as IconData,
-                            size: 64,
-                            color: Colors.white,
-                          ),
-                        )
+                              child: Icon(
+                                slide['icon'] as IconData,
+                                size: 64,
+                                color: Colors.white,
+                              ),
+                            )
                             .animate(key: ValueKey(index))
                             .scale(duration: 500.ms, curve: Curves.easeOutBack)
                             .fadeIn(),
                         const SizedBox(height: 32),
                         // Badge
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 5,
+                          ),
                           decoration: BoxDecoration(
-                            color: (slide['gradient'] as List<Color>).first.withValues(alpha: 0.15),
+                            color: (slide['gradient'] as List<Color>).first
+                                .withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(20),
                             border: Border.all(
-                              color: (slide['gradient'] as List<Color>).first.withValues(alpha: 0.3),
+                              color: (slide['gradient'] as List<Color>).first
+                                  .withValues(alpha: 0.3),
                             ),
                           ),
                           child: Text(
@@ -197,28 +215,40 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                             spacing: 8,
                             runSpacing: 8,
                             alignment: WrapAlignment.center,
-                            children: DietaryConstants.dietaryPreferences.take(6).map((pref) {
-                              final isSelected = settings.dietaryFilters.contains(pref);
-                              return FilterChip(
-                                label: Text(pref),
-                                selected: isSelected,
-                                onSelected: (_) {
-                                  settingsNotifier.toggleDietaryFilter(pref);
-                                  HapticHelper.selectionClick();
-                                },
-                                selectedColor: AppColors.primary.withValues(alpha: 0.25),
-                                checkmarkColor: AppColors.primary,
-                                labelStyle: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
-                                  color: isSelected ? AppColors.primaryLight : AppColors.textSecondaryDark,
-                                ),
-                                side: BorderSide(
-                                  color: isSelected ? AppColors.primary : AppColors.darkBorder,
-                                ),
-                                backgroundColor: AppColors.darkSurfaceCard,
-                              );
-                            }).toList(),
+                            children: DietaryConstants.dietaryPreferences
+                                .take(6)
+                                .map((pref) {
+                                  final isSelected = settings.dietaryFilters
+                                      .contains(pref);
+                                  return FilterChip(
+                                    label: Text(pref),
+                                    selected: isSelected,
+                                    onSelected: (_) {
+                                      settingsNotifier.toggleDietaryFilter(
+                                        pref,
+                                      );
+                                      HapticHelper.selectionClick();
+                                    },
+                                    selectedColor: AppColors.primary.withValues(
+                                      alpha: 0.25,
+                                    ),
+                                    checkmarkColor: AppColors.primary,
+                                    labelStyle: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                      color: isSelected
+                                          ? AppColors.primaryLight
+                                          : AppColors.textSecondaryDark,
+                                    ),
+                                    side: BorderSide(
+                                      color: isSelected
+                                          ? AppColors.primary
+                                          : AppColors.darkBorder,
+                                    ),
+                                    backgroundColor: AppColors.darkSurfaceCard,
+                                  );
+                                })
+                                .toList(),
                           ),
                         ],
                       ],
@@ -237,7 +267,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     width: isActive ? 24 : 8,
                     height: 8,
                     decoration: BoxDecoration(
-                      color: isActive ? AppColors.primary : AppColors.darkSurfaceHighlight,
+                      color: isActive
+                          ? AppColors.primary
+                          : AppColors.darkSurfaceHighlight,
                       borderRadius: BorderRadius.circular(4),
                     ),
                   );
@@ -246,8 +278,12 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               const SizedBox(height: 28),
               // Bottom Action Button
               CustomButton(
-                text: _currentPage == _slides.length - 1 ? 'Connect Puter Account' : 'Continue',
-                icon: _currentPage == _slides.length - 1 ? Icons.arrow_forward_rounded : null,
+                text: _currentPage == _slides.length - 1
+                    ? 'Connect Puter Account'
+                    : 'Continue',
+                icon: _currentPage == _slides.length - 1
+                    ? Icons.arrow_forward_rounded
+                    : null,
                 onPressed: () {
                   if (_currentPage < _slides.length - 1) {
                     _pageController.nextPage(

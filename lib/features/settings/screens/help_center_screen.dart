@@ -29,7 +29,11 @@ class HelpCenterScreen extends StatelessWidget {
           children: [
             const Text(
               'Frequently Asked Questions',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.white),
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w800,
+                color: Colors.white,
+              ),
             ),
             const SizedBox(height: 14),
 
@@ -66,19 +70,48 @@ class HelpCenterScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Official Resources', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Colors.white)),
+                  const Text(
+                    'Official Resources',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
+                  ),
                   const SizedBox(height: 10),
                   ListTile(
                     contentPadding: EdgeInsets.zero,
-                    title: const Text('Puter Developer Documentation', style: TextStyle(color: AppColors.secondaryLight, fontSize: 13, fontWeight: FontWeight.w600)),
-                    trailing: const Icon(Icons.open_in_new, color: AppColors.secondaryLight, size: 18),
+                    title: const Text(
+                      'Puter Developer Documentation',
+                      style: TextStyle(
+                        color: AppColors.secondaryLight,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    trailing: const Icon(
+                      Icons.open_in_new,
+                      color: AppColors.secondaryLight,
+                      size: 18,
+                    ),
                     onTap: () => _launchUrl(AppConstants.puterDocsUrl),
                   ),
                   const Divider(color: AppColors.darkBorder),
                   ListTile(
                     contentPadding: EdgeInsets.zero,
-                    title: const Text('Manage Puter Account & Credits', style: TextStyle(color: AppColors.secondaryLight, fontSize: 13, fontWeight: FontWeight.w600)),
-                    trailing: const Icon(Icons.open_in_new, color: AppColors.secondaryLight, size: 18),
+                    title: const Text(
+                      'Manage Puter Account & Credits',
+                      style: TextStyle(
+                        color: AppColors.secondaryLight,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    trailing: const Icon(
+                      Icons.open_in_new,
+                      color: AppColors.secondaryLight,
+                      size: 18,
+                    ),
                     onTap: () => _launchUrl(AppConstants.puterAccountUrl),
                   ),
                 ],
@@ -120,11 +153,17 @@ class _FaqAccordionState extends State<_FaqAccordion> {
                 Expanded(
                   child: Text(
                     widget.question,
-                    style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: Colors.white),
+                    style: const TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
                 Icon(
-                  _expanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+                  _expanded
+                      ? Icons.keyboard_arrow_up
+                      : Icons.keyboard_arrow_down,
                   color: AppColors.textMutedDark,
                 ),
               ],
@@ -133,7 +172,11 @@ class _FaqAccordionState extends State<_FaqAccordion> {
               const SizedBox(height: 8),
               Text(
                 widget.answer,
-                style: const TextStyle(fontSize: 12, color: AppColors.textSecondaryDark, height: 1.45),
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: AppColors.textSecondaryDark,
+                  height: 1.45,
+                ),
               ),
             ],
           ],

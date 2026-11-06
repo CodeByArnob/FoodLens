@@ -45,17 +45,17 @@ class MealPlannerState {
 
 final mealPlannerProvider =
     StateNotifierProvider<MealPlannerNotifier, MealPlannerState>((ref) {
-  final bridge = ref.watch(puterBridgeServiceProvider);
-  final settings = ref.watch(settingsProvider);
-  return MealPlannerNotifier(bridge, settings);
-});
+      final bridge = ref.watch(puterBridgeServiceProvider);
+      final settings = ref.watch(settingsProvider);
+      return MealPlannerNotifier(bridge, settings);
+    });
 
 class MealPlannerNotifier extends StateNotifier<MealPlannerState> {
   final dynamic _bridge;
   final SettingsState _settings;
 
   MealPlannerNotifier(this._bridge, this._settings)
-      : super(MealPlannerState(targetCalories: _settings.dailyCalorieTarget)) {
+    : super(MealPlannerState(targetCalories: _settings.dailyCalorieTarget)) {
     _loadCachedPlan();
   }
 
@@ -85,8 +85,14 @@ class MealPlannerNotifier extends StateNotifier<MealPlannerState> {
               carbs: 32.0,
               fat: 11.0,
               prepTimeMinutes: 12,
-              ingredients: ['Egg whites', 'Baby spinach', 'Feta cheese', 'Sourdough toast'],
-              instructions: 'Whisk egg whites with spinach and cook on olive oil spray. Top with crumbled feta.',
+              ingredients: [
+                'Egg whites',
+                'Baby spinach',
+                'Feta cheese',
+                'Sourdough toast',
+              ],
+              instructions:
+                  'Whisk egg whites with spinach and cook on olive oil spray. Top with crumbled feta.',
             ),
             PlannedMeal(
               mealType: 'Lunch',
@@ -97,8 +103,15 @@ class MealPlannerNotifier extends StateNotifier<MealPlannerState> {
               carbs: 58.0,
               fat: 22.0,
               prepTimeMinutes: 20,
-              ingredients: ['Salmon fillet', 'Cooked quinoa', 'Avocado', 'Steamed broccoli', 'Tahini dressing'],
-              instructions: 'Pan-sear salmon 4 mins each side. Assemble bowl with warm quinoa and drizzle tahini.',
+              ingredients: [
+                'Salmon fillet',
+                'Cooked quinoa',
+                'Avocado',
+                'Steamed broccoli',
+                'Tahini dressing',
+              ],
+              instructions:
+                  'Pan-sear salmon 4 mins each side. Assemble bowl with warm quinoa and drizzle tahini.',
             ),
             PlannedMeal(
               mealType: 'Dinner',
@@ -109,8 +122,15 @@ class MealPlannerNotifier extends StateNotifier<MealPlannerState> {
               carbs: 52.0,
               fat: 14.0,
               prepTimeMinutes: 25,
-              ingredients: ['Chicken breast', 'Sweet potato', 'Green beans', 'Paprika', 'Olive oil'],
-              instructions: 'Bake seasoned chicken at 200°C for 22 mins. Mash steamed sweet potato with olive oil.',
+              ingredients: [
+                'Chicken breast',
+                'Sweet potato',
+                'Green beans',
+                'Paprika',
+                'Olive oil',
+              ],
+              instructions:
+                  'Bake seasoned chicken at 200°C for 22 mins. Mash steamed sweet potato with olive oil.',
             ),
             PlannedMeal(
               mealType: 'Snacks',
@@ -121,7 +141,12 @@ class MealPlannerNotifier extends StateNotifier<MealPlannerState> {
               carbs: 26.0,
               fat: 6.0,
               prepTimeMinutes: 3,
-              ingredients: ['0% Greek yogurt', 'Fresh blueberries', 'Chia seeds', 'Honey drizzle'],
+              ingredients: [
+                '0% Greek yogurt',
+                'Fresh blueberries',
+                'Chia seeds',
+                'Honey drizzle',
+              ],
               instructions: 'Stir together and enjoy chilled.',
             ),
           ],
@@ -159,10 +184,7 @@ class MealPlannerNotifier extends StateNotifier<MealPlannerState> {
         languageName: _settings.languageNativeName,
       );
 
-      state = state.copyWith(
-        currentPlan: plan,
-        isGenerating: false,
-      );
+      state = state.copyWith(currentPlan: plan, isGenerating: false);
 
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString(

@@ -86,7 +86,10 @@ class HealthScoreIndicator extends StatelessWidget {
                   ),
                   const SizedBox(width: 6),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 6,
+                      vertical: 2,
+                    ),
                     decoration: BoxDecoration(
                       color: isVerified
                           ? AppColors.primary.withValues(alpha: 0.15)
@@ -103,7 +106,9 @@ class HealthScoreIndicator extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 9,
                         fontWeight: FontWeight.w800,
-                        color: isVerified ? AppColors.primaryLight : AppColors.secondaryLight,
+                        color: isVerified
+                            ? AppColors.primaryLight
+                            : AppColors.secondaryLight,
                         letterSpacing: 0.5,
                       ),
                     ),

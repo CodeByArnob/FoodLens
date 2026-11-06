@@ -20,17 +20,21 @@ class PuterUsage {
       return PuterUsage.defaultFreeTier();
     }
 
-    final allowanceInfo = json['allowanceInfo'] as Map<String, dynamic>? ?? json;
+    final allowanceInfo =
+        json['allowanceInfo'] as Map<String, dynamic>? ?? json;
 
-    final total = (allowanceInfo['allowance'] as num?)?.toDouble() ??
+    final total =
+        (allowanceInfo['allowance'] as num?)?.toDouble() ??
         (allowanceInfo['total'] as num?)?.toDouble() ??
         10000000.0; // 10M microcents ($10) free default on Puter
 
-    final used = (allowanceInfo['used'] as num?)?.toDouble() ??
+    final used =
+        (allowanceInfo['used'] as num?)?.toDouble() ??
         (allowanceInfo['cost'] as num?)?.toDouble() ??
         0.0;
 
-    final remaining = (allowanceInfo['remaining'] as num?)?.toDouble() ??
+    final remaining =
+        (allowanceInfo['remaining'] as num?)?.toDouble() ??
         (total - used).clamp(0.0, total);
 
     final percent = total > 0 ? (used / total).clamp(0.0, 1.0) : 0.0;
@@ -70,7 +74,8 @@ class PuterUsage {
 
   /// Formatted credits for human display
   String get remainingCreditsFormatted {
-    final remainingDollars = remainingAllowance / 1000000.0; // convert microcents to $ equivalent
+    final remainingDollars =
+        remainingAllowance / 1000000.0; // convert microcents to $ equivalent
     return '\$${remainingDollars.toStringAsFixed(2)}';
   }
 

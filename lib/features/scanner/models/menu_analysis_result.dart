@@ -38,11 +38,13 @@ class MenuItemDish {
       protein: (json['protein'] as num?)?.toDouble() ?? 20.0,
       carbs: (json['carbs'] as num?)?.toDouble() ?? 40.0,
       fat: (json['fat'] as num?)?.toDouble() ?? 15.0,
-      dietaryTags: (json['dietary_tags'] as List<dynamic>?)
+      dietaryTags:
+          (json['dietary_tags'] as List<dynamic>?)
               ?.map((e) => e.toString())
               .toList() ??
           [],
-      allergens: (json['allergens'] as List<dynamic>?)
+      allergens:
+          (json['allergens'] as List<dynamic>?)
               ?.map((e) => e.toString())
               .toList() ??
           [],
@@ -86,7 +88,8 @@ class MenuAnalysisResult {
       restaurantName: json['restaurant_name'] as String? ?? 'Restaurant Menu',
       cuisineType: json['cuisine_type'] as String? ?? 'Culinary Menu',
       currency: json['currency'] as String? ?? '\$',
-      dishes: (json['dishes'] as List<dynamic>?)
+      dishes:
+          (json['dishes'] as List<dynamic>?)
               ?.map((e) => MenuItemDish.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],

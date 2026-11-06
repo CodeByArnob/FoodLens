@@ -1,0 +1,36 @@
+name: "🌐 Localization & Translation Improvement"
+description: "Submit corrections or new translations for Bengali, Arabic, Spanish, French, German, Hindi, or Japanese."
+title: "[L10N]: "
+labels: ["localization", "translation", "good first issue"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        FoodLens is committed to universal accessibility across all world languages and RTL layouts. Thank you for improving our translations!
+  - type: dropdown
+    id: language
+    attributes:
+      label: "Language Target"
+      options:
+        - "Bengali (বাংলা)"
+        - "Arabic (العربية - RTL)"
+        - "German (Deutsch)"
+        - "Spanish (Español)"
+        - "French (Français)"
+        - "Hindi (हिन्दी)"
+        - "Japanese (日本語)"
+        - "Propose New Language"
+    validations:
+      required: true
+  - type: textarea
+    id: current_text
+    attributes:
+      label: "Current String (if applicable)"
+      description: "ARB key name or currently displayed text."
+  - type: textarea
+    id: proposed_text
+    attributes:
+      label: "Proposed Native Translation"
+      description: "Accurate, culturally authentic translation."
+    validations:
+      required: true

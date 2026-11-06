@@ -91,32 +91,36 @@ void main() {
       expect(result.dietaryTags, contains('high-protein'));
     });
 
-    test('NonFoodImageException and non-food validation fields work properly', () {
-      final nonFoodJson = {
-        'is_food_related': false,
-        'detected_category': 'household_object',
-        'rejection_reason': 'The uploaded image contains a laptop keyboard, not consumable food.',
-        'food_name': 'Non-Food Object',
-        'confidence_score': 0.0,
-        'calories': 0,
-      };
+    test(
+      'NonFoodImageException and non-food validation fields work properly',
+      () {
+        final nonFoodJson = {
+          'is_food_related': false,
+          'detected_category': 'household_object',
+          'rejection_reason':
+              'The uploaded image contains a laptop keyboard, not consumable food.',
+          'food_name': 'Non-Food Object',
+          'confidence_score': 0.0,
+          'calories': 0,
+        };
 
-      final result = FoodAnalysisResult.fromJson(nonFoodJson);
-      expect(result.isFoodRelated, false);
-      expect(result.detectedCategory, 'household_object');
-      expect(result.rejectionReason, contains('laptop keyboard'));
-      expect(result.calories, 0);
+        final result = FoodAnalysisResult.fromJson(nonFoodJson);
+        expect(result.isFoodRelated, false);
+        expect(result.detectedCategory, 'household_object');
+        expect(result.rejectionReason, contains('laptop keyboard'));
+        expect(result.calories, 0);
 
-      // Verify NonFoodImageException
-      final exception = NonFoodImageException(
-        result.rejectionReason ?? 'No food detected',
-        category: result.detectedCategory,
-      );
-      expect(exception.message, contains('laptop keyboard'));
-      expect(exception.category, 'household_object');
-      expect(exception.code, 'NON_FOOD_IMAGE');
-      expect(exception.toString(), contains('laptop keyboard'));
-    });
+        // Verify NonFoodImageException
+        final exception = NonFoodImageException(
+          result.rejectionReason ?? 'No food detected',
+          category: result.detectedCategory,
+        );
+        expect(exception.message, contains('laptop keyboard'));
+        expect(exception.category, 'household_object');
+        expect(exception.code, 'NON_FOOD_IMAGE');
+        expect(exception.toString(), contains('laptop keyboard'));
+      },
+    );
 
     test('MenuAnalysisResult parses restaurant dishes', () {
       final json = {
@@ -132,8 +136,8 @@ void main() {
             'protein': 22.0,
             'dietary_tags': ['vegetarian'],
             'health_rating': 'B',
-          }
-        ]
+          },
+        ],
       };
 
       final menu = MenuAnalysisResult.fromJson(json);
@@ -216,23 +220,46 @@ void main() {
   });
 
   group('CurrencyFormatter Tests', () {
-    test('converts USD amount to BDT with symbol ৳ and original USD reference', () {
-      final bdtFormatted = CurrencyFormatter.format(14.50, currencyCode: 'BDT', showOriginal: true);
-      expect(bdtFormatted, contains('৳'));
-      expect(bdtFormatted, contains('1,776'));
-      expect(bdtFormatted, contains('(\$ 14.50)'));
-    });
+    test(
+      'converts USD amount to BDT with symbol ৳ and original USD reference',
+      () {
+        final bdtFormatted = CurrencyFormatter.format(
+          14.50,
+          currencyCode: 'BDT',
+          showOriginal: true,
+        );
+        expect(bdtFormatted, contains('৳'));
+        expect(bdtFormatted, contains('1,776'));
+        expect(bdtFormatted, contains('(\$ 14.50)'));
+      },
+    );
 
     test('formats pure USD without redundant USD parenthesis', () {
-      final usdFormatted = CurrencyFormatter.format(14.50, currencyCode: 'USD', showOriginal: true);
+      final usdFormatted = CurrencyFormatter.format(
+        14.50,
+        currencyCode: 'USD',
+        showOriginal: true,
+      );
       expect(usdFormatted, '\$ 14.50');
     });
 
     test('formats EUR, GBP, and INR with respective international symbols', () {
-      expect(CurrencyFormatter.format(10.0, currencyCode: 'EUR'), contains('€'));
-      expect(CurrencyFormatter.format(10.0, currencyCode: 'GBP'), contains('£'));
-      expect(CurrencyFormatter.format(10.0, currencyCode: 'INR'), contains('₹'));
-      expect(CurrencyFormatter.format(10.0, currencyCode: 'SAR'), contains('ر.স'));
+      expect(
+        CurrencyFormatter.format(10.0, currencyCode: 'EUR'),
+        contains('€'),
+      );
+      expect(
+        CurrencyFormatter.format(10.0, currencyCode: 'GBP'),
+        contains('£'),
+      );
+      expect(
+        CurrencyFormatter.format(10.0, currencyCode: 'INR'),
+        contains('₹'),
+      );
+      expect(
+        CurrencyFormatter.format(10.0, currencyCode: 'SAR'),
+        contains('ر.স'),
+      );
     });
   });
 
@@ -258,44 +285,101 @@ void main() {
       expect(bn.madeWithPassion, contains('CodeByArnob'));
     });
 
-    test('DashboardLocalizationHelper provides localized greetings and insights', () {
-      // English Greetings
-      expect(DashboardLocalizationHelper.getGreeting('en', 'Alice', hour: 8), contains('Good morning, Alice'));
-      expect(DashboardLocalizationHelper.getGreeting('en', 'Alice', hour: 14), contains('Good afternoon, Alice'));
-      expect(DashboardLocalizationHelper.getGreeting('en', 'Alice', hour: 20), contains('Good evening, Alice'));
+    test(
+      'DashboardLocalizationHelper provides localized greetings and insights',
+      () {
+        // English Greetings
+        expect(
+          DashboardLocalizationHelper.getGreeting('en', 'Alice', hour: 8),
+          contains('Good morning, Alice'),
+        );
+        expect(
+          DashboardLocalizationHelper.getGreeting('en', 'Alice', hour: 14),
+          contains('Good afternoon, Alice'),
+        );
+        expect(
+          DashboardLocalizationHelper.getGreeting('en', 'Alice', hour: 20),
+          contains('Good evening, Alice'),
+        );
 
-      // Bengali Greetings
-      expect(DashboardLocalizationHelper.getGreeting('bn', 'অনন্যা', hour: 8), contains('সুপ্রভাত, অনন্যা'));
-      expect(DashboardLocalizationHelper.getGreeting('bn', 'অনন্যা', hour: 14), contains('শুভ অপরাহ্ন, অনন্যা'));
-      expect(DashboardLocalizationHelper.getGreeting('bn', 'অনন্যা', hour: 20), contains('শুভ সন্ধ্যা, অনন্যা'));
+        // Bengali Greetings
+        expect(
+          DashboardLocalizationHelper.getGreeting('bn', 'অনন্যা', hour: 8),
+          contains('সুপ্রভাত, অনন্যা'),
+        );
+        expect(
+          DashboardLocalizationHelper.getGreeting('bn', 'অনন্যা', hour: 14),
+          contains('শুভ অপরাহ্ন, অনন্যা'),
+        );
+        expect(
+          DashboardLocalizationHelper.getGreeting('bn', 'অনন্যা', hour: 20),
+          contains('শুভ সন্ধ্যা, অনন্যা'),
+        );
 
-      // Arabic Greetings
-      expect(DashboardLocalizationHelper.getGreeting('ar', 'علي', hour: 8), contains('صباح الخير، علي'));
-      expect(DashboardLocalizationHelper.getGreeting('ar', 'علي', hour: 14), contains('مساء الخير، علي'));
-      expect(DashboardLocalizationHelper.getGreeting('ar', 'علي', hour: 20), contains('مساء النور، علي'));
+        // Arabic Greetings
+        expect(
+          DashboardLocalizationHelper.getGreeting('ar', 'علي', hour: 8),
+          contains('صباح الخير، علي'),
+        );
+        expect(
+          DashboardLocalizationHelper.getGreeting('ar', 'علي', hour: 14),
+          contains('مساء الخير، علي'),
+        );
+        expect(
+          DashboardLocalizationHelper.getGreeting('ar', 'علي', hour: 20),
+          contains('مساء النور، علي'),
+        );
 
-      // Scanning titles
-      expect(DashboardLocalizationHelper.getScanFoodTitle('en'), 'Scan Food Dish');
-      expect(DashboardLocalizationHelper.getScanFoodTitle('bn'), 'খাবারের ছবি স্ক্যান করুন');
-      expect(DashboardLocalizationHelper.getScanFoodTitle('ar'), 'مسح وجبة طعام');
+        // Scanning titles
+        expect(
+          DashboardLocalizationHelper.getScanFoodTitle('en'),
+          'Scan Food Dish',
+        );
+        expect(
+          DashboardLocalizationHelper.getScanFoodTitle('bn'),
+          'খাবারের ছবি স্ক্যান করুন',
+        );
+        expect(
+          DashboardLocalizationHelper.getScanFoodTitle('ar'),
+          'مسح وجبة طعام',
+        );
 
-      expect(DashboardLocalizationHelper.getScanMenuTitle('en'), 'Scan Restaurant Menu');
-      expect(DashboardLocalizationHelper.getScanMenuTitle('bn'), 'রেস্তোরাঁর মেনু স্ক্যান');
-      expect(DashboardLocalizationHelper.getScanMenuTitle('ar'), 'مسح قائمة المطعم');
+        expect(
+          DashboardLocalizationHelper.getScanMenuTitle('en'),
+          'Scan Restaurant Menu',
+        );
+        expect(
+          DashboardLocalizationHelper.getScanMenuTitle('bn'),
+          'রেস্তোরাঁর মেনু স্ক্যান',
+        );
+        expect(
+          DashboardLocalizationHelper.getScanMenuTitle('ar'),
+          'مسح قائمة المطعم',
+        );
 
-      // Nutrition insights
-      final insightZero = DashboardLocalizationHelper.getNutritionInsight('en', 0, 2000);
-      expect(insightZero, contains('Start your day'));
+        // Nutrition insights
+        final insightZero = DashboardLocalizationHelper.getNutritionInsight(
+          'en',
+          0,
+          2000,
+        );
+        expect(insightZero, contains('Start your day'));
 
-      final insightRemaining = DashboardLocalizationHelper.getNutritionInsight('en', 1200, 2000);
-      expect(insightRemaining, contains('800 kcal away'));
-    });
+        final insightRemaining =
+            DashboardLocalizationHelper.getNutritionInsight('en', 1200, 2000);
+        expect(insightRemaining, contains('800 kcal away'));
+      },
+    );
   });
 
   group('Optimization & State Resilience Tests', () {
     test('AuthState initial state restores immediately without blocking', () {
       final user = PuterUser(username: 'testchef', uuid: 'uuid-1234');
-      final state = AuthState(user: user, isLoading: false, isBridgeReady: true);
+      final state = AuthState(
+        user: user,
+        isLoading: false,
+        isBridgeReady: true,
+      );
       expect(state.isAuthenticated, true);
       expect(state.isLoading, false);
       expect(state.user?.username, 'testchef');
@@ -319,18 +403,24 @@ void main() {
       expect(cancelled.errorMessage, contains('cancelled'));
     });
 
-    test('PuterAuthException and PuterInsufficientFundsException categorization', () {
-      final authExc = PuterAuthException('Puter authentication required. Please connect your Puter account.', code: 'auth_required');
-      expect(authExc.message, contains('Puter authentication required'));
-      expect(authExc.code, 'auth_required');
+    test(
+      'PuterAuthException and PuterInsufficientFundsException categorization',
+      () {
+        final authExc = PuterAuthException(
+          'Puter authentication required. Please connect your Puter account.',
+          code: 'auth_required',
+        );
+        expect(authExc.message, contains('Puter authentication required'));
+        expect(authExc.code, 'auth_required');
 
-      final fundsExc = PuterInsufficientFundsException(
-        message: 'Your monthly AI allowance is exhausted.',
-        upgradeUrl: 'https://puter.com/account',
-      );
-      expect(fundsExc.message, contains('allowance is exhausted'));
-      expect(fundsExc.upgradeUrl, 'https://puter.com/account');
-      expect(fundsExc.code, 'insufficient_funds');
-    });
+        final fundsExc = PuterInsufficientFundsException(
+          message: 'Your monthly AI allowance is exhausted.',
+          upgradeUrl: 'https://puter.com/account',
+        );
+        expect(fundsExc.message, contains('allowance is exhausted'));
+        expect(fundsExc.upgradeUrl, 'https://puter.com/account');
+        expect(fundsExc.code, 'insufficient_funds');
+      },
+    );
   });
 }

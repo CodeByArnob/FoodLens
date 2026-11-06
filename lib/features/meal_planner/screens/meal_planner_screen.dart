@@ -29,7 +29,10 @@ class MealPlannerScreen extends ConsumerWidget {
           PuterUpgradeModal.show(context, message: planState.errorMessage);
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(planState.errorMessage!), backgroundColor: AppColors.error),
+            SnackBar(
+              content: Text(planState.errorMessage!),
+              backgroundColor: AppColors.error,
+            ),
           );
         }
       }
@@ -86,11 +89,19 @@ class MealPlannerScreen extends ConsumerWidget {
                     children: [
                       const Text(
                         'Target Calories',
-                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Colors.white),
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                        ),
                       ),
                       Text(
                         '${planState.targetCalories} kcal',
-                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: AppColors.primaryLight),
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w800,
+                          color: AppColors.primaryLight,
+                        ),
                       ),
                     ],
                   ),
@@ -106,32 +117,50 @@ class MealPlannerScreen extends ConsumerWidget {
                     },
                   ),
                   const SizedBox(height: 10),
-                  const Text('Diet Style', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.textMutedDark)),
+                  const Text(
+                    'Diet Style',
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textMutedDark,
+                    ),
+                  ),
                   const SizedBox(height: 8),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
-                      children: ['Balanced', 'High-Protein', 'Keto', 'Vegan', 'Mediterranean'].map((diet) {
-                        final isSel = planState.selectedDiet == diet;
-                        return Padding(
-                          padding: const EdgeInsets.only(right: 8),
-                          child: ChoiceChip(
-                            label: Text(diet),
-                            selected: isSel,
-                            onSelected: (_) {
-                              HapticHelper.selectionClick();
-                              planNotifier.updateSelectedDiet(diet);
-                            },
-                            selectedColor: AppColors.primary,
-                            labelStyle: TextStyle(
-                              fontSize: 11,
-                              fontWeight: isSel ? FontWeight.w700 : FontWeight.w500,
-                              color: isSel ? Colors.white : AppColors.textSecondaryDark,
-                            ),
-                            backgroundColor: AppColors.darkSurfaceCard,
-                          ),
-                        );
-                      }).toList(),
+                      children:
+                          [
+                            'Balanced',
+                            'High-Protein',
+                            'Keto',
+                            'Vegan',
+                            'Mediterranean',
+                          ].map((diet) {
+                            final isSel = planState.selectedDiet == diet;
+                            return Padding(
+                              padding: const EdgeInsets.only(right: 8),
+                              child: ChoiceChip(
+                                label: Text(diet),
+                                selected: isSel,
+                                onSelected: (_) {
+                                  HapticHelper.selectionClick();
+                                  planNotifier.updateSelectedDiet(diet);
+                                },
+                                selectedColor: AppColors.primary,
+                                labelStyle: TextStyle(
+                                  fontSize: 11,
+                                  fontWeight: isSel
+                                      ? FontWeight.w700
+                                      : FontWeight.w500,
+                                  color: isSel
+                                      ? Colors.white
+                                      : AppColors.textSecondaryDark,
+                                ),
+                                backgroundColor: AppColors.darkSurfaceCard,
+                              ),
+                            );
+                          }).toList(),
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -150,12 +179,20 @@ class MealPlannerScreen extends ConsumerWidget {
             if (currentPlan != null) ...[
               Text(
                 currentPlan.planTitle,
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: Colors.white),
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w800,
+                  color: Colors.white,
+                ),
               ),
               const SizedBox(height: 4),
               Text(
                 'Total: ${currentPlan.totalCalories} kcal | Protein: ${currentPlan.totalProtein.toStringAsFixed(0)}g | Carbs: ${currentPlan.totalCarbs.toStringAsFixed(0)}g | Fat: ${currentPlan.totalFat.toStringAsFixed(0)}g',
-                style: const TextStyle(fontSize: 12, color: AppColors.primaryLight, fontWeight: FontWeight.w600),
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: AppColors.primaryLight,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               const SizedBox(height: 14),
 
@@ -171,19 +208,32 @@ class MealPlannerScreen extends ConsumerWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 3,
+                              ),
                               decoration: BoxDecoration(
-                                color: AppColors.primary.withValues(alpha: 0.15),
+                                color: AppColors.primary.withValues(
+                                  alpha: 0.15,
+                                ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Text(
                                 meal.mealType.toUpperCase(),
-                                style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w800, color: AppColors.primaryLight),
+                                style: const TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w800,
+                                  color: AppColors.primaryLight,
+                                ),
                               ),
                             ),
                             Text(
                               '${meal.calories} kcal',
-                              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: Colors.white),
+                              style: const TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
+                              ),
                             ),
                           ],
                         ),
@@ -204,12 +254,19 @@ class MealPlannerScreen extends ConsumerWidget {
                                 children: [
                                   Text(
                                     meal.dishName,
-                                    style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Colors.white),
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
                                     'Portion: ${meal.portion} • Prep: ${meal.prepTimeMinutes} mins',
-                                    style: const TextStyle(fontSize: 11, color: AppColors.textMutedDark),
+                                    style: const TextStyle(
+                                      fontSize: 11,
+                                      color: AppColors.textMutedDark,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -220,7 +277,10 @@ class MealPlannerScreen extends ConsumerWidget {
                           const SizedBox(height: 8),
                           Text(
                             'Ingredients: ${meal.ingredients.join(', ')}',
-                            style: const TextStyle(fontSize: 11, color: AppColors.textSecondaryDark),
+                            style: const TextStyle(
+                              fontSize: 11,
+                              color: AppColors.textSecondaryDark,
+                            ),
                           ),
                         ],
                         const SizedBox(height: 10),
@@ -229,12 +289,25 @@ class MealPlannerScreen extends ConsumerWidget {
                           children: [
                             Text(
                               'P: ${meal.protein}g | C: ${meal.carbs}g | F: ${meal.fat}g',
-                              style: const TextStyle(fontSize: 11, color: AppColors.textMutedDark),
+                              style: const TextStyle(
+                                fontSize: 11,
+                                color: AppColors.textMutedDark,
+                              ),
                             ),
                             TextButton.icon(
                               onPressed: () => logMealToTracker(meal),
-                              icon: const Icon(Icons.add, size: 14, color: AppColors.primaryLight),
-                              label: const Text('Log Dish', style: TextStyle(fontSize: 11, color: AppColors.primaryLight)),
+                              icon: const Icon(
+                                Icons.add,
+                                size: 14,
+                                color: AppColors.primaryLight,
+                              ),
+                              label: const Text(
+                                'Log Dish',
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  color: AppColors.primaryLight,
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -249,7 +322,11 @@ class MealPlannerScreen extends ConsumerWidget {
                   padding: const EdgeInsets.all(14),
                   child: Text(
                     currentPlan.nutritionalSummary,
-                    style: const TextStyle(fontSize: 12, color: AppColors.textSecondaryDark, height: 1.45),
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: AppColors.textSecondaryDark,
+                      height: 1.45,
+                    ),
                   ),
                 ),
               const SizedBox(height: 24),

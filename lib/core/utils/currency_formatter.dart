@@ -43,7 +43,9 @@ class CurrencyFormatter {
       RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
       (Match m) => '${m[1]},',
     );
-    final formattedNum = parts.length > 1 ? '$integerPart.${parts[1]}' : integerPart;
+    final formattedNum = parts.length > 1
+        ? '$integerPart.${parts[1]}'
+        : integerPart;
     final result = '$sym $formattedNum';
 
     if (showOriginal && currencyCode != 'USD') {

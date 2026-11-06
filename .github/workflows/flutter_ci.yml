@@ -7,6 +7,10 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   analyze_and_test:
     name: Code Analysis & Unit Tests
@@ -34,6 +38,9 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get
 
+      - name: Generate Localizations
+        run: flutter gen-l10n
+
       - name: Verify Code Formatting
         run: dart format --output=none --set-exit-if-changed lib test
 
@@ -43,8 +50,8 @@ jobs:
       - name: Run Test Suite
         run: flutter test --coverage
 
-  build_release:
-    name: Build Android Release APK
+  build_apk:
+    name: Build Android Verification APK
     needs: analyze_and_test
     runs-on: ubuntu-latest
     steps:
@@ -67,12 +74,15 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get
 
+      - name: Generate Localizations
+        run: flutter gen-l10n
+
       - name: Build Universal Android APK
         run: flutter build apk --release
 
-      - name: Upload APK Artifact
+      - name: Upload Verification APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: FoodLens-v1.0.0-Release-APK
+          name: FoodLens-Verification-APK
           path: build/app/outputs/flutter-apk/app-release.apk
-          retention-days: 14
+          retention-days: 7

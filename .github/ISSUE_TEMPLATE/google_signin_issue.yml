@@ -1,0 +1,42 @@
+name: "🔑 Google Sign-In Failure"
+description: "Report issues specifically related to Google Sign-In, OAuth 2.0 user-agent restrictions, or callback handling."
+title: "[GOOGLE-AUTH]: "
+labels: ["authentication", "google-oauth", "android", "help wanted"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Google enforces strict OAuth user-agent policies (`disallowed_useragent`) that block authentication inside embedded WebViews. Use this template to document Google Sign-In issues and proposed OAuth solutions.
+  - type: input
+    id: error_code
+    attributes:
+      label: "Google OAuth Error Code / Message"
+      description: "Exact error displayed on Google's authorization page."
+      placeholder: "e.g., Error 403: disallowed_useragent, redirect_uri_mismatch, access_denied"
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: "Device & OS Details"
+      description: "Device, Android API version, and default system browser."
+      placeholder: "e.g., Pixel 7 (Android 14) / Realme 8 (Android 13)"
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: "Reproduction Steps"
+      description: "Steps taken when initiating Google authentication."
+      placeholder: |
+        1. Open Puter Auth screen
+        2. Tap 'Sign in with Google'
+        3. Google authentication view opens
+        4. See Google 403 error page
+    validations:
+      required: true
+  - type: textarea
+    id: proposed_solution
+    attributes:
+      label: "Proposed Architectural Solution"
+      description: "If you have suggestions (e.g., Chrome Custom Tabs, `google_sign_in` plugin, App Links callback redirect), share them here."

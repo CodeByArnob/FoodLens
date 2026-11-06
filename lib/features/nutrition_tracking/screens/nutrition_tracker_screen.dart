@@ -91,7 +91,11 @@ class NutritionTrackerScreen extends ConsumerWidget {
                       color: AppColors.secondary.withValues(alpha: 0.15),
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.water_drop_rounded, color: AppColors.secondary, size: 24),
+                    child: const Icon(
+                      Icons.water_drop_rounded,
+                      color: AppColors.secondary,
+                      size: 24,
+                    ),
                   ),
                   const SizedBox(width: 14),
                   Expanded(
@@ -100,11 +104,18 @@ class NutritionTrackerScreen extends ConsumerWidget {
                       children: [
                         const Text(
                           'Water Hydration',
-                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Colors.white),
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                          ),
                         ),
                         Text(
                           '${todayLog.waterIntakeMl} ml / 2500 ml Goal',
-                          style: const TextStyle(fontSize: 12, color: AppColors.textMutedDark),
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: AppColors.textMutedDark,
+                          ),
                         ),
                       ],
                     ),
@@ -116,9 +127,14 @@ class NutritionTrackerScreen extends ConsumerWidget {
                           HapticHelper.lightImpact();
                           trackerNotifier.addWater(250);
                         },
-                        icon: const Icon(Icons.add, color: AppColors.secondaryLight),
+                        icon: const Icon(
+                          Icons.add,
+                          color: AppColors.secondaryLight,
+                        ),
                         style: IconButton.styleFrom(
-                          backgroundColor: AppColors.secondary.withValues(alpha: 0.2),
+                          backgroundColor: AppColors.secondary.withValues(
+                            alpha: 0.2,
+                          ),
                         ),
                       ),
                     ],
@@ -131,7 +147,11 @@ class NutritionTrackerScreen extends ConsumerWidget {
             // Meal Categories List
             const Text(
               'Logged Meals',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Colors.white),
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+              ),
             ),
             const SizedBox(height: 12),
 
@@ -190,7 +210,10 @@ class _DateSelectorRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         IconButton(
-          icon: Icon(isRtl ? Icons.chevron_right : Icons.chevron_left, color: Colors.white),
+          icon: Icon(
+            isRtl ? Icons.chevron_right : Icons.chevron_left,
+            color: Colors.white,
+          ),
           onPressed: () {
             HapticHelper.lightImpact();
             onSelectDate(selectedDate.subtract(const Duration(days: 1)));
@@ -198,10 +221,17 @@ class _DateSelectorRow extends StatelessWidget {
         ),
         Text(
           DateFormat('EEEE, MMM d').format(selectedDate),
-          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Colors.white),
+          style: const TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.w700,
+            color: Colors.white,
+          ),
         ),
         IconButton(
-          icon: Icon(isRtl ? Icons.chevron_left : Icons.chevron_right, color: Colors.white),
+          icon: Icon(
+            isRtl ? Icons.chevron_left : Icons.chevron_right,
+            color: Colors.white,
+          ),
           onPressed: () {
             HapticHelper.lightImpact();
             onSelectDate(selectedDate.add(const Duration(days: 1)));
@@ -235,10 +265,20 @@ class _MacroProgressBar extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(label, style: const TextStyle(fontSize: 11, color: AppColors.textSecondaryDark)),
+            Text(
+              label,
+              style: const TextStyle(
+                fontSize: 11,
+                color: AppColors.textSecondaryDark,
+              ),
+            ),
             Text(
               '${current.toStringAsFixed(1)} / ${target.toStringAsFixed(0)}g',
-              style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: Colors.white),
+              style: const TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+              ),
             ),
           ],
         ),
@@ -290,7 +330,11 @@ class _MealSection extends StatelessWidget {
                   const SizedBox(width: 8),
                   Text(
                     title,
-                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Colors.white),
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
                   ),
                 ],
               ),
@@ -298,11 +342,19 @@ class _MealSection extends StatelessWidget {
                 children: [
                   Text(
                     '$sectionCalories kcal',
-                    style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: AppColors.primaryLight),
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.primaryLight,
+                    ),
                   ),
                   const SizedBox(width: 8),
                   IconButton(
-                    icon: const Icon(Icons.add, size: 18, color: AppColors.primaryLight),
+                    icon: const Icon(
+                      Icons.add,
+                      size: 18,
+                      color: AppColors.primaryLight,
+                    ),
                     onPressed: onAddTap,
                     padding: EdgeInsets.zero,
                     constraints: const BoxConstraints(),
@@ -322,15 +374,25 @@ class _MealSection extends StatelessWidget {
                     Expanded(
                       child: Text(
                         m.foodName,
-                        style: const TextStyle(fontSize: 12, color: Colors.white),
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                     Text(
                       '${m.calories} kcal',
-                      style: const TextStyle(fontSize: 11, color: AppColors.textMutedDark),
+                      style: const TextStyle(
+                        fontSize: 11,
+                        color: AppColors.textMutedDark,
+                      ),
                     ),
                     IconButton(
-                      icon: const Icon(Icons.close, size: 14, color: AppColors.textMutedDark),
+                      icon: const Icon(
+                        Icons.close,
+                        size: 14,
+                        color: AppColors.textMutedDark,
+                      ),
                       onPressed: () => onDelete(m.id),
                       padding: const EdgeInsets.only(left: 8),
                       constraints: const BoxConstraints(),

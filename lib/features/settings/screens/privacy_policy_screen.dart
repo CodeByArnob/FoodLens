@@ -20,7 +20,11 @@ class PrivacyPolicyScreen extends StatelessWidget {
           children: [
             const Text(
               'Your Privacy & Food Sovereignty',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: Colors.white),
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w800,
+                color: Colors.white,
+              ),
             ),
             const SizedBox(height: 6),
             const Text(
@@ -35,32 +39,56 @@ class PrivacyPolicyScreen extends StatelessWidget {
                 children: const [
                   Text(
                     '1. Decentralized Architecture',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Colors.white),
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
                   ),
                   SizedBox(height: 6),
                   Text(
                     'FoodLens connects directly to Puter.js using a sandboxed browser bridge. We do not store your credentials on any proprietary FoodLens server. All authentication tokens and storage remain under your own Puter account identity.',
-                    style: TextStyle(fontSize: 12, color: AppColors.textSecondaryDark, height: 1.5),
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: AppColors.textSecondaryDark,
+                      height: 1.5,
+                    ),
                   ),
                   SizedBox(height: 14),
                   Text(
                     '2. Image & Photo Processing',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Colors.white),
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
                   ),
                   SizedBox(height: 6),
                   Text(
                     'Food photos captured via your camera or chosen from your gallery are encoded on-device and transmitted over encrypted HTTPS to Puter AI multimodal inference models. They are never indexed or sold for advertising.',
-                    style: TextStyle(fontSize: 12, color: AppColors.textSecondaryDark, height: 1.5),
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: AppColors.textSecondaryDark,
+                      height: 1.5,
+                    ),
                   ),
                   SizedBox(height: 14),
                   Text(
                     '3. Local Device Storage',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Colors.white),
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
                   ),
                   SizedBox(height: 6),
                   Text(
                     'Your scan history, dietary filters, and meal logs are stored locally on your Android device. You can erase all data at any time via Settings.',
-                    style: TextStyle(fontSize: 12, color: AppColors.textSecondaryDark, height: 1.5),
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: AppColors.textSecondaryDark,
+                      height: 1.5,
+                    ),
                   ),
                 ],
               ),

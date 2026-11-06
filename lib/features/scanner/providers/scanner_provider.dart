@@ -59,8 +59,12 @@ class ScannerState {
     return ScannerState(
       mode: mode ?? this.mode,
       isScanning: isScanning ?? this.isScanning,
-      currentStageMessage: clearStage ? null : (currentStageMessage ?? this.currentStageMessage),
-      streamedChunkPreview: clearStage ? null : (streamedChunkPreview ?? this.streamedChunkPreview),
+      currentStageMessage: clearStage
+          ? null
+          : (currentStageMessage ?? this.currentStageMessage),
+      streamedChunkPreview: clearStage
+          ? null
+          : (streamedChunkPreview ?? this.streamedChunkPreview),
       capturedImage: clearImage ? null : (capturedImage ?? this.capturedImage),
       lastFoodResult: lastFoodResult ?? this.lastFoodResult,
       lastMenuResult: lastMenuResult ?? this.lastMenuResult,
@@ -71,7 +75,9 @@ class ScannerState {
   }
 }
 
-final scannerProvider = StateNotifierProvider<ScannerNotifier, ScannerState>((ref) {
+final scannerProvider = StateNotifierProvider<ScannerNotifier, ScannerState>((
+  ref,
+) {
   final service = ref.watch(scannerServiceProvider);
   final settings = ref.watch(settingsProvider);
   final bridge = ref.watch(puterBridgeServiceProvider);
@@ -87,7 +93,8 @@ class ScannerNotifier extends StateNotifier<ScannerState> {
   StreamSubscription? _stageSub;
   StreamSubscription? _chunkSub;
 
-  ScannerNotifier(this._service, this._settings, this._bridge, this._storage) : super(const ScannerState()) {
+  ScannerNotifier(this._service, this._settings, this._bridge, this._storage)
+    : super(const ScannerState()) {
     _listenToStreams();
   }
 
@@ -139,7 +146,8 @@ class ScannerNotifier extends StateNotifier<ScannerState> {
     if (cachedToken == null || cachedToken.trim().isEmpty) {
       state = state.copyWith(
         isScanning: false,
-        errorMessage: 'Puter account authentication required. Please connect your Puter account or token.',
+        errorMessage:
+            'Puter account authentication required. Please connect your Puter account or token.',
       );
       return false;
     }

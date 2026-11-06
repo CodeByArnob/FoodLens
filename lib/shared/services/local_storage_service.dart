@@ -56,19 +56,29 @@ class LocalStorageService {
       _prefs.setBool(AppConstants.keyHasCompletedOnboarding, completed);
 
   // Settings & Preferences
-  String getCurrency() => _prefs.getString(AppConstants.keySelectedCurrency) ?? 'USD';
-  Future<bool> setCurrency(String code) => _prefs.setString(AppConstants.keySelectedCurrency, code);
+  String getCurrency() =>
+      _prefs.getString(AppConstants.keySelectedCurrency) ?? 'USD';
+  Future<bool> setCurrency(String code) =>
+      _prefs.setString(AppConstants.keySelectedCurrency, code);
 
-  String getUnitSystem() => _prefs.getString(AppConstants.keyUnitSystem) ?? 'metric';
-  Future<bool> setUnitSystem(String system) => _prefs.setString(AppConstants.keyUnitSystem, system);
+  String getUnitSystem() =>
+      _prefs.getString(AppConstants.keyUnitSystem) ?? 'metric';
+  Future<bool> setUnitSystem(String system) =>
+      _prefs.setString(AppConstants.keyUnitSystem, system);
 
-  String getLanguage() => _prefs.getString(AppConstants.keySelectedLanguage) ?? 'en';
-  Future<bool> setLanguage(String lang) => _prefs.setString(AppConstants.keySelectedLanguage, lang);
+  String getLanguage() =>
+      _prefs.getString(AppConstants.keySelectedLanguage) ?? 'en';
+  Future<bool> setLanguage(String lang) =>
+      _prefs.setString(AppConstants.keySelectedLanguage, lang);
 
-  String getCountry() => _prefs.getString('selected_country') ?? 'United States';
-  Future<bool> setCountry(String country) => _prefs.setString('selected_country', country);
+  String getCountry() =>
+      _prefs.getString('selected_country') ?? 'United States';
+  Future<bool> setCountry(String country) =>
+      _prefs.setString('selected_country', country);
 
-  int getDailyCalorieTarget() => _prefs.getInt(AppConstants.keyDailyCalorieTarget) ?? AppConstants.defaultDailyCalories;
+  int getDailyCalorieTarget() =>
+      _prefs.getInt(AppConstants.keyDailyCalorieTarget) ??
+      AppConstants.defaultDailyCalories;
   Future<bool> setDailyCalorieTarget(int calories) =>
       _prefs.setInt(AppConstants.keyDailyCalorieTarget, calories);
 
@@ -88,7 +98,9 @@ class LocalStorageService {
     }
     try {
       final List<dynamic> list = jsonDecode(jsonString);
-      return list.map((e) => FoodAnalysisResult.fromJson(e as Map<String, dynamic>)).toList();
+      return list
+          .map((e) => FoodAnalysisResult.fromJson(e as Map<String, dynamic>))
+          .toList();
     } catch (e) {
       return [];
     }
@@ -123,7 +135,9 @@ class LocalStorageService {
     }
     try {
       final List<dynamic> list = jsonDecode(jsonString);
-      return list.map((e) => FoodAnalysisResult.fromJson(e as Map<String, dynamic>)).toList();
+      return list
+          .map((e) => FoodAnalysisResult.fromJson(e as Map<String, dynamic>))
+          .toList();
     } catch (e) {
       return [];
     }
@@ -131,7 +145,9 @@ class LocalStorageService {
 
   Future<bool> toggleFavorite(FoodAnalysisResult result) async {
     final favorites = getFavorites();
-    final index = favorites.indexWhere((item) => item.id == result.id || item.foodName == result.foodName);
+    final index = favorites.indexWhere(
+      (item) => item.id == result.id || item.foodName == result.foodName,
+    );
     if (index >= 0) {
       favorites.removeAt(index);
     } else {
@@ -154,7 +170,9 @@ class LocalStorageService {
     }
     try {
       final List<dynamic> list = jsonDecode(jsonString);
-      return list.map((e) => DailyLog.fromJson(e as Map<String, dynamic>)).toList();
+      return list
+          .map((e) => DailyLog.fromJson(e as Map<String, dynamic>))
+          .toList();
     } catch (e) {
       return [];
     }
@@ -168,9 +186,13 @@ class LocalStorageService {
   // Load Seed Database from assets
   Future<List<FoodAnalysisResult>> loadSeedDatabase() async {
     try {
-      final dataString = await rootBundle.loadString('assets/data/food_database.json');
+      final dataString = await rootBundle.loadString(
+        'assets/data/food_database.json',
+      );
       final List<dynamic> list = jsonDecode(dataString);
-      return list.map((e) => FoodAnalysisResult.fromJson(e as Map<String, dynamic>)).toList();
+      return list
+          .map((e) => FoodAnalysisResult.fromJson(e as Map<String, dynamic>))
+          .toList();
     } catch (e) {
       return [];
     }

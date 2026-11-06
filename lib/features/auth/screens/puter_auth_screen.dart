@@ -72,7 +72,9 @@ class _PuterAuthScreenState extends ConsumerState<PuterAuthScreen> {
                 height: 56,
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 decoration: const BoxDecoration(
-                  border: Border(bottom: BorderSide(color: AppColors.darkBorder)),
+                  border: Border(
+                    bottom: BorderSide(color: AppColors.darkBorder),
+                  ),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -91,7 +93,11 @@ class _PuterAuthScreenState extends ConsumerState<PuterAuthScreen> {
                           child: const Center(
                             child: Text(
                               'P',
-                              style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900, fontSize: 16),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 16,
+                              ),
                             ),
                           ),
                         ),
@@ -107,7 +113,11 @@ class _PuterAuthScreenState extends ConsumerState<PuterAuthScreen> {
                       ],
                     ),
                     IconButton(
-                      icon: const Icon(Icons.close, color: AppColors.textSecondaryDark, size: 20),
+                      icon: const Icon(
+                        Icons.close,
+                        color: AppColors.textSecondaryDark,
+                        size: 20,
+                      ),
                       onPressed: () {
                         HapticHelper.lightImpact();
                         Navigator.of(ctx).pop();
@@ -118,9 +128,7 @@ class _PuterAuthScreenState extends ConsumerState<PuterAuthScreen> {
               ),
               // Official Puter Bridge & Popup Viewport
               Expanded(
-                child: ClipRRect(
-                  child: WebViewWidget(controller: controller),
-                ),
+                child: ClipRRect(child: WebViewWidget(controller: controller)),
               ),
             ],
           ),
@@ -146,7 +154,9 @@ class _PuterAuthScreenState extends ConsumerState<PuterAuthScreen> {
       return;
     }
     HapticHelper.mediumImpact();
-    final success = await ref.read(authProvider.notifier).signInWithToken(token);
+    final success = await ref
+        .read(authProvider.notifier)
+        .signInWithToken(token);
     if (success && mounted) {
       HapticHelper.vibrateSuccess();
       context.go('/home');
@@ -167,7 +177,10 @@ class _PuterAuthScreenState extends ConsumerState<PuterAuthScreen> {
               HapticHelper.lightImpact();
               context.go('/home');
             },
-            child: const Text('Offline Mode', style: TextStyle(color: AppColors.primaryLight)),
+            child: const Text(
+              'Offline Mode',
+              style: TextStyle(color: AppColors.primaryLight),
+            ),
           ),
         ],
       ),
@@ -221,11 +234,17 @@ class _PuterAuthScreenState extends ConsumerState<PuterAuthScreen> {
                   decoration: BoxDecoration(
                     color: AppColors.primary.withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: AppColors.primary.withValues(alpha: 0.3)),
+                    border: Border.all(
+                      color: AppColors.primary.withValues(alpha: 0.3),
+                    ),
                   ),
                   child: Row(
                     children: [
-                      const Icon(Icons.account_circle_rounded, color: AppColors.primary, size: 28),
+                      const Icon(
+                        Icons.account_circle_rounded,
+                        color: AppColors.primary,
+                        size: 28,
+                      ),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Column(
@@ -233,11 +252,18 @@ class _PuterAuthScreenState extends ConsumerState<PuterAuthScreen> {
                           children: [
                             Text(
                               'Signed in as ${authState.user?.username ?? "Puter User"}',
-                              style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 13),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontSize: 13,
+                              ),
                             ),
                             const Text(
                               'Personal Puter account active',
-                              style: TextStyle(color: AppColors.textMutedDark, fontSize: 11),
+                              style: TextStyle(
+                                color: AppColors.textMutedDark,
+                                fontSize: 11,
+                              ),
                             ),
                           ],
                         ),
@@ -248,11 +274,20 @@ class _PuterAuthScreenState extends ConsumerState<PuterAuthScreen> {
                           await ref.read(authProvider.notifier).signOut();
                           if (context.mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Signed out successfully.')),
+                              const SnackBar(
+                                content: Text('Signed out successfully.'),
+                              ),
                             );
                           }
                         },
-                        child: const Text('Sign Out', style: TextStyle(color: AppColors.error, fontWeight: FontWeight.bold, fontSize: 12)),
+                        child: const Text(
+                          'Sign Out',
+                          style: TextStyle(
+                            color: AppColors.error,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -267,18 +302,27 @@ class _PuterAuthScreenState extends ConsumerState<PuterAuthScreen> {
                   decoration: BoxDecoration(
                     color: AppColors.error.withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: AppColors.error.withValues(alpha: 0.3)),
+                    border: Border.all(
+                      color: AppColors.error.withValues(alpha: 0.3),
+                    ),
                   ),
                   child: Row(
                     children: [
-                      const Icon(Icons.error_outline, color: AppColors.error, size: 20),
+                      const Icon(
+                        Icons.error_outline,
+                        color: AppColors.error,
+                        size: 20,
+                      ),
                       const SizedBox(width: 8),
                       Expanded(
                         child: Text(
                           authState.errorMessage == '[object Object]'
                               ? 'Puter authentication was canceled or requires login.'
                               : authState.errorMessage!,
-                          style: const TextStyle(color: AppColors.error, fontSize: 12),
+                          style: const TextStyle(
+                            color: AppColors.error,
+                            fontSize: 12,
+                          ),
                         ),
                       ),
                     ],
@@ -295,19 +339,22 @@ class _PuterAuthScreenState extends ConsumerState<PuterAuthScreen> {
                     _FeatureRow(
                       icon: Icons.check_circle_outline,
                       title: '100% Free Monthly Quota',
-                      description: 'Every Puter account comes with free monthly AI tokens.',
+                      description:
+                          'Every Puter account comes with free monthly AI tokens.',
                     ),
                     const Divider(height: 20, color: AppColors.darkBorder),
                     _FeatureRow(
                       icon: Icons.lock_outline,
                       title: 'Strict User-Pays Sovereignty',
-                      description: 'FoodLens never uses shared developer keys or stores billing details.',
+                      description:
+                          'FoodLens never uses shared developer keys or stores billing details.',
                     ),
                     const Divider(height: 20, color: AppColors.darkBorder),
                     _FeatureRow(
                       icon: Icons.auto_awesome_outlined,
                       title: 'Multimodal GPT-4o & Vision',
-                      description: 'Access state-of-the-art vision models directly from your personal account.',
+                      description:
+                          'Access state-of-the-art vision models directly from your personal account.',
                     ),
                   ],
                 ),
@@ -356,10 +403,18 @@ class _PuterAuthScreenState extends ConsumerState<PuterAuthScreen> {
                   HapticHelper.lightImpact();
                   context.go('/home');
                 },
-                icon: const Icon(Icons.explore_outlined, size: 16, color: AppColors.primaryLight),
+                icon: const Icon(
+                  Icons.explore_outlined,
+                  size: 16,
+                  color: AppColors.primaryLight,
+                ),
                 label: const Text(
                   'Continue as Guest (Explore App Offline)',
-                  style: TextStyle(fontSize: 13, color: AppColors.primaryLight, fontWeight: FontWeight.w600),
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: AppColors.primaryLight,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
               const SizedBox(height: 12),
@@ -371,13 +426,20 @@ class _PuterAuthScreenState extends ConsumerState<PuterAuthScreen> {
                   HapticHelper.lightImpact();
                 },
                 icon: Icon(
-                  _showTokenField ? Icons.keyboard_arrow_up : Icons.key_outlined,
+                  _showTokenField
+                      ? Icons.keyboard_arrow_up
+                      : Icons.key_outlined,
                   size: 16,
                   color: AppColors.textMutedDark,
                 ),
                 label: Text(
-                  _showTokenField ? 'Hide Token Login' : 'Sign in using Puter API Token',
-                  style: const TextStyle(fontSize: 13, color: AppColors.textMutedDark),
+                  _showTokenField
+                      ? 'Hide Token Login'
+                      : 'Sign in using Puter API Token',
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: AppColors.textMutedDark,
+                  ),
                 ),
               ),
 
@@ -398,7 +460,11 @@ class _PuterAuthScreenState extends ConsumerState<PuterAuthScreen> {
                         children: [
                           const Text(
                             'Puter Account Token',
-                            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Colors.white),
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white,
+                            ),
                           ),
                           Row(
                             children: [
@@ -406,15 +472,25 @@ class _PuterAuthScreenState extends ConsumerState<PuterAuthScreen> {
                                 onTap: _pasteToken,
                                 child: const Text(
                                   'Paste',
-                                  style: TextStyle(fontSize: 11, color: AppColors.primaryLight, fontWeight: FontWeight.w600),
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    color: AppColors.primaryLight,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               ),
                               const SizedBox(width: 12),
                               GestureDetector(
-                                onTap: () => _launchExternalBrowser(AppConstants.puterDashboardUrl),
+                                onTap: () => _launchExternalBrowser(
+                                  AppConstants.puterDashboardUrl,
+                                ),
                                 child: const Text(
                                   'Get Token ↗',
-                                  style: TextStyle(fontSize: 11, color: AppColors.secondaryLight, fontWeight: FontWeight.w600),
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    color: AppColors.secondaryLight,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               ),
                             ],
@@ -424,24 +500,40 @@ class _PuterAuthScreenState extends ConsumerState<PuterAuthScreen> {
                       const SizedBox(height: 8),
                       TextField(
                         controller: _tokenController,
-                        style: const TextStyle(fontSize: 13, color: Colors.white, fontFamily: 'monospace'),
+                        style: const TextStyle(
+                          fontSize: 13,
+                          color: Colors.white,
+                          fontFamily: 'monospace',
+                        ),
                         decoration: InputDecoration(
                           hintText: 'Paste token from puter.com/dashboard',
-                          hintStyle: const TextStyle(color: AppColors.textMutedDark, fontSize: 12),
+                          hintStyle: const TextStyle(
+                            color: AppColors.textMutedDark,
+                            fontSize: 12,
+                          ),
                           filled: true,
                           fillColor: AppColors.darkBackground,
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 14,
+                            vertical: 12,
+                          ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
-                            borderSide: const BorderSide(color: AppColors.darkBorder),
+                            borderSide: const BorderSide(
+                              color: AppColors.darkBorder,
+                            ),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
-                            borderSide: const BorderSide(color: AppColors.darkBorder),
+                            borderSide: const BorderSide(
+                              color: AppColors.darkBorder,
+                            ),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
-                            borderSide: const BorderSide(color: AppColors.primary),
+                            borderSide: const BorderSide(
+                              color: AppColors.primary,
+                            ),
                           ),
                         ),
                       ),

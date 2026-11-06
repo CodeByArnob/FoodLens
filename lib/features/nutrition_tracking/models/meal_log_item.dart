@@ -23,8 +23,8 @@ class MealLogItem {
     required this.fat,
     DateTime? timestamp,
     this.imagePath,
-  })  : id = id ?? const Uuid().v4(),
-        timestamp = timestamp ?? DateTime.now();
+  }) : id = id ?? const Uuid().v4(),
+       timestamp = timestamp ?? DateTime.now();
 
   factory MealLogItem.fromJson(Map<String, dynamic> json) {
     return MealLogItem(

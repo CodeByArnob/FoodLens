@@ -6,6 +6,7 @@
 
 [![GitHub Release](https://img.shields.io/github/v/release/CodeByArnob/FoodLens?style=for-the-badge&logo=github&color=10B981)](https://github.com/CodeByArnob/FoodLens/releases/latest)
 [![Download APK](https://img.shields.io/badge/Download-Release%20APK-2563EB?style=for-the-badge&logo=android&logoColor=white)](https://github.com/CodeByArnob/FoodLens/releases/download/v1.0.0/app-release.apk)
+[![CI/CD](https://img.shields.io/github/actions/workflow/status/CodeByArnob/FoodLens/flutter_ci.yml?branch=main&style=for-the-badge&logo=githubactions&logoColor=white)](https://github.com/CodeByArnob/FoodLens/actions)
 [![Flutter](https://img.shields.io/badge/Flutter-3.44.4-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/Dart-3.12.2-0175C2?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 [![License: MIT](https://img.shields.io/badge/License-MIT-F59E0B?style=for-the-badge)](LICENSE)
@@ -30,18 +31,38 @@
 
 ---
 
+> [!IMPORTANT]
+> ### 🤝 FoodLens Open Source Contributions — Help Wanted!
+> 
+> **Puter.js Login, Google Sign-In, OAuth Callback এবং Session Persistence সমস্যার সমাধানে অভিজ্ঞ Developer-দের আমন্ত্রণ।**
+> 
+> We are actively inviting global developers to collaborate on FoodLens! We are particularly seeking contributions in the following domains:
+> - 📱 **Flutter / Dart Development**: Reactive Riverpod state resilience, high-fps UI animations, and charting.
+> - 🔐 **Android Authentication & Google OAuth**: Resolving Google's `disallowed_useragent` restriction in embedded WebViews, implementing Chrome Custom Tabs, or configuring native `google_sign_in` token exchange.
+> - ⚡ **Puter.js Integration**: Enhancing the headless JavaScript bridge, optimizing quota monitoring, and ensuring persistent session restoration.
+> - 📸 **AI Food Recognition**: Refining vision prompts, prompt tuning, and packaged FDA/EU label OCR precision.
+> - 🌐 **Localization & RTL**: Expanding authentic translations for Bengali (বাংলা), Arabic (العربية RTL), Hindi, Spanish, French, German, and Japanese.
+> 
+> 🔗 **Active Help Wanted Issue**: [Investigate and Fix Puter.js Authentication & Google Sign-In](https://github.com/CodeByArnob/FoodLens/issues)  
+> 📖 **Troubleshooting Architecture Guide**: [`documentation/AUTHENTICATION_TROUBLESHOOTING.md`](documentation/AUTHENTICATION_TROUBLESHOOTING.md)  
+> 🛠️ **Contributor Guidelines**: [`CONTRIBUTING.md`](CONTRIBUTING.md)
+
+---
+
 ## 📑 Table of Contents
 
 - [Overview & Vision](#-overview--vision)
 - [Key Features](#-key-features)
 - [Genuine Application Screenshots](#-genuine-application-screenshots)
 - [Puter.js User-Pays Architecture](#-puterjs-user-pays-architecture)
+- [Authentication Troubleshooting & Open Challenges](#-authentication-troubleshooting--open-challenges)
 - [Supported Languages & Regional Currencies](#-supported-languages--regional-currencies)
 - [Technology Stack](#-technology-stack)
 - [Architecture & Directory Structure](#-architecture--directory-structure)
 - [Installation & Local Setup](#-installation--local-setup)
 - [Building & Installing the Release APK](#-building--installing-the-release-apk)
 - [Testing & Quality Assurance](#-testing--quality-assurance)
+- [Open Source Contributions](#-open-source-contributions)
 - [Food Safety & Medical Disclaimer](#-food-safety--medical-disclaimer)
 - [Author & Community Credits](#-author--community-credits)
 - [License](#-license)
@@ -133,6 +154,23 @@ sequenceDiagram
 
 ---
 
+## 🔐 Authentication Troubleshooting & Open Challenges
+
+> [!WARNING]
+> **Puter.js and Google Sign-In integration within Android WebViews currently has OPEN known issues.** We are actively soliciting contributions from Flutter, Android, and OAuth developers.
+
+For complete architectural details, reproduction steps, and error logs, please see:
+👉 **[documentation/AUTHENTICATION_TROUBLESHOOTING.md](documentation/AUTHENTICATION_TROUBLESHOOTING.md)**
+
+### Key Open Issues Under Active Community Investigation:
+1. **Google OAuth 403 `disallowed_useragent`**: Google blocks OAuth requests initiated inside embedded Android WebViews. Solutions involving native `google_sign_in` token exchange or Chrome Custom Tabs are being evaluated.
+2. **External Browser Session Synchronization**: When authenticating via external browsers, session tokens do not automatically propagate back into the isolated WebView cookie store.
+3. **Multi-Window `window.open` Popups**: Puter.js popup windows require specialized multi-window delegation in `webview_flutter_android`.
+
+Join the discussion and submit proposals on our [GitHub Issues](https://github.com/CodeByArnob/FoodLens/issues).
+
+---
+
 ## 🌍 Supported Languages & Regional Currencies
 
 FoodLens offers native internationalization with dynamic in-app locale switching:
@@ -159,7 +197,7 @@ FoodLens performs **live numerical currency conversion** using real exchange rat
 | **EUR** | `€` | European Union | `€ 13.34 ($ 14.50)` |
 | **GBP** | `£` | United Kingdom | `£ 11.45 ($ 14.50)` |
 | **INR** | `₹` | India | `₹ 1,203.50 ($ 14.50)` |
-| **SAR** | `ر.س` | Saudi Arabia | `ر.س 54.38 ($ 14.50)` |
+| **SAR** | `ر.স` | Saudi Arabia | `ر.স 54.38 ($ 14.50)` |
 | **AED** | `د.إ` | United Arab Emirates | `د.إ 53.25 ($ 14.50)` |
 | **JPY** | `¥` | Japan | `¥ 2,218 ($ 14.50)` |
 
@@ -190,6 +228,7 @@ FoodLens adheres strictly to **Clean Architecture** and feature-first module sep
 ```
 FoodLens/
 ├── .github/
+│   ├── ISSUE_TEMPLATE/            # Standardized issue templates (bugs, auth, features)
 │   └── workflows/
 │       └── flutter_ci.yml         # Automated GitHub Actions CI/CD Pipeline
 ├── android/                       # Native Android configuration & manifest
@@ -199,6 +238,7 @@ FoodLens/
 │   ├── icons/                     # Master brand launcher icons (1024x1024)
 │   └── images/                    # Curated sample dish imagery
 ├── documentation/
+│   ├── AUTHENTICATION_TROUBLESHOOTING.md # Detailed Puter & OAuth architecture guide
 │   └── assets/                    # Official documentation assets
 │       ├── branding/              # High-res logos and iconography
 │       ├── demo/                  # Animated product demonstration GIF
@@ -227,6 +267,8 @@ FoodLens/
 ├── test/
 │   ├── unit_test.dart             # Logic, conversion, and model test suite
 │   └── widget_test.dart           # Widget rendering & interaction tests
+├── CONTRIBUTING.md                # Open source contribution guide
+├── CHANGELOG.md                   # Version history & release notes
 ├── pubspec.yaml                   # Dependency definitions & Flutter assets
 └── LICENSE                        # MIT Open Source License
 ```
@@ -316,6 +358,18 @@ All 24 test suites pass cleanly across both unit and widget specifications:
 00:00 +6: CalorieGauge widget renders correctly
 00:01 +24: All tests passed!
 ```
+
+---
+
+## 🤝 Open Source Contributions
+
+We warmly welcome contributions from developers worldwide! Check out [CONTRIBUTING.md](CONTRIBUTING.md) for full instructions on setting up your local environment, coding standards, and opening pull requests.
+
+### Ways You Can Contribute:
+1. **Solve Open Authentication Challenges**: Investigate Puter.js in-app login, Google OAuth federation, and session persistence.
+2. **Translate to More Languages**: Help us translate FoodLens into additional regional languages via `.arb` files in `lib/l10n/`.
+3. **Enhance AI Prompts & Offline Recognition**: Improve accuracy for regional dishes, spices, and complex culinary items.
+4. **Report Bugs & Suggest Features**: Open an issue using our [GitHub Issue Templates](https://github.com/CodeByArnob/FoodLens/issues/new/choose).
 
 ---
 

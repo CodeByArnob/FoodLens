@@ -28,7 +28,8 @@ class FoodAnalysisScreen extends ConsumerWidget {
     final historyNotifier = ref.read(historyFavoritesProvider.notifier);
 
     // Prefer passedResult or lastFoodResult from scanner
-    final FoodAnalysisResult? item = passedResult ?? scannerState.lastFoodResult;
+    final FoodAnalysisResult? item =
+        passedResult ?? scannerState.lastFoodResult;
 
     if (item == null) {
       return Scaffold(
@@ -38,9 +39,16 @@ class FoodAnalysisScreen extends ConsumerWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.error_outline_rounded, size: 48, color: AppColors.textMutedDark),
+              const Icon(
+                Icons.error_outline_rounded,
+                size: 48,
+                color: AppColors.textMutedDark,
+              ),
               const SizedBox(height: 12),
-              const Text('No scan data available.', style: TextStyle(color: Colors.white)),
+              const Text(
+                'No scan data available.',
+                style: TextStyle(color: Colors.white),
+              ),
               const SizedBox(height: 16),
               CustomButton(
                 text: 'Back to Scanner',
@@ -53,7 +61,9 @@ class FoodAnalysisScreen extends ConsumerWidget {
       );
     }
 
-    final isFav = historyState.favorites.any((f) => f.id == item.id || f.foodName == item.foodName);
+    final isFav = historyState.favorites.any(
+      (f) => f.id == item.id || f.foodName == item.foodName,
+    );
 
     void showLogMealSheet() {
       HapticHelper.mediumImpact();
@@ -70,24 +80,38 @@ class FoodAnalysisScreen extends ConsumerWidget {
             children: [
               const Text(
                 'Log to Today\'s Meals',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: Colors.white),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w800,
+                  color: Colors.white,
+                ),
               ),
               const SizedBox(height: 16),
               ...MealType.values.map((type) {
                 return ListTile(
                   title: Text(
                     type.name.toUpperCase(),
-                    style: const TextStyle(fontWeight: FontWeight.w700, color: Colors.white),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
                   ),
-                  trailing: const Icon(Icons.add_circle_outline_rounded, color: AppColors.primary),
+                  trailing: const Icon(
+                    Icons.add_circle_outline_rounded,
+                    color: AppColors.primary,
+                  ),
                   onTap: () async {
                     HapticHelper.lightImpact();
-                    await ref.read(nutritionTrackerProvider.notifier).logFoodItem(item, type);
+                    await ref
+                        .read(nutritionTrackerProvider.notifier)
+                        .logFoodItem(item, type);
                     if (ctx.mounted) Navigator.pop(ctx);
                     if (context.mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Logged ${item.foodName} to ${type.name}!'),
+                          content: Text(
+                            'Logged ${item.foodName} to ${type.name}!',
+                          ),
                           backgroundColor: AppColors.primaryDark,
                         ),
                       );
@@ -114,7 +138,9 @@ class FoodAnalysisScreen extends ConsumerWidget {
             actions: [
               IconButton(
                 icon: Icon(
-                  isFav ? Icons.favorite_rounded : Icons.favorite_border_rounded,
+                  isFav
+                      ? Icons.favorite_rounded
+                      : Icons.favorite_border_rounded,
                   color: isFav ? AppColors.accentRose : Colors.white,
                 ),
                 onPressed: () {
@@ -187,11 +213,16 @@ class FoodAnalysisScreen extends ConsumerWidget {
                       ),
                       // Calorie Highlight Badge
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 14,
+                          vertical: 8,
+                        ),
                         decoration: BoxDecoration(
                           color: AppColors.primary.withValues(alpha: 0.15),
                           borderRadius: BorderRadius.circular(16),
-                          border: Border.all(color: AppColors.primary.withValues(alpha: 0.3)),
+                          border: Border.all(
+                            color: AppColors.primary.withValues(alpha: 0.3),
+                          ),
                         ),
                         child: Column(
                           children: [
@@ -233,7 +264,11 @@ class FoodAnalysisScreen extends ConsumerWidget {
                   // Macronutrients Grid
                   const Text(
                     'Macronutrients Breakdown',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Colors.white),
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
                   ),
                   const SizedBox(height: 10),
                   Row(
@@ -285,16 +320,41 @@ class FoodAnalysisScreen extends ConsumerWidget {
                       children: [
                         const Text(
                           'Micronutrients & Electrolytes',
-                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Colors.white),
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                          ),
                         ),
                         const SizedBox(height: 12),
-                        _NutrientDetailRow('Sugar', '${item.sugar.toStringAsFixed(1)} g'),
-                        _NutrientDetailRow('Saturated Fat', '${item.saturatedFat.toStringAsFixed(1)} g'),
-                        _NutrientDetailRow('Sodium', '${item.sodium.toStringAsFixed(0)} mg'),
-                        _NutrientDetailRow('Potassium', '${item.potassium.toStringAsFixed(0)} mg'),
-                        _NutrientDetailRow('Calcium', '${item.calcium.toStringAsFixed(0)} mg'),
-                        _NutrientDetailRow('Iron', '${item.iron.toStringAsFixed(1)} mg'),
-                        _NutrientDetailRow('Vitamin C', '${item.vitaminC.toStringAsFixed(1)} mg'),
+                        _NutrientDetailRow(
+                          'Sugar',
+                          '${item.sugar.toStringAsFixed(1)} g',
+                        ),
+                        _NutrientDetailRow(
+                          'Saturated Fat',
+                          '${item.saturatedFat.toStringAsFixed(1)} g',
+                        ),
+                        _NutrientDetailRow(
+                          'Sodium',
+                          '${item.sodium.toStringAsFixed(0)} mg',
+                        ),
+                        _NutrientDetailRow(
+                          'Potassium',
+                          '${item.potassium.toStringAsFixed(0)} mg',
+                        ),
+                        _NutrientDetailRow(
+                          'Calcium',
+                          '${item.calcium.toStringAsFixed(0)} mg',
+                        ),
+                        _NutrientDetailRow(
+                          'Iron',
+                          '${item.iron.toStringAsFixed(1)} mg',
+                        ),
+                        _NutrientDetailRow(
+                          'Vitamin C',
+                          '${item.vitaminC.toStringAsFixed(1)} mg',
+                        ),
                       ],
                     ),
                   ),
@@ -304,7 +364,11 @@ class FoodAnalysisScreen extends ConsumerWidget {
                   if (item.ingredients.isNotEmpty) ...[
                     const Text(
                       'Detected Ingredients',
-                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Colors.white),
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     Wrap(
@@ -312,7 +376,10 @@ class FoodAnalysisScreen extends ConsumerWidget {
                       runSpacing: 8,
                       children: item.ingredients.map((ing) {
                         return Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 5,
+                          ),
                           decoration: BoxDecoration(
                             color: AppColors.darkSurfaceCard,
                             borderRadius: BorderRadius.circular(10),
@@ -320,7 +387,10 @@ class FoodAnalysisScreen extends ConsumerWidget {
                           ),
                           child: Text(
                             ing,
-                            style: const TextStyle(fontSize: 12, color: AppColors.textSecondaryDark),
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: AppColors.textSecondaryDark,
+                            ),
                           ),
                         );
                       }).toList(),
@@ -335,26 +405,44 @@ class FoodAnalysisScreen extends ConsumerWidget {
                       decoration: BoxDecoration(
                         color: AppColors.error.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: AppColors.error.withValues(alpha: 0.3)),
+                        border: Border.all(
+                          color: AppColors.error.withValues(alpha: 0.3),
+                        ),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
                             children: const [
-                              Icon(Icons.warning_amber_rounded, color: AppColors.error, size: 20),
+                              Icon(
+                                Icons.warning_amber_rounded,
+                                color: AppColors.error,
+                                size: 20,
+                              ),
                               SizedBox(width: 8),
                               Text(
                                 'Potential Allergen Risk',
-                                style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.error),
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColors.error,
+                                ),
                               ),
                             ],
                           ),
                           const SizedBox(height: 6),
-                          ...item.allergenWarnings.map((all) => Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 2),
-                                child: Text('• $all', style: const TextStyle(fontSize: 12, color: Colors.white70)),
-                              )),
+                          ...item.allergenWarnings.map(
+                            (all) => Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 2),
+                              child: Text(
+                                '• $all',
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.white70,
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -365,7 +453,11 @@ class FoodAnalysisScreen extends ConsumerWidget {
                   if (item.healthierAlternatives.isNotEmpty) ...[
                     const Text(
                       'Smart Healthier Alternatives',
-                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Colors.white),
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                      ),
                     ),
                     const SizedBox(height: 10),
                     ...item.healthierAlternatives.map((alt) {
@@ -378,10 +470,16 @@ class FoodAnalysisScreen extends ConsumerWidget {
                               Container(
                                 padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(
-                                  color: AppColors.primary.withValues(alpha: 0.15),
+                                  color: AppColors.primary.withValues(
+                                    alpha: 0.15,
+                                  ),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
-                                child: const Icon(Icons.swap_horiz_rounded, color: AppColors.primary, size: 22),
+                                child: const Icon(
+                                  Icons.swap_horiz_rounded,
+                                  color: AppColors.primary,
+                                  size: 22,
+                                ),
                               ),
                               const SizedBox(width: 12),
                               Expanded(
@@ -390,25 +488,41 @@ class FoodAnalysisScreen extends ConsumerWidget {
                                   children: [
                                     Text(
                                       alt.name,
-                                      style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: Colors.white),
+                                      style: const TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.white,
+                                      ),
                                     ),
                                     const SizedBox(height: 2),
                                     Text(
                                       alt.reason,
-                                      style: const TextStyle(fontSize: 11, color: AppColors.textMutedDark),
+                                      style: const TextStyle(
+                                        fontSize: 11,
+                                        color: AppColors.textMutedDark,
+                                      ),
                                     ),
                                   ],
                                 ),
                               ),
                               Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 3,
+                                ),
                                 decoration: BoxDecoration(
-                                  color: AppColors.primary.withValues(alpha: 0.2),
+                                  color: AppColors.primary.withValues(
+                                    alpha: 0.2,
+                                  ),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: Text(
                                   '${alt.calorieDifference} kcal',
-                                  style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.primaryLight),
+                                  style: const TextStyle(
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColors.primaryLight,
+                                  ),
                                 ),
                               ),
                             ],
@@ -435,7 +549,9 @@ class FoodAnalysisScreen extends ConsumerWidget {
                     isSecondary: true,
                     icon: Icons.compare_arrows_rounded,
                     onPressed: () {
-                      ref.read(foodComparisonProvider.notifier).selectFoodA(item);
+                      ref
+                          .read(foodComparisonProvider.notifier)
+                          .selectFoodA(item);
                       context.push('/comparison');
                     },
                   ),
@@ -463,8 +579,21 @@ class _NutrientDetailRow extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: const TextStyle(fontSize: 12, color: AppColors.textSecondaryDark)),
-          Text(value, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Colors.white)),
+          Text(
+            label,
+            style: const TextStyle(
+              fontSize: 12,
+              color: AppColors.textSecondaryDark,
+            ),
+          ),
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w700,
+              color: Colors.white,
+            ),
+          ),
         ],
       ),
     );

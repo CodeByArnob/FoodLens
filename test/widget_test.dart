@@ -16,15 +16,14 @@ void main() {
     });
   });
 
-  testWidgets('CalorieGauge widget renders correctly', (WidgetTester tester) async {
+  testWidgets('CalorieGauge widget renders correctly', (
+    WidgetTester tester,
+  ) async {
     await tester.pumpWidget(
       const MaterialApp(
         home: Scaffold(
           body: Center(
-            child: CalorieGauge(
-              consumedCalories: 650,
-              targetCalories: 2000,
-            ),
+            child: CalorieGauge(consumedCalories: 650, targetCalories: 2000),
           ),
         ),
       ),
@@ -35,7 +34,9 @@ void main() {
     expect(find.text('1350 left'), findsOneWidget);
   });
 
-  testWidgets('HealthScoreIndicator displays score and verified badge', (WidgetTester tester) async {
+  testWidgets('HealthScoreIndicator displays score and verified badge', (
+    WidgetTester tester,
+  ) async {
     await tester.pumpWidget(
       const MaterialApp(
         home: Scaffold(
@@ -56,7 +57,9 @@ void main() {
     expect(find.textContaining('Grade A+'), findsOneWidget);
   });
 
-  testWidgets('FoodLensApp boots up and renders root splash screen', (WidgetTester tester) async {
+  testWidgets('FoodLensApp boots up and renders root splash screen', (
+    WidgetTester tester,
+  ) async {
     final prefs = await SharedPreferences.getInstance();
     final storageService = LocalStorageService(prefs);
 

@@ -55,7 +55,8 @@ class LabelAnalysisResult {
       isVerifiedLabel: json['is_verified_label'] as bool? ?? true,
       confidenceScore: (json['confidence_score'] as num?)?.toDouble() ?? 0.99,
       servingSize: json['serving_size'] as String? ?? '1 serving',
-      servingsPerContainer: (json['servings_per_container'] as num?)?.toDouble() ?? 1.0,
+      servingsPerContainer:
+          (json['servings_per_container'] as num?)?.toDouble() ?? 1.0,
       calories: (json['calories'] as num?)?.toInt() ?? 0,
       fat: (json['fat'] as num?)?.toDouble() ?? 0.0,
       saturatedFat: (json['saturated_fat'] as num?)?.toDouble() ?? 0.0,
@@ -71,11 +72,13 @@ class LabelAnalysisResult {
       calcium: (json['calcium'] as num?)?.toDouble() ?? 0.0,
       iron: (json['iron'] as num?)?.toDouble() ?? 0.0,
       potassium: (json['potassium'] as num?)?.toDouble() ?? 0.0,
-      ingredients: (json['ingredients'] as List<dynamic>?)
+      ingredients:
+          (json['ingredients'] as List<dynamic>?)
               ?.map((e) => e.toString())
               .toList() ??
           [],
-      allergenWarnings: (json['allergen_warnings'] as List<dynamic>?)
+      allergenWarnings:
+          (json['allergen_warnings'] as List<dynamic>?)
               ?.map((e) => e.toString())
               .toList() ??
           [],

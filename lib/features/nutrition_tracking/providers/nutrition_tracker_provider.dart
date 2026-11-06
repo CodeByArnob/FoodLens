@@ -37,16 +37,18 @@ class NutritionTrackerState {
 }
 
 final nutritionTrackerProvider =
-    StateNotifierProvider<NutritionTrackerNotifier, NutritionTrackerState>((ref) {
-  final storage = ref.watch(localStorageServiceProvider);
-  return NutritionTrackerNotifier(storage);
-});
+    StateNotifierProvider<NutritionTrackerNotifier, NutritionTrackerState>((
+      ref,
+    ) {
+      final storage = ref.watch(localStorageServiceProvider);
+      return NutritionTrackerNotifier(storage);
+    });
 
 class NutritionTrackerNotifier extends StateNotifier<NutritionTrackerState> {
   final LocalStorageService _storage;
 
   NutritionTrackerNotifier(this._storage)
-      : super(NutritionTrackerState(selectedDate: DateTime.now())) {
+    : super(NutritionTrackerState(selectedDate: DateTime.now())) {
     _loadLogs();
   }
 

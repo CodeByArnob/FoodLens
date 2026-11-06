@@ -206,7 +206,8 @@ class FoodImageView extends StatelessWidget {
       }
 
       // 3. Check if it's a network URL
-      if (imagePath!.startsWith('http://') || imagePath!.startsWith('https://')) {
+      if (imagePath!.startsWith('http://') ||
+          imagePath!.startsWith('https://')) {
         return ClipRRect(
           borderRadius: BorderRadius.circular(borderRadius),
           child: Image.network(
@@ -224,7 +225,10 @@ class FoodImageView extends StatelessWidget {
                   child: SizedBox(
                     width: 20,
                     height: 20,
-                    child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.primary),
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: AppColors.primary,
+                    ),
                   ),
                 ),
               );

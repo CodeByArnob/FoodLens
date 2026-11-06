@@ -18,11 +18,13 @@ class HistoryFavoritesState {
 
   List<FoodAnalysisResult> get filteredHistory {
     return history.where((item) {
-      final matchesQuery = searchQuery.isEmpty ||
+      final matchesQuery =
+          searchQuery.isEmpty ||
           item.foodName.toLowerCase().contains(searchQuery.toLowerCase()) ||
           item.cuisine.toLowerCase().contains(searchQuery.toLowerCase());
 
-      final matchesTag = selectedFilterTag == null ||
+      final matchesTag =
+          selectedFilterTag == null ||
           item.dietaryTags.contains(selectedFilterTag);
 
       return matchesQuery && matchesTag;
@@ -31,11 +33,13 @@ class HistoryFavoritesState {
 
   List<FoodAnalysisResult> get filteredFavorites {
     return favorites.where((item) {
-      final matchesQuery = searchQuery.isEmpty ||
+      final matchesQuery =
+          searchQuery.isEmpty ||
           item.foodName.toLowerCase().contains(searchQuery.toLowerCase()) ||
           item.cuisine.toLowerCase().contains(searchQuery.toLowerCase());
 
-      final matchesTag = selectedFilterTag == null ||
+      final matchesTag =
+          selectedFilterTag == null ||
           item.dietaryTags.contains(selectedFilterTag);
 
       return matchesQuery && matchesTag;
@@ -53,21 +57,26 @@ class HistoryFavoritesState {
       history: history ?? this.history,
       favorites: favorites ?? this.favorites,
       searchQuery: searchQuery ?? this.searchQuery,
-      selectedFilterTag: clearTag ? null : (selectedFilterTag ?? this.selectedFilterTag),
+      selectedFilterTag: clearTag
+          ? null
+          : (selectedFilterTag ?? this.selectedFilterTag),
     );
   }
 }
 
 final historyFavoritesProvider =
-    StateNotifierProvider<HistoryFavoritesNotifier, HistoryFavoritesState>((ref) {
-  final storage = ref.watch(localStorageServiceProvider);
-  return HistoryFavoritesNotifier(storage);
-});
+    StateNotifierProvider<HistoryFavoritesNotifier, HistoryFavoritesState>((
+      ref,
+    ) {
+      final storage = ref.watch(localStorageServiceProvider);
+      return HistoryFavoritesNotifier(storage);
+    });
 
 class HistoryFavoritesNotifier extends StateNotifier<HistoryFavoritesState> {
   final LocalStorageService _storage;
 
-  HistoryFavoritesNotifier(this._storage) : super(const HistoryFavoritesState()) {
+  HistoryFavoritesNotifier(this._storage)
+    : super(const HistoryFavoritesState()) {
     refresh();
   }
 
@@ -90,10 +99,7 @@ class HistoryFavoritesNotifier extends StateNotifier<HistoryFavoritesState> {
       favorites = _storage.getFavorites();
     }
 
-    state = state.copyWith(
-      history: history,
-      favorites: favorites,
-    );
+    state = state.copyWith(history: history, favorites: favorites);
   }
 
   void setSearchQuery(String query) {

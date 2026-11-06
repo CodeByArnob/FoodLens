@@ -15,7 +15,11 @@ class PuterUpgradeModal extends StatelessWidget {
     this.upgradeUrl = AppConstants.puterAccountUrl,
   });
 
-  static void show(BuildContext context, {String? message, String? upgradeUrl}) {
+  static void show(
+    BuildContext context, {
+    String? message,
+    String? upgradeUrl,
+  }) {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
@@ -96,7 +100,11 @@ class PuterUpgradeModal extends StatelessWidget {
             padding: const EdgeInsets.all(14),
             child: Row(
               children: [
-                const Icon(Icons.shield_outlined, color: AppColors.primary, size: 22),
+                const Icon(
+                  Icons.shield_outlined,
+                  color: AppColors.primary,
+                  size: 22,
+                ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
@@ -104,11 +112,17 @@ class PuterUpgradeModal extends StatelessWidget {
                     children: const [
                       Text(
                         'Decentralized & Direct',
-                        style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                       Text(
                         '100% of payments go directly to your personal Puter account. FoodLens never stores payment credentials.',
-                        style: TextStyle(fontSize: 11, color: AppColors.textMutedDark),
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: AppColors.textMutedDark,
+                        ),
                       ),
                     ],
                   ),

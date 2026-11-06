@@ -1,0 +1,28 @@
+name: "✨ Feature Request"
+description: "Suggest an idea, enhancement, or new dietary capability for FoodLens."
+title: "[FEATURE]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping shape the future of FoodLens! Describe your proposed feature and how it benefits global nutrition tracking.
+  - type: textarea
+    id: problem
+    attributes:
+      label: "Problem or Need"
+      description: "Is your feature request related to a problem or limitation? Please describe."
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: "Proposed Solution"
+      description: "A clear and concise description of what you want to happen."
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: "Alternatives Considered"
+      description: "Any alternative solutions or features you've considered."

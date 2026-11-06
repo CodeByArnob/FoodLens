@@ -41,7 +41,9 @@ class _PuterUsageScreenState extends ConsumerState<PuterUsageScreen> {
     final user = authState.user;
 
     final percent = usage?.percentUsed ?? 0.125;
-    final isExhausted = authState.hasExhaustedAllowance || (usage?.hasExhaustedAllowance ?? false);
+    final isExhausted =
+        authState.hasExhaustedAllowance ||
+        (usage?.hasExhaustedAllowance ?? false);
 
     return Scaffold(
       backgroundColor: AppColors.darkBackground,
@@ -53,7 +55,10 @@ class _PuterUsageScreenState extends ConsumerState<PuterUsageScreen> {
                 ? const SizedBox(
                     width: 18,
                     height: 18,
-                    child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: Colors.white,
+                    ),
                   )
                 : const Icon(Icons.refresh_rounded),
             onPressed: _isRefreshing ? null : _refresh,
@@ -84,7 +89,11 @@ class _PuterUsageScreenState extends ConsumerState<PuterUsageScreen> {
                         ),
                       ],
                     ),
-                    child: const Icon(Icons.person, color: Colors.white, size: 28),
+                    child: const Icon(
+                      Icons.person,
+                      color: Colors.white,
+                      size: 28,
+                    ),
                   ),
                   const SizedBox(width: 16),
                   Expanded(
@@ -101,14 +110,22 @@ class _PuterUsageScreenState extends ConsumerState<PuterUsageScreen> {
                         ),
                         const SizedBox(height: 3),
                         Text(
-                          user?.uuid != null ? 'UUID: ${user!.uuid!.substring(0, 8)}...' : 'Puter.js User-Pays Mode',
-                          style: const TextStyle(fontSize: 12, color: AppColors.textMutedDark),
+                          user?.uuid != null
+                              ? 'UUID: ${user!.uuid!.substring(0, 8)}...'
+                              : 'Puter.js User-Pays Mode',
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: AppColors.textMutedDark,
+                          ),
                         ),
                       ],
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 4,
+                    ),
                     decoration: BoxDecoration(
                       color: isExhausted
                           ? AppColors.error.withValues(alpha: 0.15)
@@ -125,7 +142,9 @@ class _PuterUsageScreenState extends ConsumerState<PuterUsageScreen> {
                       style: TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.w800,
-                        color: isExhausted ? AppColors.error : AppColors.primaryLight,
+                        color: isExhausted
+                            ? AppColors.error
+                            : AppColors.primaryLight,
                       ),
                     ),
                   ),
@@ -144,14 +163,20 @@ class _PuterUsageScreenState extends ConsumerState<PuterUsageScreen> {
                     children: [
                       const Text(
                         'Monthly AI Compute Quota',
-                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Colors.white),
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                        ),
                       ),
                       Text(
                         '${(percent * 100).toStringAsFixed(1)}% Used',
                         style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w700,
-                          color: isExhausted ? AppColors.error : AppColors.primaryLight,
+                          color: isExhausted
+                              ? AppColors.error
+                              : AppColors.primaryLight,
                         ),
                       ),
                     ],
@@ -167,8 +192,8 @@ class _PuterUsageScreenState extends ConsumerState<PuterUsageScreen> {
                         isExhausted
                             ? AppColors.error
                             : percent > 0.8
-                                ? AppColors.warning
-                                : AppColors.primary,
+                            ? AppColors.warning
+                            : AppColors.primary,
                       ),
                     ),
                   ),
@@ -179,7 +204,9 @@ class _PuterUsageScreenState extends ConsumerState<PuterUsageScreen> {
                         child: _AllowanceMetricBox(
                           label: 'Remaining',
                           value: usage?.remainingCreditsFormatted ?? '\$8.75',
-                          color: isExhausted ? AppColors.error : AppColors.primaryLight,
+                          color: isExhausted
+                              ? AppColors.error
+                              : AppColors.primaryLight,
                         ),
                       ),
                       const SizedBox(width: 12),
@@ -213,23 +240,39 @@ class _PuterUsageScreenState extends ConsumerState<PuterUsageScreen> {
                 children: [
                   Row(
                     children: const [
-                      Icon(Icons.verified_user_outlined, color: AppColors.puterBlue, size: 20),
+                      Icon(
+                        Icons.verified_user_outlined,
+                        color: AppColors.puterBlue,
+                        size: 20,
+                      ),
                       SizedBox(width: 8),
                       Text(
                         'About Puter User-Pays Model',
-                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Colors.white),
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                        ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 10),
                   const Text(
                     'Puter provides every user with a free monthly allowance for AI vision queries, OCR, and storage. FoodLens connects directly to your Puter cloud without intermediary markup or developer API keys.',
-                    style: TextStyle(fontSize: 12, color: AppColors.textSecondaryDark, height: 1.5),
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: AppColors.textSecondaryDark,
+                      height: 1.5,
+                    ),
                   ),
                   const SizedBox(height: 12),
                   const Text(
                     'When your free monthly allowance runs out, you can purchase additional microcredits or subscribe on Puter.com to continue uninterrupted.',
-                    style: TextStyle(fontSize: 12, color: AppColors.textSecondaryDark, height: 1.5),
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: AppColors.textSecondaryDark,
+                      height: 1.5,
+                    ),
                   ),
                 ],
               ),
@@ -287,9 +330,23 @@ class _AllowanceMetricBox extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label, style: const TextStyle(fontSize: 10, color: AppColors.textMutedDark, fontWeight: FontWeight.w500)),
+          Text(
+            label,
+            style: const TextStyle(
+              fontSize: 10,
+              color: AppColors.textMutedDark,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
           const SizedBox(height: 4),
-          Text(value, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: color)),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w800,
+              color: color,
+            ),
+          ),
         ],
       ),
     );

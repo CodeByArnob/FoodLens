@@ -1,0 +1,40 @@
+name: "📸 AI Food Scanner & OCR Problem"
+description: "Report issues with dish detection, food label OCR, menu parsing, or prompt handling."
+title: "[SCANNER]: "
+labels: ["ai-vision", "scanner", "bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Report defects or inaccuracies encountered when scanning food items, packaged labels, or restaurant menus.
+  - type: dropdown
+    id: scan_type
+    attributes:
+      label: "Scanner Mode"
+      options:
+        - "Food Dish Visual Analysis"
+        - "Packaged Nutrition Label OCR"
+        - "Restaurant Menu Explorer"
+        - "Food Comparison Engine"
+    validations:
+      required: true
+  - type: textarea
+    id: food_item
+    attributes:
+      label: "Scanned Food / Dish Item"
+      description: "What was the food being scanned (e.g., Apple, Homemade Curry, Cereal Box label)?"
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: "Observed Issue"
+      description: "Did the scanner misidentify the dish, return parsing errors, fail on JSON format, or timeout?"
+    validations:
+      required: true
+  - type: textarea
+    id: json_response
+    attributes:
+      label: "Puter AI Response or Error Trace (if available)"
+      description: "Sanitized JSON or error message from the scanner provider."
+      render: json

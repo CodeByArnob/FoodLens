@@ -10,7 +10,9 @@ import '../../../core/errors/app_exception.dart';
 
 // Providers
 final localStorageServiceProvider = Provider<LocalStorageService>((ref) {
-  throw UnimplementedError('localStorageServiceProvider must be overridden in main');
+  throw UnimplementedError(
+    'localStorageServiceProvider must be overridden in main',
+  );
 });
 
 final puterBridgeServiceProvider = Provider<PuterBridgeService>((ref) {
@@ -54,7 +56,8 @@ class AuthState {
       isLoading: isLoading ?? this.isLoading,
       isBridgeReady: isBridgeReady ?? this.isBridgeReady,
       errorMessage: errorMessage,
-      hasExhaustedAllowance: hasExhaustedAllowance ?? this.hasExhaustedAllowance,
+      hasExhaustedAllowance:
+          hasExhaustedAllowance ?? this.hasExhaustedAllowance,
     );
   }
 }
@@ -79,7 +82,9 @@ class AuthNotifier extends StateNotifier<AuthState> {
     final cachedUsername = _storage.getPuterUsername();
     final cachedUuid = _storage.getPuterUuid();
 
-    if (cachedToken != null && cachedToken.isNotEmpty && cachedUsername != null) {
+    if (cachedToken != null &&
+        cachedToken.isNotEmpty &&
+        cachedUsername != null) {
       state = state.copyWith(
         user: PuterUser(username: cachedUsername, uuid: cachedUuid),
         isLoading: false,
@@ -114,9 +119,13 @@ class AuthNotifier extends StateNotifier<AuthState> {
         unawaited(_syncTokenAndFetchUsageAsync(cachedToken));
       } else {
         // Quick session check with 3s timeout
-        final session = await _bridge.checkSession(timeout: const Duration(seconds: 3));
+        final session = await _bridge.checkSession(
+          timeout: const Duration(seconds: 3),
+        );
         if (session['isSignedIn'] == true && session['user'] != null) {
-          final user = PuterUser.fromJson(session['user'] as Map<String, dynamic>);
+          final user = PuterUser.fromJson(
+            session['user'] as Map<String, dynamic>,
+          );
           await _storage.setPuterUsername(user.username);
           await _storage.setPuterUuid(user.uuid);
           state = state.copyWith(
@@ -159,7 +168,8 @@ class AuthNotifier extends StateNotifier<AuthState> {
   Future<bool> signInWithToken(String token) async {
     state = state.copyWith(isLoading: true, errorMessage: null);
     try {
-      final trimmedToken = token.trim()
+      final trimmedToken = token
+          .trim()
           .replaceFirst(RegExp(r'^Bearer\s+', caseSensitive: false), '')
           .replaceAll('"', '')
           .replaceAll("'", "");
@@ -180,7 +190,9 @@ class AuthNotifier extends StateNotifier<AuthState> {
         user = await _bridge.getUser();
         user ??= PuterUser(
           username: 'Puter User',
-          uuid: trimmedToken.length > 8 ? trimmedToken.substring(0, 8) : trimmedToken,
+          uuid: trimmedToken.length > 8
+              ? trimmedToken.substring(0, 8)
+              : trimmedToken,
         );
       }
 

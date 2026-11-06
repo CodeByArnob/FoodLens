@@ -33,7 +33,8 @@ class PlannedMeal {
       carbs: (json['carbs'] as num?)?.toDouble() ?? 40.0,
       fat: (json['fat'] as num?)?.toDouble() ?? 12.0,
       prepTimeMinutes: (json['prep_time_minutes'] as num?)?.toInt() ?? 15,
-      ingredients: (json['ingredients'] as List<dynamic>?)
+      ingredients:
+          (json['ingredients'] as List<dynamic>?)
               ?.map((e) => e.toString())
               .toList() ??
           [],
@@ -83,7 +84,8 @@ class MealPlan {
       totalProtein: (json['total_protein'] as num?)?.toDouble() ?? 120.0,
       totalCarbs: (json['total_carbs'] as num?)?.toDouble() ?? 200.0,
       totalFat: (json['total_fat'] as num?)?.toDouble() ?? 60.0,
-      meals: (json['meals'] as List<dynamic>?)
+      meals:
+          (json['meals'] as List<dynamic>?)
               ?.map((e) => PlannedMeal.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],

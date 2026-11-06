@@ -30,21 +30,27 @@ class _MenuAnalysisScreenState extends ConsumerState<MenuAnalysisScreen> {
     final scannerState = ref.watch(scannerProvider);
     final settings = ref.watch(settingsProvider);
 
-    final MenuAnalysisResult? menu = widget.passedResult ?? scannerState.lastMenuResult;
+    final MenuAnalysisResult? menu =
+        widget.passedResult ?? scannerState.lastMenuResult;
 
     if (menu == null) {
       return Scaffold(
         backgroundColor: AppColors.darkBackground,
         appBar: AppBar(title: const Text('Menu Analysis')),
         body: const Center(
-          child: Text('No menu data scanned yet.', style: TextStyle(color: Colors.white)),
+          child: Text(
+            'No menu data scanned yet.',
+            style: TextStyle(color: Colors.white),
+          ),
         ),
       );
     }
 
     final filteredDishes = menu.dishes.where((dish) {
       if (_selectedFilter == null) return true;
-      if (_selectedFilter == 'Veg') return dish.dietaryTags.any((t) => t.toLowerCase().contains('veg'));
+      if (_selectedFilter == 'Veg') {
+        return dish.dietaryTags.any((t) => t.toLowerCase().contains('veg'));
+      }
       if (_selectedFilter == 'High Protein') return dish.protein >= 25;
       if (_selectedFilter == 'Low Cal') return dish.estimatedCalories <= 500;
       return true;
@@ -73,7 +79,11 @@ class _MenuAnalysisScreenState extends ConsumerState<MenuAnalysisScreen> {
                       color: AppColors.tertiary.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(14),
                     ),
-                    child: const Icon(Icons.restaurant_rounded, color: AppColors.tertiary, size: 28),
+                    child: const Icon(
+                      Icons.restaurant_rounded,
+                      color: AppColors.tertiary,
+                      size: 28,
+                    ),
                   ),
                   const SizedBox(width: 14),
                   Expanded(
@@ -82,12 +92,19 @@ class _MenuAnalysisScreenState extends ConsumerState<MenuAnalysisScreen> {
                       children: [
                         Text(
                           menu.restaurantName,
-                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.white),
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w800,
+                            color: Colors.white,
+                          ),
                         ),
                         const SizedBox(height: 3),
                         Text(
                           '${menu.cuisineType} • ${menu.dishes.length} Items Detected',
-                          style: const TextStyle(fontSize: 12, color: AppColors.textMutedDark),
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: AppColors.textMutedDark,
+                          ),
                         ),
                       ],
                     ),
@@ -117,7 +134,8 @@ class _MenuAnalysisScreenState extends ConsumerState<MenuAnalysisScreen> {
                   _FilterChipPill(
                     label: 'High Protein (25g+)',
                     isSelected: _selectedFilter == 'High Protein',
-                    onTap: () => setState(() => _selectedFilter = 'High Protein'),
+                    onTap: () =>
+                        setState(() => _selectedFilter = 'High Protein'),
                   ),
                   const SizedBox(width: 8),
                   _FilterChipPill(
@@ -134,15 +152,24 @@ class _MenuAnalysisScreenState extends ConsumerState<MenuAnalysisScreen> {
             if (settings.currencyCode != 'USD')
               Container(
                 margin: const EdgeInsets.only(bottom: 14),
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 14,
+                  vertical: 10,
+                ),
                 decoration: BoxDecoration(
                   color: AppColors.primary.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(14),
-                  border: Border.all(color: AppColors.primary.withValues(alpha: 0.3)),
+                  border: Border.all(
+                    color: AppColors.primary.withValues(alpha: 0.3),
+                  ),
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.currency_exchange_rounded, size: 18, color: AppColors.primaryLight),
+                    const Icon(
+                      Icons.currency_exchange_rounded,
+                      size: 18,
+                      color: AppColors.primaryLight,
+                    ),
                     const SizedBox(width: 10),
                     Expanded(
                       child: Column(
@@ -150,12 +177,19 @@ class _MenuAnalysisScreenState extends ConsumerState<MenuAnalysisScreen> {
                         children: [
                           Text(
                             'Live Currency Conversion: ${settings.currencyCode} (${settings.currencySymbol})',
-                            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: AppColors.primaryLight),
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.primaryLight,
+                            ),
                           ),
                           const SizedBox(height: 2),
                           Text(
                             'Rates via ${CurrencyService.providerName}. Original USD prices in parentheses.',
-                            style: const TextStyle(fontSize: 10, color: AppColors.textMutedDark),
+                            style: const TextStyle(
+                              fontSize: 10,
+                              color: AppColors.textMutedDark,
+                            ),
                           ),
                         ],
                       ),
@@ -167,7 +201,11 @@ class _MenuAnalysisScreenState extends ConsumerState<MenuAnalysisScreen> {
             // Dishes List
             const Text(
               'Detected Dishes & Nutrition',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Colors.white),
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+              ),
             ),
             const SizedBox(height: 12),
             ...filteredDishes.map((dish) {
@@ -194,7 +232,8 @@ class _MenuAnalysisScreenState extends ConsumerState<MenuAnalysisScreen> {
                       cuisine: menu.cuisineType,
                       dietaryTags: dish.dietaryTags,
                       allergenWarnings: dish.allergens,
-                      disclaimer: 'AI estimated from menu text and culinary database.',
+                      disclaimer:
+                          'AI estimated from menu text and culinary database.',
                     );
                     context.push('/analysis-result', extra: food);
                   },
@@ -218,18 +257,31 @@ class _MenuAnalysisScreenState extends ConsumerState<MenuAnalysisScreen> {
                                 Expanded(
                                   child: Text(
                                     dish.name,
-                                    style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Colors.white),
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
                                 Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8,
+                                    vertical: 3,
+                                  ),
                                   decoration: BoxDecoration(
-                                    color: AppColors.primary.withValues(alpha: 0.15),
+                                    color: AppColors.primary.withValues(
+                                      alpha: 0.15,
+                                    ),
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Text(
                                     formattedPrice,
-                                    style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w800, color: AppColors.primaryLight),
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w800,
+                                      color: AppColors.primaryLight,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -238,33 +290,50 @@ class _MenuAnalysisScreenState extends ConsumerState<MenuAnalysisScreen> {
                               const SizedBox(height: 4),
                               Text(
                                 dish.description,
-                                style: const TextStyle(fontSize: 12, color: AppColors.textSecondaryDark),
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: AppColors.textSecondaryDark,
+                                ),
                               ),
                             ],
                             const SizedBox(height: 8),
                             Row(
                               children: [
                                 Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 6,
+                                    vertical: 2,
+                                  ),
                                   decoration: BoxDecoration(
                                     color: AppColors.darkSurfaceHighlight,
                                     borderRadius: BorderRadius.circular(6),
                                   ),
                                   child: Text(
                                     'Grade ${dish.healthRating}',
-                                    style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.white),
+                                    style: const TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(width: 8),
                                 Text(
                                   '~${dish.estimatedCalories} kcal',
-                                  style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: AppColors.primaryLight),
+                                  style: const TextStyle(
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w600,
+                                    color: AppColors.primaryLight,
+                                  ),
                                 ),
                                 const SizedBox(width: 8),
                                 Expanded(
                                   child: Text(
                                     'P: ${dish.protein.toStringAsFixed(0)}g | C: ${dish.carbs.toStringAsFixed(0)}g | F: ${dish.fat.toStringAsFixed(0)}g',
-                                    style: const TextStyle(fontSize: 11, color: AppColors.textMutedDark),
+                                    style: const TextStyle(
+                                      fontSize: 11,
+                                      color: AppColors.textMutedDark,
+                                    ),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -281,7 +350,8 @@ class _MenuAnalysisScreenState extends ConsumerState<MenuAnalysisScreen> {
             }),
             const SizedBox(height: 16),
             const DisclaimerBanner(
-              customText: 'Restaurant menu nutritional estimations are calculated using standard preparation models. Actual kitchen ingredients, sauces, and cooking oils may vary.',
+              customText:
+                  'Restaurant menu nutritional estimations are calculated using standard preparation models. Actual kitchen ingredients, sauces, and cooking oils may vary.',
             ),
             const SizedBox(height: 24),
           ],

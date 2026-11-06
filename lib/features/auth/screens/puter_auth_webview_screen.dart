@@ -14,10 +14,12 @@ class PuterAuthWebViewScreen extends ConsumerStatefulWidget {
   const PuterAuthWebViewScreen({super.key, this.mode = 'login'});
 
   @override
-  ConsumerState<PuterAuthWebViewScreen> createState() => _PuterAuthWebViewScreenState();
+  ConsumerState<PuterAuthWebViewScreen> createState() =>
+      _PuterAuthWebViewScreenState();
 }
 
-class _PuterAuthWebViewScreenState extends ConsumerState<PuterAuthWebViewScreen> {
+class _PuterAuthWebViewScreenState
+    extends ConsumerState<PuterAuthWebViewScreen> {
   late final WebViewController _controller;
   bool _isLoading = true;
   double _progress = 0.0;
@@ -43,7 +45,9 @@ class _PuterAuthWebViewScreenState extends ConsumerState<PuterAuthWebViewScreen>
   void _initWebView() {
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setUserAgent('Mozilla/5.0 (Linux; Android 13; Mobile) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36')
+      ..setUserAgent(
+        'Mozilla/5.0 (Linux; Android 13; Mobile) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36',
+      )
       ..setBackgroundColor(const Color(0xFF0C121E))
       ..setNavigationDelegate(
         NavigationDelegate(
@@ -70,7 +74,9 @@ class _PuterAuthWebViewScreenState extends ConsumerState<PuterAuthWebViewScreen>
             }
           },
           onWebResourceError: (error) {
-            debugPrint('[PuterAuthWebView] WebResourceError: ${error.description}');
+            debugPrint(
+              '[PuterAuthWebView] WebResourceError: ${error.description}',
+            );
           },
           onNavigationRequest: (request) {
             return NavigationDecision.navigate;
@@ -93,7 +99,9 @@ class _PuterAuthWebViewScreenState extends ConsumerState<PuterAuthWebViewScreen>
     // 1. Check cookies via CookieManager
     try {
       final cookieManager = WebViewCookieManager();
-      final cookies = await cookieManager.getCookies(domain: Uri.parse('https://puter.com'));
+      final cookies = await cookieManager.getCookies(
+        domain: Uri.parse('https://puter.com'),
+      );
       for (final cookie in cookies) {
         if (cookie.name == 'auth_token' ||
             cookie.name == 'token' ||
@@ -166,7 +174,9 @@ class _PuterAuthWebViewScreenState extends ConsumerState<PuterAuthWebViewScreen>
     ''';
 
     try {
-      final result = await _controller.runJavaScriptReturningResult(extractScript);
+      final result = await _controller.runJavaScriptReturningResult(
+        extractScript,
+      );
       final String raw = result.toString();
 
       if (raw.isNotEmpty && raw != 'null' && raw != '""') {
@@ -203,7 +213,9 @@ class _PuterAuthWebViewScreenState extends ConsumerState<PuterAuthWebViewScreen>
       ),
     );
 
-    final success = await ref.read(authProvider.notifier).signInWithToken(token);
+    final success = await ref
+        .read(authProvider.notifier)
+        .signInWithToken(token);
     if (success && mounted) {
       context.go('/home');
     } else if (mounted) {
@@ -215,16 +227,25 @@ class _PuterAuthWebViewScreenState extends ConsumerState<PuterAuthWebViewScreen>
 
   @override
   Widget build(BuildContext context) {
-    final title = widget.mode == 'signup' ? 'Create Puter Account' : 'Puter Official Sign In';
+    final title = widget.mode == 'signup'
+        ? 'Create Puter Account'
+        : 'Puter Official Sign In';
 
     return Scaffold(
       backgroundColor: AppColors.darkBackground,
       appBar: AppBar(
         title: Row(
           children: [
-            const Icon(Icons.lock_outline, color: AppColors.primaryLight, size: 18),
+            const Icon(
+              Icons.lock_outline,
+              color: AppColors.primaryLight,
+              size: 18,
+            ),
             const SizedBox(width: 8),
-            Text(title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
+            Text(
+              title,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+            ),
           ],
         ),
         actions: [
@@ -243,14 +264,14 @@ class _PuterAuthWebViewScreenState extends ConsumerState<PuterAuthWebViewScreen>
                 child: LinearProgressIndicator(
                   value: _progress > 0 ? _progress : null,
                   backgroundColor: AppColors.darkSurfaceCard,
-                  valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primaryLight),
+                  valueColor: const AlwaysStoppedAnimation<Color>(
+                    AppColors.primaryLight,
+                  ),
                 ),
               )
             : null,
       ),
-      body: SafeArea(
-        child: WebViewWidget(controller: _controller),
-      ),
+      body: SafeArea(child: WebViewWidget(controller: _controller)),
     );
   }
 }

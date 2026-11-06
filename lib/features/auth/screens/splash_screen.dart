@@ -64,25 +64,25 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
               children: [
                 // App Logo Icon with Glass Glow
                 Container(
-                  width: 96,
-                  height: 96,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(28),
-                    gradient: AppColors.primaryGradient,
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.primary.withValues(alpha: 0.45),
-                        blurRadius: 30,
-                        spreadRadius: 4,
+                      width: 96,
+                      height: 96,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(28),
+                        gradient: AppColors.primaryGradient,
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.primary.withValues(alpha: 0.45),
+                            blurRadius: 30,
+                            spreadRadius: 4,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  child: const Icon(
-                    Icons.center_focus_strong_rounded,
-                    color: Colors.white,
-                    size: 48,
-                  ),
-                )
+                      child: const Icon(
+                        Icons.center_focus_strong_rounded,
+                        color: Colors.white,
+                        size: 48,
+                      ),
+                    )
                     .animate()
                     .scale(duration: 800.ms, curve: Curves.easeOutBack)
                     .shimmer(delay: 900.ms, duration: 1200.ms),
@@ -94,16 +94,16 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                     Text(
                       'Food',
                       style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w900,
-                          ),
+                        color: Colors.white,
+                        fontWeight: FontWeight.w900,
+                      ),
                     ),
                     Text(
                       'Lens',
                       style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                            color: AppColors.primary,
-                            fontWeight: FontWeight.w900,
-                          ),
+                        color: AppColors.primary,
+                        fontWeight: FontWeight.w900,
+                      ),
                     ),
                   ],
                 ).animate().fadeIn(delay: 400.ms).moveY(begin: 15, end: 0),
@@ -111,9 +111,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 Text(
                   AppConstants.appTagline,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: AppColors.textMutedDark,
-                        letterSpacing: 0.5,
-                      ),
+                    color: AppColors.textMutedDark,
+                    letterSpacing: 0.5,
+                  ),
                 ).animate().fadeIn(delay: 600.ms),
               ],
             ),

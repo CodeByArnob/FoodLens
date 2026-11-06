@@ -36,13 +36,18 @@ class FoodComparisonScreen extends ConsumerWidget {
             children: [
               Text(
                 'Select ${isFoodA ? 'First' : 'Second'} Dish',
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: Colors.white),
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w800,
+                  color: Colors.white,
+                ),
               ),
               const SizedBox(height: 12),
               Expanded(
                 child: ListView.separated(
                   itemCount: historyState.history.length,
-                  separatorBuilder: (context, index) => const Divider(color: AppColors.darkBorder),
+                  separatorBuilder: (context, index) =>
+                      const Divider(color: AppColors.darkBorder),
                   itemBuilder: (context, idx) {
                     final item = historyState.history[idx];
                     return ListTile(
@@ -53,8 +58,17 @@ class FoodComparisonScreen extends ConsumerWidget {
                         height: 40,
                         borderRadius: 8,
                       ),
-                      title: Text(item.foodName, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600)),
-                      subtitle: Text('${item.calories} kcal • ${item.cuisine}', style: const TextStyle(color: AppColors.textMutedDark)),
+                      title: Text(
+                        item.foodName,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      subtitle: Text(
+                        '${item.calories} kcal • ${item.cuisine}',
+                        style: const TextStyle(color: AppColors.textMutedDark),
+                      ),
                       onTap: () {
                         HapticHelper.lightImpact();
                         if (isFoodA) {
@@ -102,7 +116,14 @@ class FoodComparisonScreen extends ConsumerWidget {
                     color: AppColors.darkSurfaceHighlight,
                     shape: BoxShape.circle,
                   ),
-                  child: const Text('VS', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w900, color: AppColors.primary)),
+                  child: const Text(
+                    'VS',
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w900,
+                      color: AppColors.primary,
+                    ),
+                  ),
                 ),
                 const SizedBox(width: 8),
                 Expanded(
@@ -122,7 +143,9 @@ class FoodComparisonScreen extends ConsumerWidget {
               text: 'Run AI Comparison',
               icon: Icons.auto_awesome,
               isLoading: comparisonState.isComparing,
-              onPressed: comparisonState.canCompare ? () => comparisonNotifier.runComparison() : null,
+              onPressed: comparisonState.canCompare
+                  ? () => comparisonNotifier.runComparison()
+                  : null,
             ),
             const SizedBox(height: 20),
 
@@ -132,7 +155,10 @@ class FoodComparisonScreen extends ConsumerWidget {
                 padding: const EdgeInsets.all(18),
                 child: Column(
                   children: [
-                    _ComparisonHeader(foodAName: foodA.foodName, foodBName: foodB.foodName),
+                    _ComparisonHeader(
+                      foodAName: foodA.foodName,
+                      foodBName: foodB.foodName,
+                    ),
                     const Divider(color: AppColors.darkBorder, height: 24),
                     _MetricCompareRow(
                       label: 'Calories',
@@ -185,12 +211,20 @@ class FoodComparisonScreen extends ConsumerWidget {
                   children: [
                     Row(
                       children: [
-                        const Icon(Icons.emoji_events_rounded, color: AppColors.tertiary, size: 24),
+                        const Icon(
+                          Icons.emoji_events_rounded,
+                          color: AppColors.tertiary,
+                          size: 24,
+                        ),
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(
                             'AI Verdict: ${result.winner} Wins',
-                            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.white),
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w800,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ],
@@ -198,12 +232,20 @@ class FoodComparisonScreen extends ConsumerWidget {
                     const SizedBox(height: 10),
                     Text(
                       result.verdictSummary,
-                      style: const TextStyle(fontSize: 13, color: AppColors.textSecondaryDark, height: 1.45),
+                      style: const TextStyle(
+                        fontSize: 13,
+                        color: AppColors.textSecondaryDark,
+                        height: 1.45,
+                      ),
                     ),
                     const SizedBox(height: 16),
                     const Text(
                       'Goal-Specific Recommendations:',
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: Colors.white),
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     ...result.recommendationByGoal.entries.map((entry) {
@@ -211,11 +253,28 @@ class FoodComparisonScreen extends ConsumerWidget {
                         padding: const EdgeInsets.symmetric(vertical: 3),
                         child: Row(
                           children: [
-                            const Icon(Icons.check_circle_rounded, color: AppColors.primary, size: 14),
+                            const Icon(
+                              Icons.check_circle_rounded,
+                              color: AppColors.primary,
+                              size: 14,
+                            ),
                             const SizedBox(width: 6),
-                            Text('${entry.key}: ', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.white)),
+                            Text(
+                              '${entry.key}: ',
+                              style: const TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
+                            ),
                             Expanded(
-                              child: Text(entry.value, style: const TextStyle(fontSize: 12, color: AppColors.primaryLight)),
+                              child: Text(
+                                entry.value,
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: AppColors.primaryLight,
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -257,7 +316,14 @@ class _FoodSelectorCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label, style: const TextStyle(fontSize: 10, color: AppColors.textMutedDark, fontWeight: FontWeight.w600)),
+          Text(
+            label,
+            style: const TextStyle(
+              fontSize: 10,
+              color: AppColors.textMutedDark,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
           const SizedBox(height: 6),
           if (calories != null) ...[
             FoodImageView(
@@ -270,7 +336,11 @@ class _FoodSelectorCard extends StatelessWidget {
           ],
           Text(
             foodName,
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Colors.white),
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
+              color: Colors.white,
+            ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
@@ -279,7 +349,9 @@ class _FoodSelectorCard extends StatelessWidget {
             calories != null ? '$calories kcal' : 'Tap to choose',
             style: TextStyle(
               fontSize: 11,
-              color: calories != null ? AppColors.primaryLight : AppColors.secondaryLight,
+              color: calories != null
+                  ? AppColors.primaryLight
+                  : AppColors.secondaryLight,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -299,11 +371,24 @@ class _ComparisonHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const Expanded(child: Text('METRIC', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.textMutedDark))),
+        const Expanded(
+          child: Text(
+            'METRIC',
+            style: TextStyle(
+              fontSize: 11,
+              fontWeight: FontWeight.w700,
+              color: AppColors.textMutedDark,
+            ),
+          ),
+        ),
         Expanded(
           child: Text(
             foodAName,
-            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w800, color: AppColors.primaryLight),
+            style: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w800,
+              color: AppColors.primaryLight,
+            ),
             textAlign: TextAlign.center,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -312,7 +397,11 @@ class _ComparisonHeader extends StatelessWidget {
         Expanded(
           child: Text(
             foodBName,
-            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w800, color: AppColors.secondaryLight),
+            style: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w800,
+              color: AppColors.secondaryLight,
+            ),
             textAlign: TextAlign.center,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -342,7 +431,15 @@ class _MetricCompareRow extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         children: [
-          Expanded(child: Text(label, style: const TextStyle(fontSize: 12, color: AppColors.textSecondaryDark))),
+          Expanded(
+            child: Text(
+              label,
+              style: const TextStyle(
+                fontSize: 12,
+                color: AppColors.textSecondaryDark,
+              ),
+            ),
+          ),
           Expanded(
             child: Text(
               valA,

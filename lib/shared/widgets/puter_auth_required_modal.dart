@@ -86,7 +86,11 @@ class PuterAuthRequiredModal extends StatelessWidget {
             padding: const EdgeInsets.all(14),
             child: Row(
               children: [
-                const Icon(Icons.shield_outlined, color: AppColors.primary, size: 22),
+                const Icon(
+                  Icons.shield_outlined,
+                  color: AppColors.primary,
+                  size: 22,
+                ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
@@ -94,12 +98,19 @@ class PuterAuthRequiredModal extends StatelessWidget {
                     children: const [
                       Text(
                         '100% Free Monthly Allowance',
-                        style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: Colors.white),
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                        ),
                       ),
                       SizedBox(height: 2),
                       Text(
                         'Puter accounts include free monthly AI credits. FoodLens never requires developer subscription keys.',
-                        style: TextStyle(fontSize: 11, color: AppColors.textMutedDark),
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: AppColors.textMutedDark,
+                        ),
                       ),
                     ],
                   ),

@@ -26,11 +26,28 @@ class FavouritesScreen extends ConsumerWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: const [
-                  Icon(Icons.favorite_border_rounded, size: 54, color: AppColors.textMutedDark),
+                  Icon(
+                    Icons.favorite_border_rounded,
+                    size: 54,
+                    color: AppColors.textMutedDark,
+                  ),
                   SizedBox(height: 12),
-                  Text('No favourite dishes yet', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 16)),
+                  Text(
+                    'No favourite dishes yet',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 16,
+                    ),
+                  ),
                   SizedBox(height: 4),
-                  Text('Tap the heart icon on any scanned food to save it here.', style: TextStyle(color: AppColors.textMutedDark, fontSize: 12)),
+                  Text(
+                    'Tap the heart icon on any scanned food to save it here.',
+                    style: TextStyle(
+                      color: AppColors.textMutedDark,
+                      fontSize: 12,
+                    ),
+                  ),
                 ],
               ),
             )
@@ -62,20 +79,30 @@ class FavouritesScreen extends ConsumerWidget {
                           children: [
                             Text(
                               item.foodName,
-                              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Colors.white),
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
+                              ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
                             const SizedBox(height: 3),
                             Text(
                               '${item.cuisine} • ${item.calories} kcal',
-                              style: const TextStyle(fontSize: 12, color: AppColors.textMutedDark),
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: AppColors.textMutedDark,
+                              ),
                             ),
                           ],
                         ),
                       ),
                       IconButton(
-                        icon: const Icon(Icons.favorite_rounded, color: AppColors.accentRose),
+                        icon: const Icon(
+                          Icons.favorite_rounded,
+                          color: AppColors.accentRose,
+                        ),
                         onPressed: () {
                           HapticHelper.lightImpact();
                           notifier.toggleFavorite(item);

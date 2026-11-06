@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/utils/haptic_helper.dart';
@@ -30,111 +29,42 @@ class _PuterAuthScreenState extends ConsumerState<PuterAuthScreen> {
 
   Future<void> _launchExternalBrowser(String url) async {
     final uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    try {
+      final launched = await launchUrl(
+        uri,
+        mode: LaunchMode.externalApplication,
+      );
+      if (!launched && mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Could not open your default browser. Please try again.',
+            ),
+          ),
+        );
+      }
+    } catch (error) {
+      debugPrint('[PuterAuth] External browser launch failed: $error');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Could not open your default browser. Please try again.',
+            ),
+          ),
+        );
+      }
     }
   }
 
   Future<void> _handleOfficialSignIn() async {
     HapticHelper.mediumImpact();
-    final bridge = ref.read(puterBridgeServiceProvider);
-
-    // If bridge controller is ready, show official Puter auth modal dialog
-    if (bridge.webViewController != null) {
-      _showPuterAuthModal(context, bridge.webViewController!);
-    }
-
-    final success = await ref.read(authProvider.notifier).signInWithPuterWeb();
-    if (success && mounted) {
-      HapticHelper.vibrateSuccess();
-      context.go('/home');
-    }
+    await _launchExternalBrowser('https://puter.com/login');
   }
 
-  void _showPuterAuthModal(BuildContext context, WebViewController controller) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      enableDrag: false,
-      isDismissible: true,
-      builder: (ctx) {
-        return Container(
-          height: MediaQuery.of(ctx).size.height * 0.92,
-          decoration: const BoxDecoration(
-            color: Color(0xFF0C121E),
-            borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-          ),
-          child: Column(
-            children: [
-              // Header
-              Container(
-                height: 56,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                decoration: const BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(color: AppColors.darkBorder),
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          width: 28,
-                          height: 28,
-                          decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                              colors: [Color(0xFF0055FF), Color(0xFF00D2FF)],
-                            ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: const Center(
-                            child: Text(
-                              'P',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w900,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        const Text(
-                          'Puter Official Authorization',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ],
-                    ),
-                    IconButton(
-                      icon: const Icon(
-                        Icons.close,
-                        color: AppColors.textSecondaryDark,
-                        size: 20,
-                      ),
-                      onPressed: () {
-                        HapticHelper.lightImpact();
-                        Navigator.of(ctx).pop();
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              // Official Puter Bridge & Popup Viewport
-              Expanded(
-                child: ClipRRect(child: WebViewWidget(controller: controller)),
-              ),
-            ],
-          ),
-        );
-      },
-    );
+  Future<void> _handleOfficialSignUp() async {
+    HapticHelper.mediumImpact();
+    await _launchExternalBrowser('https://puter.com/signup');
   }
 
   Future<void> _pasteToken() async {
@@ -373,27 +303,12 @@ class _PuterAuthScreenState extends ConsumerState<PuterAuthScreen> {
               ),
               const SizedBox(height: 12),
 
-              // Action: Continue with Google via Puter
+              // Create a new Puter account in the device default browser.
               CustomButton(
-                text: 'Continue with Google',
-                icon: Icons.g_mobiledata_rounded,
+                text: 'Sign Up with Puter',
                 isSecondary: true,
-                onPressed: () {
-                  HapticHelper.lightImpact();
-                  _launchExternalBrowser('https://puter.com/login');
-                },
-              ),
-              const SizedBox(height: 12),
-
-              // Action 2: Open External Browser for Account Creation / Management
-              CustomButton(
-                text: 'Open Puter.com in Browser',
-                isSecondary: true,
-                icon: Icons.open_in_browser_rounded,
-                onPressed: () {
-                  HapticHelper.lightImpact();
-                  _launchExternalBrowser('https://puter.com/login');
-                },
+                icon: Icons.person_add_alt_1_rounded,
+                onPressed: _handleOfficialSignUp,
               ),
               const SizedBox(height: 12),
 

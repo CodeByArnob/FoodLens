@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FoodLens - Open-Source AI Food Intelligence & Nutrition Platform</title>
+  <meta name="description" content="FoodLens is a next-generation open-source Flutter mobile application for AI-powered food recognition, clinical macronutrient tracking, allergen screening, and automated meal planning.">
+  <meta name="author" content="CodeByArnob">
+  <meta name="theme-color" content="#090d16">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="FoodLens - Open-Source AI Food Intelligence">
+  <meta property="og:description" content="Instant visual food recognition, clinical macronutrient tracking, and decentralized client-side AI computing.">
+  <meta property="og:image" content="assets/branding/foodlens_icon.png">
+  <meta property="og:url" content="https://codebyarnob.github.io/FoodLens/">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/branding/foodlens_icon.png">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="ambient-glow"></div>
+
+  <!-- Navigation -->
+  <header class="navbar">
+    <a href="#" class="brand">
+      <img src="assets/branding/foodlens_icon.png" alt="FoodLens Icon" class="brand-icon">
+      <div class="brand-name">Food<span>Lens</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#demo">Preview</a></li>
+      <li><a href="#screenshots">Screenshots</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#localization">Languages</a></li>
+      <li><a href="#contribute">Contribute</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="https://github.com/CodeByArnob/FoodLens" class="btn btn-secondary" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/CodeByArnob/FoodLens/releases/download/v1.0.0/app-release.apk" class="btn btn-primary">Download APK</a>
+      <button class="mobile-menu-btn" aria-label="Toggle navigation menu">☰</button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="badge">Open-Source AI Food Intelligence</div>
+      <h1>See What You Eat with <span class="gradient-text">Multimodal Vision AI</span></h1>
+      <p>Transform your nutrition with real-time food recognition, clinical macronutrient estimation, packaged label OCR, and decentralized client-side AI computing.</p>
+      
+      <div class="hero-actions">
+        <a href="https://github.com/CodeByArnob/FoodLens/releases/download/v1.0.0/app-release.apk" class="btn btn-primary" style="padding: 0.9rem 1.8rem; font-size: 1.05rem;">
+          Download Release APK (v1.0.0)
+        </a>
+        <a href="https://github.com/CodeByArnob/FoodLens" class="btn btn-secondary" target="_blank" rel="noopener" style="padding: 0.9rem 1.8rem; font-size: 1.05rem;">
+          View Source Code on GitHub
+        </a>
+      </div>
+
+      <div class="hero-meta">
+        <span>✓ Android 7.0+ (API 24+)</span>
+        <span>✓ Zero Server Costs (User-Pays)</span>
+        <span>✓ 100% MIT Open Source</span>
+        <span>✓ Privacy First Local Storage</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Demo GIF Showcase -->
+  <section id="demo" class="container">
+    <div class="demo-showcase">
+      <h3>Live Application Demonstration</h3>
+      <p>Recorded directly from the running FoodLens build on a physical Realme 8 (Android 13) mobile device.</p>
+      <div class="demo-gif-wrapper">
+        <img src="assets/demo/foodlens_demo.gif" alt="FoodLens Interactive Product Demonstration">
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="features container">
+    <div class="section-header">
+      <div class="section-tag">Core Capabilities</div>
+      <h2 class="section-title">Engineered for Complete Food Clarity</h2>
+      <p class="section-subtitle">FoodLens combines advanced machine vision algorithms with intuitive health tools to help you understand every meal.</p>
+    </div>
+
+    <div class="grid-3">
+      <div class="feature-card">
+        <div class="feature-icon-wrapper">📸</div>
+        <h3>Live Dish Recognition</h3>
+        <p>Instantly detects meals from camera capture or gallery selection, identifying complex multi-ingredient dishes, preparation styles, and serving sizes.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon-wrapper">🏷️</div>
+        <h3>Packaged Food Label OCR</h3>
+        <p>Scans Nutrition Facts panels on groceries and packaged foods, parsing calories, sodium levels, and hidden sugar additives with high accuracy.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon-wrapper">📋</div>
+        <h3>Restaurant Menu Analyzer</h3>
+        <p>Extracts menu items from dining menus, computes estimated calorie ranges, and highlights dishes matching your specific dietary targets.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon-wrapper">📊</div>
+        <h3>Macronutrient & Calorie Rings</h3>
+        <p>Interactive circular charts track daily caloric intake against custom limits, visualizing protein, carbohydrates, and healthy fats.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon-wrapper">📅</div>
+        <h3>Automated Meal Planning</h3>
+        <p>Generates balanced breakfast, lunch, dinner, and snack suggestions tailored to your calorie targets, dietary filters, and taste preferences.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon-wrapper">🌐</div>
+        <h3>True Global Localization</h3>
+        <p>Full support for 7 international languages, native Right-to-Left (RTL) Arabic layout, and dynamic live currency conversion.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Dish Scanner Preview -->
+  <section class="interactive-section container">
+    <div class="section-header">
+      <div class="section-tag">Interactive Simulation</div>
+      <h2 class="section-title">Experience the AI Scanner</h2>
+      <p class="section-subtitle">Select a culinary dish below to view the automated nutrition decomposition generated by FoodLens.</p>
+    </div>
+
+    <div class="scanner-sim">
+      <div class="dish-selector">
+        <div class="dish-option active" data-dish="avocado">
+          <img src="assets/foods/avocado_toast.jpg" alt="Avocado Toast" class="dish-thumb">
+          <div class="dish-meta">
+            <h4>Sourdough Avocado Toast</h4>
+            <p>Fresh Produce, Healthy Fats</p>
+          </div>
+        </div>
+
+        <div class="dish-option" data-dish="salmon">
+          <img src="assets/foods/salmon_bowl.jpg" alt="Salmon Bowl" class="dish-thumb">
+          <div class="dish-meta">
+            <h4>Wild Salmon Quinoa Bowl</h4>
+            <p>High Protein, Omega-3 Rich</p>
+          </div>
+        </div>
+
+        <div class="dish-option" data-dish="greek">
+          <img src="assets/foods/greek_salad.jpg" alt="Greek Salad" class="dish-thumb">
+          <div class="dish-meta">
+            <h4>Mediterranean Greek Salad</h4>
+            <p>Low Carb, Vegetarian, Fresh</p>
+          </div>
+        </div>
+
+        <div class="dish-option" data-dish="lentil">
+          <img src="assets/foods/lentil_dal.jpg" alt="Lentil Dal" class="dish-thumb">
+          <div class="dish-meta">
+            <h4>Red Lentil Dal & Rice</h4>
+            <p>Plant-Based Protein, High Fiber</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sim-output">
+        <div class="sim-header">
+          <div>
+            <div id="sim-dish-title" class="sim-title">Sourdough Avocado Toast</div>
+            <div style="color: var(--text-muted); font-size: 0.85rem;">Estimated Portion: 1 Serving (180g)</div>
+          </div>
+          <div id="sim-health-score" class="health-badge">Grade A (92/100)</div>
+        </div>
+
+        <div class="macro-bars">
+          <div class="macro-bar-item">
+            <div class="macro-bar-header">
+              <span>Energy</span>
+              <span id="val-cal" style="color: var(--accent-amber);">340 kcal</span>
+            </div>
+            <div class="progress-track"><div id="fill-cal" class="progress-fill fill-cal" style="width: 68%;"></div></div>
+          </div>
+
+          <div class="macro-bar-item">
+            <div class="macro-bar-header">
+              <span>Protein</span>
+              <span id="val-pro" style="color: var(--accent-rose);">12g</span>
+            </div>
+            <div class="progress-track"><div id="fill-pro" class="progress-fill fill-pro" style="width: 24%;"></div></div>
+          </div>
+
+          <div class="macro-bar-item">
+            <div class="macro-bar-header">
+              <span>Carbohydrates</span>
+              <span id="val-carb" style="color: var(--accent-blue);">38g</span>
+            </div>
+            <div class="progress-track"><div id="fill-carb" class="progress-fill fill-carb" style="width: 42%;"></div></div>
+          </div>
+
+          <div class="macro-bar-item">
+            <div class="macro-bar-header">
+              <span>Dietary Fats</span>
+              <span id="val-fat" style="color: var(--accent-purple);">18g</span>
+            </div>
+            <div class="progress-track"><div id="fill-fat" class="progress-fill fill-fat" style="width: 36%;"></div></div>
+          </div>
+        </div>
+
+        <div style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--text-muted);">Detected Ingredients:</div>
+        <div id="sim-tags" class="ingredient-tags">
+          <span class="tag">Artisan Sourdough</span>
+          <span class="tag">Hass Avocado</span>
+          <span class="tag">Extra Virgin Olive Oil</span>
+          <span class="tag">Chili Flakes</span>
+          <span class="tag">Flaky Sea Salt</span>
+          <span class="tag">Hemp Hearts</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Screenshots Gallery Section -->
+  <section id="screenshots" class="gallery-section container">
+    <div class="section-header">
+      <div class="section-tag">Authentic Interface</div>
+      <h2 class="section-title">Physical Android Device Gallery</h2>
+      <p class="section-subtitle">Real application screenshots captured directly from our Realme 8 test device running Android 13.</p>
+    </div>
+
+    <div class="gallery-grid">
+      <div class="gallery-card">
+        <img src="assets/screenshots/01_home_dashboard.png" alt="Home Dashboard Screenshot">
+        <h4>Home Dashboard</h4>
+        <p>Daily calories, macro dials, water tracking, and quick camera entry.</p>
+      </div>
+
+      <div class="gallery-card">
+        <img src="assets/screenshots/02_food_scanner.png" alt="Food Scanner Screenshot">
+        <h4>AI Food Scanner</h4>
+        <p>Real-time camera viewfinder, photo picker, and scan mode selection.</p>
+      </div>
+
+      <div class="gallery-card">
+        <img src="assets/screenshots/03_nutrition_analysis.png" alt="Nutrition Analysis Screenshot">
+        <h4>Nutrition Analysis</h4>
+        <p>Detailed nutritional decomposition, macro charts, and detected tags.</p>
+      </div>
+
+      <div class="gallery-card">
+        <img src="assets/screenshots/04_meal_planner.png" alt="Meal Planner Screenshot">
+        <h4>Meal Planner</h4>
+        <p>Custom daily targets and AI-suggested balanced recipes.</p>
+      </div>
+
+      <div class="gallery-card">
+        <img src="assets/screenshots/05_settings.png" alt="Settings Screenshot">
+        <h4>Settings & Profile</h4>
+        <p>Puter authentication state, quota monitor, and regional preferences.</p>
+      </div>
+
+      <div class="gallery-card">
+        <img src="assets/screenshots/07_arabic_rtl_dashboard.png" alt="Arabic RTL Dashboard Screenshot">
+        <h4>Arabic RTL Interface</h4>
+        <p>Complete Right-to-Left bidirectional layout with Cairo typography.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Puter User-Pays Architecture Section -->
+  <section id="architecture" class="architecture-section container">
+    <div class="arch-card">
+      <div class="arch-content">
+        <div class="section-tag">Decentralized Computing</div>
+        <h3>The Puter.js User-Pays Model</h3>
+        <p>Traditional AI apps force developers to pay massive cloud API bills or charge expensive recurring subscriptions. FoodLens solves this through a decentralized User-Pays architecture.</p>
+        
+        <div class="arch-features">
+          <div class="arch-feature-item">
+            <i>⚡</i>
+            <div>
+              <strong>Decentralized Cloud Inference:</strong> Each user connects their personal Puter account and consumes their own free monthly quota ($10.00 USD/month).
+            </div>
+          </div>
+          <div class="arch-feature-item">
+            <i>🛡️</i>
+            <div>
+              <strong>Zero Server Overhead:</strong> Open-source maintainers operate zero centralized backend servers, guaranteeing long-term project sustainability.
+            </div>
+          </div>
+          <div class="arch-feature-item">
+            <i>🔒</i>
+            <div>
+              <strong>Complete User Sovereignty:</strong> Health metrics and food logs remain stored locally in encrypted storage on your mobile device.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-metric-box">
+        <div class="arch-metric-value">$10.00</div>
+        <div class="arch-metric-label">Monthly Free AI Allowance</div>
+        <div class="arch-metric-sub">Provided directly by Puter to every registered user for multimodal food inference and nutrition calculation.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Localization and Currency Section -->
+  <section id="localization" class="currency-section container">
+    <div class="section-header">
+      <div class="section-tag">Global Readiness</div>
+      <h2 class="section-title">Worldwide Languages & Live Currency Conversion</h2>
+      <p class="section-subtitle">Engineered for accessibility across cultures, scripts, and regional economies.</p>
+    </div>
+
+    <div class="currency-table-wrapper" style="margin-bottom: 3rem;">
+      <table>
+        <thead>
+          <tr>
+            <th>Language</th>
+            <th>Native Name</th>
+            <th>Layout Direction</th>
+            <th>Typography Engine</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>English</strong></td>
+            <td>English</td>
+            <td>Left-to-Right (LTR)</td>
+            <td>Material Inter</td>
+          </tr>
+          <tr>
+            <td><strong>Bengali</strong></td>
+            <td>বাংলা</td>
+            <td>Left-to-Right (LTR)</td>
+            <td>GoogleFonts.hindSiliguri</td>
+          </tr>
+          <tr>
+            <td><strong>Arabic</strong></td>
+            <td>العربية</td>
+            <td><strong>Right-to-Left (RTL)</strong></td>
+            <td>GoogleFonts.cairo</td>
+          </tr>
+          <tr>
+            <td><strong>Spanish</strong></td>
+            <td>Español</td>
+            <td>Left-to-Right (LTR)</td>
+            <td>Material Inter</td>
+          </tr>
+          <tr>
+            <td><strong>French</strong></td>
+            <td>Français</td>
+            <td>Left-to-Right (LTR)</td>
+            <td>Material Inter</td>
+          </tr>
+          <tr>
+            <td><strong>German</strong></td>
+            <td>Deutsch</td>
+            <td>Left-to-Right (LTR)</td>
+            <td>Material Inter</td>
+          </tr>
+          <tr>
+            <td><strong>Japanese</strong></td>
+            <td>日本語</td>
+            <td>Left-to-Right (LTR)</td>
+            <td>Noto Sans JP</td>
+          </tr>
+          <tr>
+            <td><strong>Hindi</strong></td>
+            <td>हिन्दी</td>
+            <td>Left-to-Right (LTR)</td>
+            <td>Noto Sans Devanagari</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Live Currency Switcher Demo -->
+    <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;">
+      <div>
+        <h4 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.25rem;">Live Currency Conversion Preview</h4>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">Select a regional currency to preview real-time conversion for an example dish priced at $14.50 USD:</p>
+      </div>
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <select id="currency-select" style="background: #0d131f; color: var(--text-main); border: 1px solid var(--border-color); padding: 0.6rem 1rem; border-radius: 8px; font-weight: 700; font-family: inherit;">
+          <option value="BDT">BDT (৳ Bangladesh)</option>
+          <option value="USD">USD ($ United States)</option>
+          <option value="EUR">EUR (€ European Union)</option>
+          <option value="GBP">GBP (£ United Kingdom)</option>
+          <option value="INR">INR (₹ India)</option>
+          <option value="SAR">SAR (ر.س Saudi Arabia)</option>
+          <option value="AED">AED (د.إ UAE)</option>
+          <option value="JPY">JPY (¥ Japan)</option>
+        </select>
+        <div id="converted-price-display" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: var(--primary); font-weight: 800; font-size: 1.1rem; padding: 0.55rem 1.25rem; border-radius: 8px;">
+          ৳ 1,776.25 ($14.50)
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Developer & Open-Source Community Section -->
+  <section id="contribute" class="contribute-section container">
+    <div class="contribute-box">
+      <div class="badge" style="background: rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.3); color: var(--accent-blue);">
+        Open-Source Collaboration
+      </div>
+      <h3>Help Wanted: Puter Authentication in External Default Browser</h3>
+      <p>We are actively inviting international Flutter, Android, and web integration developers to solve our top priority technical challenge: opening Puter Login and Sign Up directly within the user default external Android browser (Chrome, Firefox, or preferred browser) instead of an embedded WebView, and returning securely to FoodLens with session recognized.</p>
+      
+      <div class="contribute-actions">
+        <a href="https://github.com/CodeByArnob/FoodLens/issues/1" class="btn btn-primary" target="_blank" rel="noopener">
+          View Issue #1 on GitHub
+        </a>
+        <a href="https://github.com/CodeByArnob/FoodLens/blob/main/CONTRIBUTING.md" class="btn btn-secondary" target="_blank" rel="noopener">
+          Read Contributing Guidelines
+        </a>
+        <a href="https://github.com/CodeByArnob/FoodLens/blob/main/documentation/AUTHENTICATION_TROUBLESHOOTING.md" class="btn btn-secondary" target="_blank" rel="noopener">
+          Authentication Architecture Guide
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Food Safety Disclaimer -->
+  <section class="container" style="padding-bottom: 5rem;">
+    <div style="background: rgba(245, 158, 11, 0.05); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: var(--radius-md); padding: 1.75rem; font-size: 0.9rem; color: #cbd5e1; line-height: 1.6;">
+      <strong style="color: var(--accent-amber); display: block; margin-bottom: 0.5rem; font-size: 1rem;">⚠️ Food Safety & Medical Disclaimer</strong>
+      FoodLens is designed exclusively for educational, nutritional awareness, and lifestyle planning purposes. It does not provide clinical diagnosis or medical treatment. Camera estimation cannot detect microscopic allergens, food-borne pathogens, or unlisted restaurant ingredients. Always consult a certified healthcare professional before making significant dietary changes.
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>FoodLens</h4>
+          <p style="max-width: 300px; font-size: 0.9rem;">Next-generation open-source AI food intelligence and nutrition platform built with Flutter and Puter.js.</p>
+        </div>
+
+        <div class="footer-col">
+          <h5>Product</h5>
+          <ul>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#demo">Demo Preview</a></li>
+            <li><a href="#screenshots">Screenshots</a></li>
+            <li><a href="https://github.com/CodeByArnob/FoodLens/releases/latest" target="_blank" rel="noopener">Latest Release</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Community</h5>
+          <ul>
+            <li><a href="https://github.com/CodeByArnob/FoodLens" target="_blank" rel="noopener">GitHub Repository</a></li>
+            <li><a href="https://github.com/CodeByArnob/FoodLens/issues/1" target="_blank" rel="noopener">Issue #1: Help Wanted</a></li>
+            <li><a href="https://github.com/CodeByArnob/FoodLens/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">Contributing Guide</a></li>
+            <li><a href="https://github.com/CodeByArnob/FoodLens/blob/main/CODE_OF_CONDUCT.md" target="_blank" rel="noopener">Code of Conduct</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Legal</h5>
+          <ul>
+            <li><a href="https://github.com/CodeByArnob/FoodLens/blob/main/LICENSE" target="_blank" rel="noopener">MIT License</a></li>
+            <li><a href="https://github.com/CodeByArnob/FoodLens/blob/main/SECURITY.md" target="_blank" rel="noopener">Security Policy</a></li>
+            <li><a href="https://github.com/CodeByArnob/FoodLens/blob/main/CHANGELOG.md" target="_blank" rel="noopener">Changelog</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        Created and maintained with passion for open-source health intelligence by <a href="https://github.com/CodeByArnob" target="_blank" rel="noopener">CodeByArnob</a> (Arnob). Released under the MIT License.
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

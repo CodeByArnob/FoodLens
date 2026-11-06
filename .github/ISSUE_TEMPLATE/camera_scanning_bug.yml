@@ -1,0 +1,44 @@
+name: "Camera and Image Scanning Bug"
+description: "Report bugs related to camera initialization, permissions, photo capture, or gallery import."
+title: "[CAMERA]: "
+labels: ["bug", "scanner", "android"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Report issues related to camera hardware access, permissions, image rotation, viewfinder rendering, or gallery photo picker.
+  - type: input
+    id: device_info
+    attributes:
+      label: "Device Model and Android Version"
+      placeholder: "e.g., Samsung Galaxy S22 (Android 14) / Realme 8 (Android 13)"
+    validations:
+      required: true
+  - type: dropdown
+    id: source_type
+    attributes:
+      label: "Image Acquisition Source"
+      options:
+        - "Live Camera Viewfinder"
+        - "Device Photo Gallery Picker"
+        - "Menu OCR Camera Capture"
+    validations:
+      required: true
+  - type: textarea
+    id: bug_description
+    attributes:
+      label: "Description of the Bug"
+      description: "Describe what went wrong."
+    validations:
+      required: true
+  - type: textarea
+    id: steps_to_reproduce
+    attributes:
+      label: "Steps to Reproduce"
+      placeholder: |
+        1. Open FoodLens
+        2. Tap Center Scan button
+        3. Tap Camera / Gallery
+        4. Observe behavior
+    validations:
+      required: true

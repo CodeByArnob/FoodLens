@@ -607,7 +607,7 @@ class DashboardLocalizationHelper {
   static String getEmptyScansDesc(String lang) {
     switch (lang) {
       case 'bn':
-        return 'যেকোনো খাবারের ছবি তুলুন—এআই সেকেন্ডেই পুষ্টি ও ক্যালোরির গভীর বিশ্লেষণ তৈরি করে দেবে।';
+        return 'যেকোনো খাবারের ছবি তুলুন, এআই সেকেন্ডেই পুষ্টি ও ক্যালোরির গভীর বিশ্লেষণ তৈরি করে দেবে।';
       case 'ar':
         return 'التقط صورة لطبقك للحصول على تفكيك كامل للسعرات والمكونات في ثوانٍ.';
       case 'es':

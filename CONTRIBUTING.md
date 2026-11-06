@@ -1,245 +1,234 @@
-# 🤝 Contributing to FoodLens
+# Contributing to FoodLens
 
-First off, thank you for considering contributing to **FoodLens**! 🎉
+Thank you for considering contributing to FoodLens.
 
-FoodLens is an open-source, global AI food intelligence, computer vision nutrition analysis, and personalized meal planning platform created and maintained by **[CodeByArnob](https://github.com/CodeByArnob)**.
+FoodLens is an open-source, global AI food intelligence, computer vision nutrition analysis, and personalized meal planning platform created and maintained by [CodeByArnob](https://github.com/CodeByArnob).
 
 We actively invite developers, UX designers, nutritionists, translators, and open-source enthusiasts worldwide to contribute to FoodLens.
 
 ---
 
-## 🧭 Table of Contents
+## Table of Contents
 
 - [Code of Conduct](#code-of-conduct)
-- [🔥 Priority Call for Contributions: Authentication & Google Sign-In](#-priority-call-for-contributions-authentication--google-sign-in)
+- [Priority Call for Contributions: External Browser Puter Authentication](#priority-call-for-contributions-external-browser-puter-authentication)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
-  - [Forking & Local Setup](#forking--local-setup)
+  - [Forking and Local Setup](#forking-and-local-setup)
 - [Development Workflow](#development-workflow)
   - [Branching Conventions](#branching-conventions)
   - [Running the Application](#running-the-application)
-  - [Running Static Analysis & Formatting](#running-static-analysis--formatting)
+  - [Running Static Analysis and Formatting](#running-static-analysis-and-formatting)
   - [Running the Test Suite](#running-the-test-suite)
-- [Reproducing & Investigating Bugs](#reproducing--investigating-bugs)
-  - [Authentication & OAuth Testing](#authentication--oauth-testing)
-  - [Food Vision & OCR Testing](#food-vision--ocr-testing)
-  - [Internationalization & RTL Testing](#internationalization--rtl-testing)
+- [Reproducing and Investigating Issues](#reproducing-and-investigating-issues)
+  - [Authentication Testing](#authentication-testing)
+  - [Food Vision and OCR Testing](#food-vision-and-ocr-testing)
+  - [Internationalization and RTL Testing](#internationalization-and-rtl-testing)
 - [Submitting a Pull Request](#submitting-a-pull-request)
 - [Issue Templates](#issue-templates)
-- [Community & Recognition](#community--recognition)
+- [Community and Recognition](#community-and-recognition)
 - [License](#license)
 
 ---
 
-## 📜 Code of Conduct
+## Code of Conduct
 
-We are dedicated to providing a friendly, safe, and welcoming environment for all contributors, regardless of experience level, gender identity, sexual orientation, disability, personal appearance, race, nationality, or religion. Please be respectful and constructive in all issues, pull requests, and discussions.
-
----
-
-## 🔥 Priority Call for Contributions: Authentication & Google Sign-In
-
-We currently have a major open technical challenge where community expertise is urgently needed:
-
-> 📌 **Active Help Wanted Issue**:  
-> **[Help Wanted: Investigate and Fix Puter.js Authentication and Google Sign-In Integration](https://github.com/CodeByArnob/FoodLens/issues/1)**  
-> 📖 **Architecture & Troubleshooting Guide**:  
-> **[documentation/AUTHENTICATION_TROUBLESHOOTING.md](documentation/AUTHENTICATION_TROUBLESHOOTING.md)**
-
-### Areas Where Help is Actively Welcomed:
-1. **Google OAuth 2.0 Compliance**: Solving Google's `disallowed_useragent` restriction within Android embedded WebViews.
-2. **Native Google Sign-In Integration**: Using `google_sign_in` plugin and bridging the resulting auth token to Puter.js.
-3. **Android App Links & Chrome Custom Tabs**: Seamless deep-link callback redirect from external browser sign-in back to Flutter.
-4. **Session Persistence & Cold Boot**: Reliable token recovery across app restarts without requiring repetitive user sign-in.
-5. **Multi-Window WebView Support**: Handling `window.open` popups spawned by Puter.js SDK.
+FoodLens follows the Contributor Covenant. We are dedicated to providing a friendly, safe, and welcoming environment for all contributors, regardless of experience level, gender identity, sexual orientation, disability, personal appearance, race, nationality, or religion. Please be respectful and constructive in all issues, pull requests, and community discussions. See [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) for full details.
 
 ---
 
-## 🚀 Getting Started
+## Priority Call for Contributions: External Browser Puter Authentication
+
+We currently have a high-priority open technical challenge where community investigation and code contributions are actively requested:
+
+> **[Help Wanted: Open Puter Login and Sign Up in the External Default Browser](https://github.com/CodeByArnob/FoodLens/issues/1)**
+
+### The Challenge
+FoodLens operates on a decentralized User-Pays architecture powered by Puter.js. Instead of requiring centralized backend servers or shared developer API keys, each user connects their personal Puter account and consumes their own complimentary monthly free allowance ($10.00 monthly quota).
+
+Currently, the authentication flow opens inside an internal embedded WebView within the mobile application. We want both **Login** and **Sign Up** to open in the user actual Android default external browser (such as Chrome, Firefox, or Samsung Internet). After completing authentication, the user should return smoothly to FoodLens with their account session recognized and persisted.
+
+### Areas for Investigation
+1. **Puter.js SDK Capabilities**: Research whether official Puter.js documentation or newer SDK releases support redirect URIs, OAuth PKCE flows, or mobile browser delegation.
+2. **Android Intent and Deep Linking**: Establishing an Android App Link or Custom Scheme callback (such as `foodlens://auth/callback`) to return control from the browser back to Flutter.
+3. **Session Handshake**: Safely transmitting the authenticated session or token into the app without insecure query parameters or plaintext exposure.
+4. **Offline and Cold Boot Persistence**: Storing the verified session token securely in encrypted local storage (`flutter_secure_storage`).
+
+Please read our detailed [Authentication Troubleshooting Guide](documentation/AUTHENTICATION_TROUBLESHOOTING.md) and participate in [Issue #1](https://github.com/CodeByArnob/FoodLens/issues/1).
+
+---
+
+## Getting Started
 
 ### Prerequisites
-- **Flutter SDK**: `^3.44.0` (channel `stable`)
-- **Dart SDK**: `^3.12.0`
-- **Android SDK**: API 34+ (minSdkVersion 24, compileSdkVersion 34)
-- **Java**: JDK 17 (recommended Temurin 17)
-- **Git**
+Before contributing, ensure you have the following installed on your machine:
+- **Flutter SDK**: version 3.29.0 or later (channel stable)
+- **Dart SDK**: version 3.7.0 or later
+- **Android SDK**: API level 34 or later (Android Studio recommended)
+- **Java Development Kit**: JDK 17 (recommended for Gradle 8 compatibility)
+- **Git**: version 2.30 or later
 
-### Forking & Local Setup
+Verify your environment with:
+```shell
+flutter doctor -v
+```
 
-1. **Fork the Repository**:
-   Click the **Fork** button at the top-right of [https://github.com/CodeByArnob/FoodLens](https://github.com/CodeByArnob/FoodLens).
-
-2. **Clone your Fork**:
-   ```bash
+### Forking and Local Setup
+1. Fork the repository on GitHub by clicking the **Fork** button at [https://github.com/CodeByArnob/FoodLens](https://github.com/CodeByArnob/FoodLens).
+2. Clone your personal fork locally:
+   ```shell
    git clone https://github.com/<your-username>/FoodLens.git
    cd FoodLens
    ```
-
-3. **Configure Upstream Remote**:
-   ```bash
+3. Set the upstream remote to stay synchronized with official updates:
+   ```shell
    git remote add upstream https://github.com/CodeByArnob/FoodLens.git
-   git fetch upstream
    ```
-
-4. **Install Flutter Dependencies**:
-   ```bash
+4. Install all Flutter dependencies:
+   ```shell
    flutter pub get
    ```
 
-5. **Generate Localization Files**:
-   ```bash
-   flutter gen-l10n
-   ```
-
 ---
 
-## 🛠️ Development Workflow
+## Development Workflow
 
 ### Branching Conventions
-
-Always create a dedicated feature or bugfix branch off `upstream/main`:
-
-```bash
-git checkout -b fix/puter-auth-popup
+Always create a focused branch from `upstream/main`:
+```shell
+git checkout -b feat/your-feature-name
 # or
-git checkout -b feat/glycemic-index-filter
-# or
-git checkout -b l10n/arabic-rtl-refinement
+git checkout -b fix/issue-description
 ```
 
-Use descriptive branch prefixes:
-- `fix/` for bug fixes and patches
-- `feat/` for new features or user enhancements
-- `auth/` for authentication and OAuth improvements
-- `l10n/` for translations and locale adjustments
-- `docs/` for documentation updates
-- `test/` for adding or improving test coverage
+Use standardized branch prefixes:
+- `feat/`: New user-facing capabilities or enhancements
+- `fix/`: Bug fixes or defects
+- `docs/`: Documentation updates, guides, or comments
+- `refactor/`: Code improvements that do not change external behavior
+- `test/`: New automated tests or test suite improvements
 
 ### Running the Application
-
-Launch the app on a connected physical Android device or emulator:
-```bash
+Connect a physical Android device with USB debugging enabled, or start an Android emulator:
+```shell
+flutter devices
 flutter run
 ```
 
-For verbose logging of the Puter.js WebView bridge:
-```bash
-flutter run -v
-```
+### Running Static Analysis and Formatting
+FoodLens enforces strict code formatting and zero linter warnings. Before opening a pull request, run:
 
-### Running Static Analysis & Formatting
-
-Ensure your code matches project formatting and passes all static analysis checks before committing:
-
-1. **Format Dart code**:
-   ```bash
+1. **Format all Dart files**:
+   ```shell
    dart format lib test
    ```
-2. **Verify format compliance (matches CI check)**:
-   ```bash
+2. **Check for formatting compliance**:
+   ```shell
    dart format --output=none --set-exit-if-changed lib test
    ```
-3. **Run Flutter Analyzer**:
-   ```bash
+3. **Run Flutter static analyzer**:
+   ```shell
    flutter analyze
    ```
-   > ⚠️ Must exit with **0 issues found**!
+   *Your PR will only be merged if `flutter analyze` reports 0 issues.*
 
 ### Running the Test Suite
-
-Run all unit and widget tests:
-```bash
+FoodLens maintains an automated test suite covering state management, localization, food recognition models, and core widgets:
+```shell
 flutter test
 ```
-
-For detailed per-test reporting:
-```bash
-flutter test --reporter expanded
+To run tests with code coverage:
+```shell
+flutter test --coverage
 ```
 
 ---
 
-## 🔍 Reproducing & Investigating Bugs
+## Reproducing and Investigating Issues
 
-### Authentication & OAuth Testing
-1. Review [`documentation/AUTHENTICATION_TROUBLESHOOTING.md`](documentation/AUTHENTICATION_TROUBLESHOOTING.md).
-2. Start the app, navigate to Onboarding or Profile > Settings > Puter Account.
-3. Test both **Puter Account Login** and **Google Sign-In**.
-4. Capture logs via `adb logcat`:
-   ```bash
-   adb logcat -s PuterBridge chromium
-   ```
+### Authentication Testing
+- Open the application and navigate to Settings or Onboarding.
+- Select Sign In with Puter or Sign Up.
+- Verify browser interaction, network status, and session token receipt.
+- Do not commit personal auth tokens or credentials.
 
-### Food Vision & OCR Testing
-FoodLens supports testing with both live cameras and sample assets stored in `assets/images/`:
-- `salmon_bowl.jpg`
-- `margherita_pizza.jpg`
-- `avocado_toast.jpg`
-- `lentil_dal.jpg`
+### Food Vision and OCR Testing
+- The AI scanner module is located in `lib/features/scanner/`.
+- Test dish recognition, ingredient analysis, and nutrition estimation across various food categories (fresh produce, packaged food labels, restaurant menus).
+- Verify fallback behavior when network connectivity is slow or unavailable.
 
-Test scanner parsing logic by injecting sample images via `ScannerService`.
+### Internationalization and RTL Testing
+FoodLens supports 7 international languages and full bidirectional layout:
+- English (en)
+- Bengali (bn)
+- Arabic (ar, Right-to-Left)
+- Spanish (es)
+- French (fr)
+- German (de)
+- Japanese (ja)
 
-### Internationalization & RTL Testing
-FoodLens supports 8 languages with dynamic switching in **Settings > App Language**:
-- When modifying Bengali (`lib/l10n/app_bn.arb`), verify rendering with `GoogleFonts.hindSiliguri()`.
-- When modifying Arabic (`lib/l10n/app_ar.arb`), verify Right-to-Left (RTL) mirroring, chevrons, gauge alignments, and `GoogleFonts.cairo()`.
-- After modifying any `.arb` file, re-run `flutter gen-l10n` and execute `flutter test`.
+When adding or modifying localized strings:
+1. Update all language files in `lib/l10n/` or `lib/core/localization/`.
+2. Test both Left-to-Right (LTR) and Right-to-Left (RTL) screen orientations.
+3. Verify that numbers, currency symbols, and text directions render accurately.
 
 ---
 
-## 📤 Submitting a Pull Request
+## Submitting a Pull Request
 
-1. **Sync with Upstream**:
-   ```bash
+Follow these steps to submit your contribution:
+
+1. **Sync with upstream**:
+   ```shell
+   git checkout main
    git fetch upstream
-   git rebase upstream/main
+   git merge upstream/main
+   git checkout your-branch-name
+   git rebase main
    ```
-2. **Ensure CI Checks Pass Locally**:
-   ```bash
+2. **Verify all checks pass**:
+   ```shell
    dart format --output=none --set-exit-if-changed lib test
    flutter analyze
    flutter test
    ```
-3. **Push to Your Fork**:
-   ```bash
-   git push origin <your-branch-name>
+3. **Commit your changes**:
+   Write clear, concise commit messages following the Conventional Commits specification:
+   ```shell
+   git commit -m "fix(auth): investigate external browser delegation for Puter login"
    ```
-4. **Open a Pull Request**:
-   - Go to your fork on GitHub and click **Compare & pull request**.
-   - Target branch: `main` of `CodeByArnob/FoodLens`.
-   - Include a clear title (e.g., `fix(auth): implement Chrome Custom Tabs redirect for Google OAuth`).
-   - Fill in the PR description:
-     - What problem does this PR solve?
-     - How was it tested? (physical device, emulator, unit tests)
-     - Attach before/after screenshots or logs if modifying UI.
+4. **Push to your fork**:
+   ```shell
+   git push origin your-branch-name
+   ```
+5. **Open a Pull Request**:
+   Go to [https://github.com/CodeByArnob/FoodLens](https://github.com/CodeByArnob/FoodLens) and click **Compare & pull request**.
+   - Fill out the provided PR template completely.
+   - Reference any relevant issues (for example, `Fixes #1`).
+   - Include screenshots or screen recordings for visual changes.
 
 ---
 
-## 📋 Issue Templates
+## Issue Templates
 
-When filing an issue on GitHub, please select the most relevant template:
-- **🐛 Bug Report**: For defects and runtime crashes.
-- **🔐 Authentication Problem**: For Puter.js sign-in, token expiration, or bridge timeouts.
-- **🔑 Google Sign-In Failure**: Specifically for Google OAuth 403 `disallowed_useragent` errors.
-- **📸 AI Food Scanner & OCR Problem**: For dish recognition or nutrition label extraction errors.
-- **✨ Feature Request**: For proposals of new capabilities.
-- **🌐 Localization & Translation Improvement**: For improving or adding language translations.
-
----
-
-## 🏆 Community & Recognition
-
-All contributors who have pull requests merged will be:
-- Credited in the official `README.md` Contributors section.
-- Featured in the in-app **About FoodLens** screen.
-- Listed in GitHub Release notes.
+When reporting issues or proposing ideas, use our structured issue templates:
+- **Authentication Problem**: For Puter.js sign-in, session persistence, or external browser integration.
+- **Bug Report**: For reproducible errors, crashes, or broken behavior.
+- **Camera and Image Scanning Bug**: For hardware camera access, permissions, or image capture defects.
+- **AI Scanner Problem**: For dish recognition accuracy, OCR parsing, or nutrition miscalculations.
+- **Feature Request**: For proposing new features or dietary tools.
+- **Localization Improvement**: For translation updates or RTL formatting fixes.
 
 ---
 
-## 📜 License
+## Community and Recognition
+
+All contributors will be credited in our release notes, project documentation, and GitHub contributor list. FoodLens is built by the global open-source community for health and nutrition enthusiasts everywhere.
+
+If you have questions, feel free to open an issue or join our community discussions.
+
+---
+
+## License
 
 By contributing to FoodLens, you agree that your contributions will be licensed under the project's [MIT License](LICENSE).
-
-<div align="center">
-  <sub>Created with passion by <b><a href="https://github.com/CodeByArnob">CodeByArnob</a></b> ❤️</sub>
-</div>

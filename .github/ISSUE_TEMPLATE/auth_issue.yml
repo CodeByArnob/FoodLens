@@ -1,55 +1,60 @@
-name: "🔐 Authentication Problem (Puter.js / Account)"
-description: "Report issues related to Puter.js sign-in, token storage, quota limits, or bridge communication."
+name: "Authentication Problem (Puter Login and External Browser)"
+description: "Report issues with Puter.js sign-in, sign-up, external browser delegation, or token persistence."
 title: "[AUTH]: "
-labels: ["authentication", "bug", "help wanted"]
+labels: ["authentication", "help wanted", "enhancement"]
 body:
   - type: markdown
     attributes:
       value: |
-        Use this template to report issues with **Puter.js authentication**, session persistence, quota allowances, or the JavaScript-to-Flutter bridge.
+        Use this template to report issues or technical findings regarding **Puter.js authentication**, external default browser launching, or session persistence. Please review `documentation/AUTHENTICATION_TROUBLESHOOTING.md` before filing.
   - type: dropdown
-    id: auth_method
+    id: auth_scenario
     attributes:
-      label: "Authentication Flow"
+      label: "Authentication Scenario"
       description: "Which authentication flow was being attempted?"
       options:
-        - "In-App Puter WebView Login (https://puter.com)"
-        - "External Browser Redirect / Web Auth"
-        - "Puter Token Restoration from SharedPreferences"
-        - "Puter AI Allowance / Quota Retrieval (puter.os.getMonthlyUsage)"
-        - "Other"
+        - "Puter Login in Default External Browser"
+        - "Puter Sign Up in Default External Browser"
+        - "Embedded WebView In-App Fallback"
+        - "Token Recovery on Cold Boot"
+        - "Monthly Usage and Quota Tracking"
     validations:
       required: true
   - type: input
     id: environment
     attributes:
-      label: "Environment Details"
-      description: "Operating System, device model, Android WebView version, and network conditions."
-      placeholder: "e.g., Android 13, Realme 8, Chrome System WebView 128.0"
+      label: "Device and Browser Details"
+      description: "Device model, Android version, and default system browser."
+      placeholder: "e.g., Realme 8 (Android 13), Chrome 128 / Firefox 130"
     validations:
       required: true
   - type: textarea
     id: reproduction
     attributes:
       label: "Steps to Reproduce"
-      description: "Step-by-step instructions to reproduce the authentication failure."
+      description: "Step-by-step instructions to reproduce the issue."
       placeholder: |
         1. Open FoodLens
-        2. Tap 'Sign in with Puter' on Onboarding/Settings
-        3. Enter Puter credentials or tap Sign In
-        4. Observe the failure/spinner/redirect loop
+        2. Tap Sign in with Puter or Sign Up
+        3. Observe the browser behavior
     validations:
       required: true
   - type: textarea
     id: actual_behavior
     attributes:
       label: "Actual Behavior"
-      description: "What actually happens (e.g., blank screen, bridge timeout, session not persisted, 403 Forbidden)?"
+      description: "What happens currently?"
     validations:
       required: true
   - type: textarea
-    id: logs
+    id: expected_behavior
     attributes:
-      label: "Puter Bridge / Console Logs"
-      description: "Paste JavascriptChannel or ADB console output."
-      render: shell
+      label: "Expected Behavior"
+      description: "What should happen according to project specifications?"
+    validations:
+      required: true
+  - type: textarea
+    id: proposed_fix
+    attributes:
+      label: "Proposed Technical Solution"
+      description: "Share architecture proposals, custom scheme redirect ideas, or official Puter SDK references."

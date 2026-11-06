@@ -76,15 +76,8 @@ class PuterBridgeService {
         NavigationDelegate(
           onPageFinished: (String url) async {
             debugPrint('[PuterBridge] Page finished loading: $url');
-            final cachedToken = _storageService.getPuterToken();
-            if (cachedToken != null && cachedToken.isNotEmpty) {
-              setAuthToken(cachedToken).catchError((e) {
-                debugPrint(
-                  '[PuterBridge] Non-blocking initial token set error: $e',
-                );
-                return false;
-              });
-            }
+            // Do not inject a persisted credential into JavaScript until the
+            // AuthNotifier has verified it with Puter's identity endpoint.
           },
           onWebResourceError: (WebResourceError error) {
             debugPrint('[PuterBridge] Resource error: ${error.description}');

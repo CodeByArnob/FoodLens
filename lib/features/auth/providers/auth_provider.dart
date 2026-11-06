@@ -77,31 +77,15 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 
   Future<void> _init() async {
-    // 1. Immediately restore cached session from local storage in 0ms!
     final cachedToken = _storage.getPuterToken();
-    final cachedUsername = _storage.getPuterUsername();
-    final cachedUuid = _storage.getPuterUuid();
+    state = state.copyWith(isLoading: cachedToken != null && cachedToken.isNotEmpty);
 
-    if (cachedToken != null &&
-        cachedToken.isNotEmpty &&
-        cachedUsername != null) {
-      state = state.copyWith(
-        user: PuterUser(username: cachedUsername, uuid: cachedUuid),
-        isLoading: false,
-        isBridgeReady: false,
-      );
-    } else {
-      state = state.copyWith(isLoading: false, isBridgeReady: false);
-    }
-
-    // 2. Wire event streams
     _bridge.insufficientFundsStream.listen((exc) {
       state = state.copyWith(
         hasExhaustedAllowance: true,
         errorMessage: exc.message,
       );
     });
-
     _bridge.usageStream.listen((usage) {
       state = state.copyWith(
         usage: usage,
@@ -109,32 +93,62 @@ class AuthNotifier extends StateNotifier<AuthState> {
       );
     });
 
-    // 3. Initialize Puter Bridge in background without blocking UI
     try {
       await _bridge.initializeBridge();
       state = state.copyWith(isBridgeReady: true);
 
-      // If we have cached token, sync it to WebView
       if (cachedToken != null && cachedToken.isNotEmpty) {
-        unawaited(_syncTokenAndFetchUsageAsync(cachedToken));
-      } else {
-        // Quick session check with 3s timeout
-        final session = await _bridge.checkSession(
-          timeout: const Duration(seconds: 3),
-        );
-        if (session['isSignedIn'] == true && session['user'] != null) {
-          final user = PuterUser.fromJson(
-            session['user'] as Map<String, dynamic>,
-          );
-          await _storage.setPuterUsername(user.username);
-          await _storage.setPuterUuid(user.uuid);
+        try {
+          final verifiedUser = await _bridge.validatePuterTokenViaRest(cachedToken);
+          if (verifiedUser != null) {
+            state = state.copyWith(
+              user: verifiedUser,
+              isLoading: false,
+              isBridgeReady: true,
+              errorMessage: null,
+            );
+            unawaited(_fetchUsageAsync());
+            return;
+          }
+        } on PuterAuthException {
+          await _storage.clearAuth();
           state = state.copyWith(
-            user: user,
-            isBridgeReady: true,
+            clearUser: true,
             isLoading: false,
+            isBridgeReady: true,
+            errorMessage: 'Your Puter session expired. Please sign in again.',
           );
-          unawaited(_fetchUsageAsync());
+          return;
+        } catch (e) {
+          // Preserve the encrypted credential on temporary network/server errors,
+          // but never show a cached username as authenticated before verification.
+          state = state.copyWith(
+            clearUser: true,
+            isLoading: false,
+            isBridgeReady: true,
+            errorMessage: 'Could not verify your Puter session. Check internet and retry.',
+          );
+          return;
         }
+      }
+
+      final session = await _bridge.checkSession(
+        timeout: const Duration(seconds: 3),
+      );
+      if (session['isSignedIn'] == true && session['user'] != null) {
+        final user = PuterUser.fromJson(
+          session['user'] as Map<String, dynamic>,
+        );
+        await _storage.setPuterUsername(user.username);
+        await _storage.setPuterUuid(user.uuid);
+        state = state.copyWith(
+          user: user,
+          isBridgeReady: true,
+          isLoading: false,
+        );
+        unawaited(_fetchUsageAsync());
+      } else {
+        state = state.copyWith(isLoading: false, clearUser: true);
       }
     } catch (e) {
       debugPrint('[AuthNotifier] Background init error: $e');
@@ -178,23 +192,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
         throw AppException('Please enter a valid Puter token.');
       }
 
-      PuterUser? user;
-      try {
-        user = await _bridge.validatePuterTokenViaRest(trimmedToken);
-      } catch (e) {
-        if (e is PuterAuthException) rethrow;
-      }
-
-      if (user == null && trimmedToken.length >= 10) {
-        await _bridge.setAuthToken(trimmedToken);
-        user = await _bridge.getUser();
-        user ??= PuterUser(
-          username: 'Puter User',
-          uuid: trimmedToken.length > 8
-              ? trimmedToken.substring(0, 8)
-              : trimmedToken,
-        );
-      }
+      final user = await _bridge.validatePuterTokenViaRest(trimmedToken);
 
       if (user != null) {
         await _storage.setPuterToken(trimmedToken);

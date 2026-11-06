@@ -455,7 +455,7 @@ class PuterBridgeService {
   Future<PuterUser?> validatePuterTokenViaRest(String token) async {
     final cleanToken = token
         .trim()
-        .replaceFirst(RegExp(r'^Bearer\\s+', caseSensitive: false), '')
+        .replaceFirst(RegExp(r'^Bearer\s+', caseSensitive: false), '')
         .replaceAll('"', '')
         .replaceAll("'", '');
     if (cleanToken.isEmpty) {

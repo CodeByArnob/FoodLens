@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FoodLens - Open-Source AI Food Intelligence & Nutrition Platform</title>
-  <meta name="description" content="FoodLens is a next-generation open-source Flutter mobile application for AI-powered food recognition, clinical macronutrient tracking, allergen screening, and automated meal planning.">
+  <meta name="description" content="FoodLens is a next-generation open-source Flutter mobile application for AI food recognition, clinical macronutrient tracking, allergen screening, and automated meal planning.">
   <meta name="author" content="CodeByArnob">
-  <meta name="theme-color" content="#090d16">
+  <meta name="theme-color" content="#070b12">
 
   <!-- Open Graph -->
   <meta property="og:title" content="FoodLens - Open-Source AI Food Intelligence">
@@ -37,9 +37,11 @@
     <ul class="nav-links">
       <li><a href="#features">Features</a></li>
       <li><a href="#demo">Preview</a></li>
-      <li><a href="#screenshots">Screenshots</a></li>
+      <li><a href="#simulator">Simulator</a></li>
+      <li><a href="#screenshots">Gallery</a></li>
+      <li><a href="#comparison">Comparison</a></li>
       <li><a href="#architecture">Architecture</a></li>
-      <li><a href="#localization">Languages</a></li>
+      <li><a href="privacy.html">Privacy</a></li>
       <li><a href="#contribute">Contribute</a></li>
     </ul>
     <div class="nav-actions">
@@ -49,38 +51,62 @@
     </div>
   </header>
 
+  <!-- Mobile Drawer Menu -->
+  <div id="mobile-drawer" class="mobile-drawer">
+    <a href="#features">Core Features</a>
+    <a href="#demo">Live App Demo</a>
+    <a href="#simulator">Interactive Scanner</a>
+    <a href="#screenshots">Screenshot Gallery</a>
+    <a href="#comparison">FoodLens vs Others</a>
+    <a href="#architecture">User-Pays Architecture</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="#contribute">Contribute (Issue #1)</a>
+    <div style="display: flex; gap: 0.75rem; margin-top: 1rem;">
+      <a href="https://github.com/CodeByArnob/FoodLens/releases/download/v1.0.0/app-release.apk" class="btn btn-primary" style="flex: 1; text-align: center;">Download APK</a>
+      <a href="https://github.com/CodeByArnob/FoodLens" class="btn btn-secondary" target="_blank" rel="noopener" style="flex: 1; text-align: center;">GitHub</a>
+    </div>
+  </div>
+
   <!-- Hero Section -->
   <section class="hero">
     <div class="container">
       <div class="badge">Open-Source AI Food Intelligence</div>
       <h1>See What You Eat with <span class="gradient-text">Multimodal Vision AI</span></h1>
-      <p>Transform your nutrition with real-time food recognition, clinical macronutrient estimation, packaged label OCR, and decentralized client-side AI computing.</p>
+      <p>Transform your daily nutrition with real-time food recognition, clinical macronutrient estimation, packaged food label OCR, and decentralized client-side computing.</p>
       
       <div class="hero-actions">
-        <a href="https://github.com/CodeByArnob/FoodLens/releases/download/v1.0.0/app-release.apk" class="btn btn-primary" style="padding: 0.9rem 1.8rem; font-size: 1.05rem;">
+        <a href="https://github.com/CodeByArnob/FoodLens/releases/download/v1.0.0/app-release.apk" class="btn btn-primary" style="padding: 0.85rem 1.85rem; font-size: 1.05rem;">
           Download Release APK (v1.0.0)
         </a>
-        <a href="https://github.com/CodeByArnob/FoodLens" class="btn btn-secondary" target="_blank" rel="noopener" style="padding: 0.9rem 1.8rem; font-size: 1.05rem;">
-          View Source Code on GitHub
+        <a href="https://github.com/CodeByArnob/FoodLens" class="btn btn-secondary" target="_blank" rel="noopener" style="padding: 0.85rem 1.85rem; font-size: 1.05rem;">
+          View Repository on GitHub
+        </a>
+        <a href="#simulator" class="btn btn-secondary" style="padding: 0.85rem 1.5rem; font-size: 1.05rem;">
+          Try Interactive Simulator
         </a>
       </div>
 
       <div class="hero-meta">
-        <span>✓ Android 7.0+ (API 24+)</span>
+        <span>✓ Android 7.0+ (Universal APK)</span>
         <span>✓ Zero Server Costs (User-Pays)</span>
-        <span>✓ 100% MIT Open Source</span>
-        <span>✓ Privacy First Local Storage</span>
+        <span>✓ 100% On-Device Privacy</span>
+        <span>✓ MIT Open Source</span>
       </div>
     </div>
   </section>
 
-  <!-- Interactive Demo GIF Showcase -->
-  <section id="demo" class="container">
-    <div class="demo-showcase">
-      <h3>Live Application Demonstration</h3>
-      <p>Recorded directly from the running FoodLens build on a physical Realme 8 (Android 13) mobile device.</p>
-      <div class="demo-gif-wrapper">
-        <img src="assets/demo/foodlens_demo.gif" alt="FoodLens Interactive Product Demonstration">
+  <!-- Interactive Demo Showcase with Android Device Frame -->
+  <section id="demo" class="container device-showcase-wrapper">
+    <div class="section-tag">Real-Time Performance</div>
+    <h2 class="section-title">Physical Android Device Demonstration</h2>
+    <p class="section-subtitle">Captured directly from our Realme 8 test device running Android 13 without mockups or emulated visuals.</p>
+    
+    <div style="margin-top: 2.5rem;">
+      <div class="phone-mockup">
+        <div class="phone-screen">
+          <div class="phone-notch"></div>
+          <img src="assets/demo/foodlens_demo.gif" alt="FoodLens Interactive Product Demonstration">
+        </div>
       </div>
     </div>
   </section>
@@ -97,7 +123,7 @@
       <div class="feature-card">
         <div class="feature-icon-wrapper">📸</div>
         <h3>Live Dish Recognition</h3>
-        <p>Instantly detects meals from camera capture or gallery selection, identifying complex multi-ingredient dishes, preparation styles, and serving sizes.</p>
+        <p>Instantly detects meals from camera capture or gallery selection, identifying complex multi-ingredient dishes, culinary preparation styles, and estimated serving sizes.</p>
       </div>
 
       <div class="feature-card">
@@ -109,7 +135,7 @@
       <div class="feature-card">
         <div class="feature-icon-wrapper">📋</div>
         <h3>Restaurant Menu Analyzer</h3>
-        <p>Extracts menu items from dining menus, computes estimated calorie ranges, and highlights dishes matching your specific dietary targets.</p>
+        <p>Extracts dishes from dining menus, computes estimated calorie ranges, and highlights items matching your specific dietary targets.</p>
       </div>
 
       <div class="feature-card">
@@ -132,12 +158,12 @@
     </div>
   </section>
 
-  <!-- Interactive Dish Scanner Preview -->
-  <section class="interactive-section container">
+  <!-- Interactive Dish Scanner Preview Section -->
+  <section id="simulator" class="interactive-section container">
     <div class="section-header">
       <div class="section-tag">Interactive Simulation</div>
       <h2 class="section-title">Experience the AI Scanner</h2>
-      <p class="section-subtitle">Select a culinary dish below to view the automated nutrition decomposition generated by FoodLens.</p>
+      <p class="section-subtitle">Select a culinary dish below to view the automated nutrition decomposition and adjust serving sizes dynamically.</p>
     </div>
 
     <div class="scanner-sim">
@@ -179,9 +205,18 @@
         <div class="sim-header">
           <div>
             <div id="sim-dish-title" class="sim-title">Sourdough Avocado Toast</div>
-            <div style="color: var(--text-muted); font-size: 0.85rem;">Estimated Portion: 1 Serving (180g)</div>
+            <div id="sim-portion-label" style="color: var(--text-muted); font-size: 0.85rem;">Estimated Portion: 1 Serving (180g) (1.0x)</div>
           </div>
           <div id="sim-health-score" class="health-badge">Grade A (92/100)</div>
+        </div>
+
+        <!-- Serving Size Adjuster -->
+        <div class="serving-controls">
+          <span>Serving Multiplier:</span>
+          <button class="serving-btn" data-mult="0.5">0.5x</button>
+          <button class="serving-btn active" data-mult="1.0">1.0x</button>
+          <button class="serving-btn" data-mult="1.5">1.5x</button>
+          <button class="serving-btn" data-mult="2.0">2.0x</button>
         </div>
 
         <div class="macro-bars">
@@ -190,7 +225,7 @@
               <span>Energy</span>
               <span id="val-cal" style="color: var(--accent-amber);">340 kcal</span>
             </div>
-            <div class="progress-track"><div id="fill-cal" class="progress-fill fill-cal" style="width: 68%;"></div></div>
+            <div class="progress-track"><div id="fill-cal" class="progress-fill fill-cal" style="width: 57%;"></div></div>
           </div>
 
           <div class="macro-bar-item">
@@ -206,7 +241,7 @@
               <span>Carbohydrates</span>
               <span id="val-carb" style="color: var(--accent-blue);">38g</span>
             </div>
-            <div class="progress-track"><div id="fill-carb" class="progress-fill fill-carb" style="width: 42%;"></div></div>
+            <div class="progress-track"><div id="fill-carb" class="progress-fill fill-carb" style="width: 48%;"></div></div>
           </div>
 
           <div class="macro-bar-item">
@@ -214,7 +249,7 @@
               <span>Dietary Fats</span>
               <span id="val-fat" style="color: var(--accent-purple);">18g</span>
             </div>
-            <div class="progress-track"><div id="fill-fat" class="progress-fill fill-fat" style="width: 36%;"></div></div>
+            <div class="progress-track"><div id="fill-fat" class="progress-fill fill-fat" style="width: 45%;"></div></div>
           </div>
         </div>
 
@@ -231,49 +266,138 @@
     </div>
   </section>
 
-  <!-- Screenshots Gallery Section -->
+  <!-- Screenshots Gallery Section with Lightbox & Category Filters -->
   <section id="screenshots" class="gallery-section container">
     <div class="section-header">
       <div class="section-tag">Authentic Interface</div>
       <h2 class="section-title">Physical Android Device Gallery</h2>
-      <p class="section-subtitle">Real application screenshots captured directly from our Realme 8 test device running Android 13.</p>
+      <p class="section-subtitle">Real application screenshots captured directly from our Realme 8 test device running Android 13. Click any image to view in full resolution.</p>
+    </div>
+
+    <!-- Category Filter Pills -->
+    <div class="gallery-filters">
+      <button class="filter-btn active" data-filter="all">All Screens (8)</button>
+      <button class="filter-btn" data-filter="scanner">Scanner & Vision</button>
+      <button class="filter-btn" data-filter="nutrition">Nutrition & Planner</button>
+      <button class="filter-btn" data-filter="international">Settings & RTL</button>
     </div>
 
     <div class="gallery-grid">
-      <div class="gallery-card">
-        <img src="assets/screenshots/01_home_dashboard.png" alt="Home Dashboard Screenshot">
+      <div class="gallery-card" data-category="nutrition">
+        <img src="assets/screenshots/01_home_dashboard.png" alt="Home Dashboard">
         <h4>Home Dashboard</h4>
         <p>Daily calories, macro dials, water tracking, and quick camera entry.</p>
       </div>
 
-      <div class="gallery-card">
-        <img src="assets/screenshots/02_food_scanner.png" alt="Food Scanner Screenshot">
+      <div class="gallery-card" data-category="scanner">
+        <img src="assets/screenshots/02_food_scanner.png" alt="Food Scanner">
         <h4>AI Food Scanner</h4>
         <p>Real-time camera viewfinder, photo picker, and scan mode selection.</p>
       </div>
 
-      <div class="gallery-card">
-        <img src="assets/screenshots/03_nutrition_analysis.png" alt="Nutrition Analysis Screenshot">
+      <div class="gallery-card" data-category="scanner">
+        <img src="assets/screenshots/03_nutrition_analysis.png" alt="Nutrition Analysis">
         <h4>Nutrition Analysis</h4>
         <p>Detailed nutritional decomposition, macro charts, and detected tags.</p>
       </div>
 
-      <div class="gallery-card">
-        <img src="assets/screenshots/04_meal_planner.png" alt="Meal Planner Screenshot">
+      <div class="gallery-card" data-category="nutrition">
+        <img src="assets/screenshots/04_meal_planner.png" alt="Meal Planner">
         <h4>Meal Planner</h4>
         <p>Custom daily targets and AI-suggested balanced recipes.</p>
       </div>
 
-      <div class="gallery-card">
-        <img src="assets/screenshots/05_settings.png" alt="Settings Screenshot">
+      <div class="gallery-card" data-category="international">
+        <img src="assets/screenshots/05_settings.png" alt="Settings & Profile">
         <h4>Settings & Profile</h4>
         <p>Puter authentication state, quota monitor, and regional preferences.</p>
       </div>
 
-      <div class="gallery-card">
-        <img src="assets/screenshots/07_arabic_rtl_dashboard.png" alt="Arabic RTL Dashboard Screenshot">
-        <h4>Arabic RTL Interface</h4>
+      <div class="gallery-card" data-category="international">
+        <img src="assets/screenshots/06_bengali_settings.png" alt="Bengali Settings Interface">
+        <h4>Bengali Interface</h4>
+        <p>Full Bengali language support with authentic Hind Siliguri typography.</p>
+      </div>
+
+      <div class="gallery-card" data-category="international">
+        <img src="assets/screenshots/07_arabic_rtl_dashboard.png" alt="Arabic RTL Dashboard">
+        <h4>Arabic RTL Dashboard</h4>
         <p>Complete Right-to-Left bidirectional layout with Cairo typography.</p>
+      </div>
+
+      <div class="gallery-card" data-category="international">
+        <img src="assets/screenshots/07_arabic_rtl_settings.png" alt="Arabic RTL Settings">
+        <h4>Arabic RTL Settings</h4>
+        <p>Right-aligned controls, Arabic numerals, and regional preferences.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightbox Modal -->
+  <div id="lightbox-modal" class="lightbox-modal">
+    <div class="lightbox-content">
+      <button id="lightbox-close" class="lightbox-close" aria-label="Close image modal">✕</button>
+      <img id="lightbox-img" src="" alt="Screenshot Full View">
+      <h4 id="lightbox-title" style="font-size: 1.15rem; font-weight: 700; color: var(--text-main);"></h4>
+    </div>
+  </div>
+
+  <!-- Side-by-Side Comparison Matrix -->
+  <section id="comparison" class="comparison-section container">
+    <div class="section-header">
+      <div class="section-tag">Transparent Architecture</div>
+      <h2 class="section-title">FoodLens vs Commercial Nutrition Apps</h2>
+      <p class="section-subtitle">How decentralized open-source computing provides a superior experience without subscriptions or privacy compromises.</p>
+    </div>
+
+    <div class="comparison-table-wrapper">
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Feature or Attribute</th>
+              <th class="highlight-col">FoodLens (Open Source)</th>
+              <th>Commercial Nutrition Apps</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Monthly Cost</strong></td>
+              <td class="highlight-col">100% Free ($10/month free Puter tier)</td>
+              <td>$9.99 to $19.99 per month</td>
+            </tr>
+            <tr>
+              <td><strong>User Data Privacy</strong></td>
+              <td class="highlight-col">100% On-Device Local Sandbox</td>
+              <td>Centralized cloud databases & tracking</td>
+            </tr>
+            <tr>
+              <td><strong>Advertising & Telemetry</strong></td>
+              <td class="highlight-col">Zero Ads, Zero Trackers, Zero Telemetry</td>
+              <td>Advertising SDKs & behavioral profiling</td>
+            </tr>
+            <tr>
+              <td><strong>AI Vision & Label OCR</strong></td>
+              <td class="highlight-col">Multimodal AI included natively</td>
+              <td>Locked behind premium paywalls</td>
+            </tr>
+            <tr>
+              <td><strong>Regional Currency Conversion</strong></td>
+              <td class="highlight-col">Live conversion (BDT, EUR, GBP, SAR, etc.)</td>
+              <td>Single currency or missing</td>
+            </tr>
+            <tr>
+              <td><strong>Bidirectional RTL Layout</strong></td>
+              <td class="highlight-col">Native Arabic RTL & Cairo fonts</td>
+              <td>Often broken or unsupported</td>
+            </tr>
+            <tr>
+              <td><strong>Source Code Transparency</strong></td>
+              <td class="highlight-col">100% MIT Open Source on GitHub</td>
+              <td>Proprietary closed source</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </section>
@@ -324,77 +448,28 @@
       <p class="section-subtitle">Engineered for accessibility across cultures, scripts, and regional economies.</p>
     </div>
 
-    <div class="currency-table-wrapper" style="margin-bottom: 3rem;">
-      <table>
-        <thead>
-          <tr>
-            <th>Language</th>
-            <th>Native Name</th>
-            <th>Layout Direction</th>
-            <th>Typography Engine</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>English</strong></td>
-            <td>English</td>
-            <td>Left-to-Right (LTR)</td>
-            <td>Material Inter</td>
-          </tr>
-          <tr>
-            <td><strong>Bengali</strong></td>
-            <td>বাংলা</td>
-            <td>Left-to-Right (LTR)</td>
-            <td>GoogleFonts.hindSiliguri</td>
-          </tr>
-          <tr>
-            <td><strong>Arabic</strong></td>
-            <td>العربية</td>
-            <td><strong>Right-to-Left (RTL)</strong></td>
-            <td>GoogleFonts.cairo</td>
-          </tr>
-          <tr>
-            <td><strong>Spanish</strong></td>
-            <td>Español</td>
-            <td>Left-to-Right (LTR)</td>
-            <td>Material Inter</td>
-          </tr>
-          <tr>
-            <td><strong>French</strong></td>
-            <td>Français</td>
-            <td>Left-to-Right (LTR)</td>
-            <td>Material Inter</td>
-          </tr>
-          <tr>
-            <td><strong>German</strong></td>
-            <td>Deutsch</td>
-            <td>Left-to-Right (LTR)</td>
-            <td>Material Inter</td>
-          </tr>
-          <tr>
-            <td><strong>Japanese</strong></td>
-            <td>日本語</td>
-            <td>Left-to-Right (LTR)</td>
-            <td>Noto Sans JP</td>
-          </tr>
-          <tr>
-            <td><strong>Hindi</strong></td>
-            <td>हिन्दी</td>
-            <td>Left-to-Right (LTR)</td>
-            <td>Noto Sans Devanagari</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Live Currency Switcher Demo -->
-    <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;">
-      <div>
-        <h4 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.25rem;">Live Currency Conversion Preview</h4>
-        <p style="color: var(--text-muted); font-size: 0.9rem;">Select a regional currency to preview real-time conversion for an example dish priced at $14.50 USD:</p>
+    <!-- Live Currency Calculator Card -->
+    <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 2.5rem; margin-bottom: 3.5rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <h4 style="font-size: 1.35rem; font-weight: 800;">Interactive Currency Conversion Calculator</h4>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">Select a sample meal price preset or select a target regional currency:</p>
+        </div>
+        <div id="converted-price-display" style="background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.35); color: var(--primary); font-weight: 800; font-size: 1.25rem; padding: 0.65rem 1.5rem; border-radius: var(--radius-sm);">
+          ৳ 1,776.25 ($14.50)
+        </div>
       </div>
-      <div style="display: flex; align-items: center; gap: 1rem;">
-        <select id="currency-select" style="background: #0d131f; color: var(--text-main); border: 1px solid var(--border-color); padding: 0.6rem 1rem; border-radius: 8px; font-weight: 700; font-family: inherit;">
+
+      <div style="display: flex; gap: 0.65rem; margin-bottom: 1.5rem; flex-wrap: wrap; align-items: center;">
+        <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 700;">Price Presets:</span>
+        <button class="filter-btn price-preset-btn" data-price="4.50">$4.50 (Snack & Coffee)</button>
+        <button class="filter-btn price-preset-btn active" data-price="14.50">$14.50 (Healthy Lunch)</button>
+        <button class="filter-btn price-preset-btn" data-price="28.00">$28.00 (Dinner for Two)</button>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+        <label for="currency-select" style="font-size: 0.9rem; font-weight: 700; color: var(--text-muted);">Target Currency:</label>
+        <select id="currency-select" style="background: #090e18; color: var(--text-main); border: 1px solid var(--border-color); padding: 0.65rem 1.15rem; border-radius: 8px; font-weight: 700; font-family: inherit;">
           <option value="BDT">BDT (৳ Bangladesh)</option>
           <option value="USD">USD ($ United States)</option>
           <option value="EUR">EUR (€ European Union)</option>
@@ -404,9 +479,72 @@
           <option value="AED">AED (د.إ UAE)</option>
           <option value="JPY">JPY (¥ Japan)</option>
         </select>
-        <div id="converted-price-display" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: var(--primary); font-weight: 800; font-size: 1.1rem; padding: 0.55rem 1.25rem; border-radius: 8px;">
-          ৳ 1,776.25 ($14.50)
-        </div>
+      </div>
+    </div>
+
+    <!-- Supported Languages Table -->
+    <div class="comparison-table-wrapper">
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Language</th>
+              <th>Native Name</th>
+              <th>Layout Direction</th>
+              <th>Typography Engine</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>English</strong></td>
+              <td>English</td>
+              <td>Left-to-Right (LTR)</td>
+              <td>Material Inter</td>
+            </tr>
+            <tr>
+              <td><strong>Bengali</strong></td>
+              <td>বাংলা</td>
+              <td>Left-to-Right (LTR)</td>
+              <td>GoogleFonts.hindSiliguri</td>
+            </tr>
+            <tr>
+              <td><strong>Arabic</strong></td>
+              <td>العربية</td>
+              <td><strong>Right-to-Left (RTL)</strong></td>
+              <td>GoogleFonts.cairo</td>
+            </tr>
+            <tr>
+              <td><strong>Spanish</strong></td>
+              <td>Español</td>
+              <td>Left-to-Right (LTR)</td>
+              <td>Material Inter</td>
+            </tr>
+            <tr>
+              <td><strong>French</strong></td>
+              <td>Français</td>
+              <td>Left-to-Right (LTR)</td>
+              <td>Material Inter</td>
+            </tr>
+            <tr>
+              <td><strong>German</strong></td>
+              <td>Deutsch</td>
+              <td>Left-to-Right (LTR)</td>
+              <td>Material Inter</td>
+            </tr>
+            <tr>
+              <td><strong>Japanese</strong></td>
+              <td>日本語</td>
+              <td>Left-to-Right (LTR)</td>
+              <td>Noto Sans JP</td>
+            </tr>
+            <tr>
+              <td><strong>Hindi</strong></td>
+              <td>हिन्दी</td>
+              <td>Left-to-Right (LTR)</td>
+              <td>Noto Sans Devanagari</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </section>
@@ -435,12 +573,27 @@
   </section>
 
   <!-- Food Safety Disclaimer -->
-  <section class="container" style="padding-bottom: 5rem;">
+  <section class="container" style="padding-bottom: 4rem;">
     <div style="background: rgba(245, 158, 11, 0.05); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: var(--radius-md); padding: 1.75rem; font-size: 0.9rem; color: #cbd5e1; line-height: 1.6;">
       <strong style="color: var(--accent-amber); display: block; margin-bottom: 0.5rem; font-size: 1rem;">⚠️ Food Safety & Medical Disclaimer</strong>
       FoodLens is designed exclusively for educational, nutritional awareness, and lifestyle planning purposes. It does not provide clinical diagnosis or medical treatment. Camera estimation cannot detect microscopic allergens, food-borne pathogens, or unlisted restaurant ingredients. Always consult a certified healthcare professional before making significant dietary changes.
     </div>
   </section>
+
+  <!-- Floating Sticky Bottom Bar for Mobile -->
+  <div class="mobile-bottom-bar">
+    <div style="display: flex; align-items: center; gap: 0.5rem;">
+      <img src="assets/branding/foodlens_icon.png" alt="FoodLens" style="width: 28px; height: 28px; border-radius: 6px;">
+      <span style="font-weight: 800; font-size: 0.95rem;">FoodLens <span style="color: var(--primary);">v1.0.0</span></span>
+    </div>
+    <div style="display: flex; gap: 0.5rem;">
+      <a href="https://github.com/CodeByArnob/FoodLens/releases/download/v1.0.0/app-release.apk" class="btn btn-primary" style="padding: 0.45rem 0.85rem; font-size: 0.85rem;">Download APK</a>
+      <a href="https://github.com/CodeByArnob/FoodLens" class="btn btn-secondary" target="_blank" rel="noopener" style="padding: 0.45rem 0.65rem; font-size: 0.85rem;">GitHub</a>
+    </div>
+  </div>
+
+  <!-- Floating Back to Top Button -->
+  <button id="back-to-top" class="back-to-top" aria-label="Scroll back to top">↑</button>
 
   <!-- Footer -->
   <footer>
@@ -456,6 +609,7 @@
           <ul>
             <li><a href="#features">Features</a></li>
             <li><a href="#demo">Demo Preview</a></li>
+            <li><a href="#simulator">Scanner Simulator</a></li>
             <li><a href="#screenshots">Screenshots</a></li>
             <li><a href="https://github.com/CodeByArnob/FoodLens/releases/latest" target="_blank" rel="noopener">Latest Release</a></li>
           </ul>
@@ -474,6 +628,7 @@
         <div class="footer-col">
           <h5>Legal</h5>
           <ul>
+            <li><a href="privacy.html" style="color: var(--primary); font-weight: 700;">Privacy Policy</a></li>
             <li><a href="https://github.com/CodeByArnob/FoodLens/blob/main/LICENSE" target="_blank" rel="noopener">MIT License</a></li>
             <li><a href="https://github.com/CodeByArnob/FoodLens/blob/main/SECURITY.md" target="_blank" rel="noopener">Security Policy</a></li>
             <li><a href="https://github.com/CodeByArnob/FoodLens/blob/main/CHANGELOG.md" target="_blank" rel="noopener">Changelog</a></li>

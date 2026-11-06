@@ -70,6 +70,7 @@
 - [Open Source Contributions](#open-source-contributions)
 - [Food Safety and Medical Disclaimer](#food-safety-and-medical-disclaimer)
 - [Author and Community Credits](#author-and-community-credits)
+- [Privacy Policy](#privacy-policy)
 - [License](#license)
 
 ---
@@ -328,6 +329,7 @@ FoodLens/
 │   └── widget_test.dart           # Widget rendering and interaction tests
 ├── CODE_OF_CONDUCT.md            # Contributor Covenant Code of Conduct
 ├── SECURITY.md                    # Security disclosure policy
+├── PRIVACY.md                     # Privacy policy and zero telemetry terms
 ├── CONTRIBUTING.md                # Open source contribution guide
 ├── CHANGELOG.md                   # Version history and release notes
 ├── pubspec.yaml                   # Dependency definitions and Flutter assets
@@ -452,6 +454,14 @@ FoodLens was conceived, architected, and built from the ground up by:
 * **Official Repository**: [https://github.com/CodeByArnob/FoodLens](https://github.com/CodeByArnob/FoodLens)
 * **Official Website**: [https://codebyarnob.github.io/FoodLens/](https://codebyarnob.github.io/FoodLens/)
 * **Contributions**: Pull requests, issues, and feature proposals are enthusiastically welcomed. Check out [CONTRIBUTING.md](CONTRIBUTING.md) to get started.
+
+---
+
+## 🔒 Privacy Policy
+
+FoodLens is built around a zero telemetry and decentralized User-Pays architecture. User dietary logs and history reside locally on device in encrypted storage. Food imagery is processed ephemerally without central developer server retention.
+
+Read our complete [Privacy Policy](PRIVACY.md) or visit our [Web Privacy Policy](https://codebyarnob.github.io/FoodLens/privacy.html).
 
 ---
 

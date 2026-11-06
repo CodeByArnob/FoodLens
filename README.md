@@ -43,7 +43,7 @@
 > - 📸 **AI Food Recognition**: Refining vision prompts, prompt tuning, and packaged FDA/EU label OCR precision.
 > - 🌐 **Localization & RTL**: Expanding authentic translations for Bengali (বাংলা), Arabic (العربية RTL), Hindi, Spanish, French, German, and Japanese.
 > 
-> 🔗 **Active Help Wanted Issue**: [Investigate and Fix Puter.js Authentication & Google Sign-In](https://github.com/CodeByArnob/FoodLens/issues)  
+> 🔗 **Active Help Wanted Issue**: [Investigate and Fix Puter.js Authentication & Google Sign-In](https://github.com/CodeByArnob/FoodLens/issues/1)  
 > 📖 **Troubleshooting Architecture Guide**: [`documentation/AUTHENTICATION_TROUBLESHOOTING.md`](documentation/AUTHENTICATION_TROUBLESHOOTING.md)  
 > 🛠️ **Contributor Guidelines**: [`CONTRIBUTING.md`](CONTRIBUTING.md)
 
@@ -167,7 +167,7 @@ For complete architectural details, reproduction steps, and error logs, please s
 2. **External Browser Session Synchronization**: When authenticating via external browsers, session tokens do not automatically propagate back into the isolated WebView cookie store.
 3. **Multi-Window `window.open` Popups**: Puter.js popup windows require specialized multi-window delegation in `webview_flutter_android`.
 
-Join the discussion and submit proposals on our [GitHub Issues](https://github.com/CodeByArnob/FoodLens/issues).
+Join the discussion and submit proposals on our [GitHub Issues](https://github.com/CodeByArnob/FoodLens/issues/1).
 
 ---
 

@@ -42,7 +42,7 @@ We are dedicated to providing a friendly, safe, and welcoming environment for al
 We currently have a major open technical challenge where community expertise is urgently needed:
 
 > 📌 **Active Help Wanted Issue**:  
-> **[Help Wanted: Investigate and Fix Puter.js Authentication and Google Sign-In Integration](https://github.com/CodeByArnob/FoodLens/issues)**  
+> **[Help Wanted: Investigate and Fix Puter.js Authentication and Google Sign-In Integration](https://github.com/CodeByArnob/FoodLens/issues/1)**  
 > 📖 **Architecture & Troubleshooting Guide**:  
 > **[documentation/AUTHENTICATION_TROUBLESHOOTING.md](documentation/AUTHENTICATION_TROUBLESHOOTING.md)**
 

@@ -457,49 +457,60 @@ class PuterBridgeService {
     } catch (_) {}
   }
 
-  // Direct REST token validation fallback
+  // Validate credentials only against Puter's authenticated identity endpoint.
+  // Network failures are not treated as invalid credentials.
   Future<PuterUser?> validatePuterTokenViaRest(String token) async {
     final cleanToken = token
         .trim()
-        .replaceFirst(RegExp(r'^Bearer\s+', caseSensitive: false), '')
+        .replaceFirst(RegExp(r'^Bearer\\s+', caseSensitive: false), '')
         .replaceAll('"', '')
-        .replaceAll("'", "");
-
-    try {
-      final response = await http
-          .get(
-            Uri.parse('https://api.puter.com/whoami'),
-            headers: {
-              'Authorization': 'Bearer $cleanToken',
-              'Content-Type': 'application/json',
-            },
-          )
-          .timeout(const Duration(seconds: 8));
-
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        final user = PuterUser.fromJson(data);
-        await setAuthToken(cleanToken);
-        return user;
-      } else if (response.statusCode == 401 || response.statusCode == 403) {
-        throw PuterAuthException(
-          'Invalid Puter authorization token. Please check your credentials.',
-        );
-      }
-    } catch (e) {
-      if (e is AppException) rethrow;
-      debugPrint('[PuterBridge] REST validation error: $e');
+        .replaceAll("'", '');
+    if (cleanToken.isEmpty) {
+      throw PuterAuthException('Missing Puter authorization token.');
     }
 
-    try {
-      await setAuthToken(cleanToken);
-      final user = await getUser();
-      if (user != null) return user;
-    } catch (bridgeErr) {
-      debugPrint('[PuterBridge] Bridge fallback error: $bridgeErr');
+    final response = await http
+        .get(
+          Uri.parse('https://api.puter.com/whoami'),
+          headers: {
+            'Authorization': 'Bearer $cleanToken',
+            'Accept': 'application/json',
+          },
+        )
+        .timeout(const Duration(seconds: 12));
+
+    if (response.statusCode == 401 || response.statusCode == 403) {
+      throw PuterAuthException(
+        'Your Puter session has expired. Please sign in again.',
+      );
+    }
+    if (response.statusCode != 200) {
+      throw AppException(
+        'Puter could not verify the session (HTTP ${response.statusCode}). Try again.',
+        code: 'puter_verification_unavailable',
+      );
     }
 
-    return null;
+    final decoded = jsonDecode(response.body);
+    if (decoded is! Map<String, dynamic>) {
+      throw AppException('Puter returned an unexpected identity response.');
+    }
+    final user = PuterUser.fromJson(decoded);
+
+    // Persist only after the server has positively validated the token.
+    await _storageService.setPuterToken(cleanToken);
+    await _storageService.setPuterUsername(user.username);
+    await _storageService.setPuterUuid(user.uuid);
+
+    // Sync the verified credential into the local Puter.js bridge.
+    final bridgeSynced = await setAuthToken(cleanToken);
+    if (!bridgeSynced) {
+      throw AppException(
+        'Puter account was verified, but the local AI bridge could not initialize.',
+        code: 'puter_bridge_sync_failed',
+      );
+    }
+    return user;
   }
 
   // --- AI Operations ---

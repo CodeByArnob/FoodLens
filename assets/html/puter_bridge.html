@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>FoodLens Puter Bridge</title>
+  <script src="https://js.puter.com/v2/"></script>
+  <style>
+    :root {
+      --bg: #0c121e;
+      --card-bg: #141c2e;
+      --primary: #10b981;
+      --primary-blue: #0055ff;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --border: rgba(255, 255, 255, 0.1);
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--muted);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      overflow: hidden;
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 600;
+      background: rgba(16, 185, 129, 0.15);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      margin-bottom: 12px;
+      transition: all 0.25s ease;
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+    }
+    .title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0 0 6px 0;
+    }
+    .subtitle {
+      font-size: 12px;
+      color: #64748b;
+      margin: 0;
+    }
+
+    /* Official Puter Auth Popup Modal Overlay */
+    #authModalOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(8, 12, 22, 0.95);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 999999;
+      display: none;
+      flex-direction: column;
+      width: 100vw;
+      height: 100vh;
+      animation: modalFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #authModalOverlay.active {
+      display: flex;
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .modal-header {
+      height: 54px;
+      background: #111827;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      flex-shrink: 0;
+    }
+    .modal-title-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .modal-logo {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, #0055ff, #00d2ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 800;
+      font-size: 13px;
+    }
+    .modal-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .modal-subtitle {
+      font-size: 11px;
+      color: #94a3b8;
+    }
+    .modal-close-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #e2e8f0;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .modal-close-btn:active {
+      background: rgba(255, 255, 255, 0.16);
+    }
+    .modal-iframe-container {
+      flex: 1;
+      width: 100%;
+      height: calc(100% - 54px);
+      position: relative;
+      background: #0c121e;
+    }
+    .modal-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #0c121e;
+    }
+    .modal-loading-indicator {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #94a3b8;
+      font-size: 13px;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="status-badge" id="statusBadge">
+    <span class="status-dot" id="statusDot"></span>
+    <span id="statusText">Puter Bridge Active</span>
+  </div>
+  <h1 class="title">FoodLens AI Engine</h1>
+  <p class="subtitle" id="userInfo">Decentralized User-Pays Food Intelligence</p>
+
+  <!-- Puter Official Auth Modal -->
+  <div id="authModalOverlay">
+    <div class="modal-header">
+      <div class="modal-title-row">
+        <div class="modal-logo">P</div>
+        <div>
+          <div class="modal-title">Puter Official Sign In</div>
+          <div class="modal-subtitle">Secure User-Pays Authorization</div>
+        </div>
+      </div>
+      <button class="modal-close-btn" id="closeAuthModalBtn">Cancel</button>
+    </div>
+    <div class="modal-iframe-container">
+      <div class="modal-loading-indicator" id="modalLoadingIndicator">Loading official Puter login...</div>
+      <iframe class="modal-iframe" id="authIframe" name="PuterAuthIframe" src="about:blank"></iframe>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      // Pending command abort controllers
+      const activeAbortControllers = new Map();
+
+      // Flutter JavaScript Bridge
+      function sendToFlutter(type, data, requestId) {
+        const payload = JSON.stringify({
+          type: type,
+          data: data,
+          requestId: requestId || null,
+          timestamp: Date.now()
+        });
+        if (window.FlutterBridge && typeof window.FlutterBridge.postMessage === 'function') {
+          window.FlutterBridge.postMessage(payload);
+        } else if (window.chrome && window.chrome.webview) {
+          window.chrome.webview.postMessage(payload);
+        } else {
+          console.log('[FoodLens Bridge]', payload);
+        }
+      }
+
+      function updateStatus(text, isError) {
+        const statusText = document.getElementById('statusText');
+        const statusDot = document.getElementById('statusDot');
+        const badge = document.getElementById('statusBadge');
+        if (statusText) statusText.textContent = text;
+        if (statusDot) statusDot.style.background = isError ? '#ef4444' : '#10b981';
+        if (badge) {
+          badge.style.color = isError ? '#ef4444' : '#10b981';
+          badge.style.background = isError ? 'rgba(239, 68, 68, 0.15)' : 'rgba(16, 185, 129, 0.15)';
+          badge.style.borderColor = isError ? 'rgba(239, 68, 68, 0.3)' : 'rgba(16, 185, 129, 0.3)';
+        }
+      }
+
+      function updateUserInfo(text) {
+        const info = document.getElementById('userInfo');
+        if (info) info.textContent = text;
+      }
+
+      // Check current auth & usage with high efficiency
+      async function getSessionInfo() {
+        try {
+          const isSignedIn = puter.auth ? puter.auth.isSignedIn() : false;
+          let user = null;
+          let usage = null;
+
+          if (isSignedIn) {
+            user = await puter.auth.getUser();
+            try {
+              if (puter.os && typeof puter.os.getMonthlyUsage === 'function') {
+                usage = await puter.os.getMonthlyUsage();
+              }
+            } catch (uErr) {
+              console.warn('[PuterBridge] Non-critical usage fetch error:', uErr);
+            }
+          }
+
+          return {
+            isSignedIn: isSignedIn,
+            user: user,
+            usage: usage
+          };
+        } catch (e) {
+          console.error('[PuterBridge] Session check error:', e);
+          return { isSignedIn: false, user: null, usage: null };
+        }
+      }
+
+      // Extract JSON cleanly from LLM response
+      function extractJson(rawText) {
+        if (!rawText) throw new Error('Empty response from AI model');
+        let text = rawText.trim();
+        if (text.startsWith('```json')) {
+          text = text.substring(7);
+        } else if (text.startsWith('```')) {
+          text = text.substring(3);
+        }
+        if (text.endsWith('```')) {
+          text = text.substring(0, text.length - 3);
+        }
+        text = text.trim();
+
+        const firstBrace = text.indexOf('{');
+        const lastBrace = text.lastIndexOf('}');
+        if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+          text = text.substring(firstBrace, lastBrace + 1);
+        }
+        return JSON.parse(text);
+      }
+
+      function resolveLanguageName(code, explicitName) {
+        if (explicitName && explicitName.length > 0) return explicitName;
+        switch (code) {
+          case 'bn': return 'Bengali (বাংলা)';
+          case 'ar': return 'Arabic (العربية)';
+          case 'es': return 'Spanish (Español)';
+          case 'fr': return 'French (Français)';
+          case 'de': return 'German (Deutsch)';
+          case 'ja': return 'Japanese (日本語)';
+          case 'hi': return 'Hindi (हिन्दी)';
+          default: return 'English';
+        }
+      }
+
+      // --- POPUP / WINDOW.OPEN INTERCEPTOR FOR PUTER AUTH ---
+      let currentAuthPopupProxy = null;
+
+      function extractErrorMessage(error) {
+        if (!error) return 'An unexpected bridge error occurred.';
+        if (typeof error === 'string') return error;
+        if (error.message && typeof error.message === 'string' && error.message !== '[object Object]') {
+          return error.message;
+        }
+        if (error.error) {
+          if (typeof error.error === 'string') return error.error;
+          if (error.error.message && typeof error.error.message === 'string') return error.error.message;
+          if (error.error.code) return 'Puter error: ' + error.error.code;
+        }
+        if (error.code) return 'Puter error: ' + error.code;
+        try {
+          const json = JSON.stringify(error);
+          if (json && json !== '{}' && json !== '[]') return json;
+        } catch (_) {}
+        const str = String(error);
+        if (str === '[object Object]') {
+          return 'Puter account authentication required. Please connect your Puter account or token.';
+        }
+        return str;
+      }
+
+      function setupAuthPopupInterceptor() {
+        const originalOpen = window.open;
+        const modalOverlay = document.getElementById('authModalOverlay');
+        const iframe = document.getElementById('authIframe');
+        const loadingIndicator = document.getElementById('modalLoadingIndicator');
+        const closeBtn = document.getElementById('closeAuthModalBtn');
+
+        function closeAuthModal() {
+          if (modalOverlay) modalOverlay.classList.remove('active');
+          if (iframe) iframe.src = 'about:blank';
+          if (currentAuthPopupProxy) {
+            currentAuthPopupProxy.closed = true;
+            if (typeof currentAuthPopupProxy.onclose === 'function') {
+              currentAuthPopupProxy.onclose();
+            }
+          }
+          sendToFlutter('auth_modal_state', { open: false }, null);
+        }
+
+        if (closeBtn) {
+          closeBtn.onclick = function() {
+            closeAuthModal();
+          };
+        }
+
+        // Intercept window.open
+        window.open = function(url, target, features) {
+          const urlStr = String(url || '');
+          console.log('[PuterBridge window.open]', urlStr, target);
+
+          // If this is a Puter authentication popup
+          if (urlStr.includes('/action/sign-in') || urlStr.includes('embedded_in_popup=true')) {
+            console.log('[PuterBridge] Intercepted Puter signIn popup:', urlStr);
+
+            if (loadingIndicator) loadingIndicator.style.display = 'block';
+            if (modalOverlay) modalOverlay.classList.add('active');
+            sendToFlutter('auth_modal_state', { open: true, url: urlStr }, null);
+
+            // Proxy window object adhering to browser Window interface
+            const proxyWindow = {
+              closed: false,
+              close: function() {
+                closeAuthModal();
+              },
+              postMessage: function(message, targetOrigin) {
+                if (iframe && iframe.contentWindow) {
+                  iframe.contentWindow.postMessage(message, targetOrigin || '*');
+                }
+              },
+              focus: function() {},
+              blur: function() {}
+            };
+
+            currentAuthPopupProxy = proxyWindow;
+
+            iframe.onload = function() {
+              if (loadingIndicator) loadingIndicator.style.display = 'none';
+              try {
+                // Set same-origin opener reference
+                if (iframe.contentWindow) {
+                  iframe.contentWindow.opener = window;
+                }
+              } catch (e) {
+                console.warn('[PuterBridge] Opener assignment error:', e);
+              }
+            };
+
+            iframe.src = urlStr;
+            return proxyWindow;
+          }
+
+          // Fallback to original window.open for other URLs
+          return originalOpen ? originalOpen.call(window, url, target, features) : null;
+        };
+
+        // Cross-window postMessage handler for Puter Auth
+        window.addEventListener('message', function(event) {
+          if (!event.data) return;
+
+          // 1. Handshake: Puter popup asking for opener origin
+          if (event.data.msg === 'requestOrigin' || event.data.action === 'requestOrigin') {
+            console.log('[PuterBridge] Received requestOrigin from popup');
+            if (event.source && typeof event.source.postMessage === 'function') {
+              event.source.postMessage({ msg: 'originResponse' }, '*');
+            } else if (iframe && iframe.contentWindow) {
+              iframe.contentWindow.postMessage({ msg: 'originResponse' }, '*');
+            }
+            return;
+          }
+
+          // 2. Auth completion: Puter popup delivering token
+          if (event.data.msg === 'puter.token') {
+            console.log('[PuterBridge] Received puter.token message from popup!');
+            const token = event.data.token;
+            if (token) {
+              try {
+                if (typeof puter.setAuthToken === 'function') {
+                  puter.setAuthToken(token);
+                }
+              } catch (e) {
+                console.warn('[PuterBridge] setAuthToken err:', e);
+              }
+              puter.authToken = token;
+              if (puter.auth) {
+                puter.auth.token = token;
+              }
+            }
+            closeAuthModal();
+          }
+        }, false);
+      }
+
+      setupAuthPopupInterceptor();
+
+      // Main Bridge Execution Handler
+      async function handleBridgeCommand(action, paramsJson, requestId) {
+        let params = {};
+        try {
+          if (typeof paramsJson === 'string' && paramsJson.length > 0) {
+            params = JSON.parse(paramsJson);
+          } else if (typeof paramsJson === 'object' && paramsJson !== null) {
+            params = paramsJson;
+          }
+        } catch (e) {
+          console.error('[PuterBridge] Invalid params JSON:', e);
+        }
+
+        console.log('[PuterBridge Command]', action, 'ID:', requestId);
+
+        const abortController = new AbortController();
+        if (requestId) {
+          activeAbortControllers.set(requestId, abortController);
+        }
+
+        try {
+          switch (action) {
+            case 'init':
+            case 'get_session': {
+              const session = await getSessionInfo();
+              if (session.user) {
+                updateUserInfo('Signed in as: ' + (session.user.username || 'User'));
+              }
+              sendToFlutter('session_info', session, requestId);
+              break;
+            }
+
+            case 'get_usage':
+            case 'get_monthly_usage': {
+              if (puter.os && typeof puter.os.getMonthlyUsage === 'function') {
+                const usage = await puter.os.getMonthlyUsage();
+                sendToFlutter('monthly_usage', usage, requestId);
+              } else {
+                sendToFlutter('monthly_usage', null, requestId);
+              }
+              break;
+            }
+
+            case 'get_user': {
+              let user = null;
+              if (puter.auth && puter.auth.isSignedIn()) {
+                user = await puter.auth.getUser();
+              }
+              sendToFlutter('user_info', { user: user }, requestId);
+              break;
+            }
+
+            case 'set_token': {
+              const token = params.token;
+              if (token) {
+                try {
+                  if (typeof puter.setAuthToken === 'function') {
+                    puter.setAuthToken(token);
+                  }
+                } catch (e) {
+                  console.warn('[PuterBridge] setAuthToken err:', e);
+                }
+                puter.authToken = token;
+                if (puter.auth) {
+                  puter.auth.token = token;
+                }
+              }
+              const session = await getSessionInfo();
+              sendToFlutter('auth_success', session, requestId);
+              break;
+            }
+
+            case 'sign_in': {
+              updateStatus('Signing in with Puter...', false);
+              // Use request_auth: true for clean account selection
+              const authOptions = { request_auth: true };
+              const signInRes = await puter.auth.signIn(authOptions);
+              const session = await getSessionInfo();
+              updateStatus('Puter Connected', false);
+              sendToFlutter('sign_in_success', session, requestId);
+              break;
+            }
+
+            case 'sign_out': {
+              try {
+                if (typeof puter.resetAuthToken === 'function') {
+                  puter.resetAuthToken();
+                }
+              } catch (e) {
+                console.warn('[PuterBridge] resetAuthToken err:', e);
+              }
+              try {
+                if (puter.auth && typeof puter.auth.signOut === 'function') {
+                  await puter.auth.signOut();
+                }
+              } catch (e) {
+                console.warn('[PuterBridge] signOut sync err:', e);
+              }
+              try {
+                puter.authToken = null;
+                if (puter.auth) {
+                  puter.auth.token = null;
+                }
+                localStorage.clear();
+                sessionStorage.clear();
+                if (window.indexedDB) {
+                  try { indexedDB.deleteDatabase('puter'); } catch (_) {}
+                }
+              } catch (_) {}
+              updateStatus('Signed Out', false);
+              sendToFlutter('sign_out_success', {}, requestId);
+              break;
+            }
+
+            case 'list_models': {
+              let models = [];
+              if (puter.ai && typeof puter.ai.listModels === 'function') {
+                models = await puter.ai.listModels();
+              }
+              sendToFlutter('models_list', { models: models }, requestId);
+              break;
+            }
+
+            case 'cancel_request': {
+              const targetId = params.targetRequestId || requestId;
+              if (activeAbortControllers.has(targetId)) {
+                activeAbortControllers.get(targetId).abort();
+                activeAbortControllers.delete(targetId);
+                console.log('[PuterBridge] Aborted AI request:', targetId);
+              }
+              sendToFlutter('cancel_success', { targetRequestId: targetId }, requestId);
+              break;
+            }
+
+            // --- STREAMED AI OPERATIONS ---
+
+            case 'analyze_food': {
+              updateStatus('Analyzing Food Image with AI...', false);
+              sendToFlutter('ai_stage', { stage: 'recognizing', message: 'Recognizing visual food features...' }, requestId);
+
+              const activeToken = puter.authToken || (puter.auth && puter.auth.isSignedIn() ? puter.authToken : null);
+              if (!activeToken && (!puter.auth || !puter.auth.isSignedIn())) {
+                throw {
+                  code: 'auth_required',
+                  status: 401,
+                  message: 'Puter account authentication required. Please connect your Puter account or token.'
+                };
+              }
+
+              const base64Image = params.image;
+              const preferences = params.preferences || '';
+              const langName = resolveLanguageName(params.languageCode, params.languageName);
+              const model = params.model || 'gpt-4o-mini';
+
+              const prompt = `You are an expert food vision scientist, computer vision specialist, and clinical nutritionist.
+Analyze the attached image in strict sequential stages:
+
+STAGE 1: DOMAIN CLASSIFICATION & OBJECT VERIFICATION
+Determine whether this image actually depicts real, consumable food, a cooked culinary dish, raw edible ingredients, or beverages.
+CRITICAL MANDATORY REJECTION: You must immediately REJECT any unrelated object (such as electronic devices, shoes, tools, vehicles, clothing, furniture, interior spaces, outdoor landscapes, animal/pets, human portraits/selfies, documents, text screenshots, company logos, corrupted images, or blank/dark photos).
+
+STAGE 2: AUTHENTICITY & CLARITY ASSESSMENT
+Determine if the food is a real physical edible item or an illustration / AI synthetic artwork / plastic promotional model.
+Assess if recognition confidence is high (clear visible dish) or ambiguous (e.g., plain sauce, generic soup, blurry stew).
+
+STAGE 3: CONDITIONAL REJECTION OR NUTRITIONAL ESTIMATION
+- IF THE IMAGE DOES NOT CONTAIN REAL RECOGNIZABLE FOOD OR EDIBLE INGREDIENTS:
+  Set "is_food_related": false.
+  Set "detected_category": one of ["non_food_object", "human_portrait", "animal", "landscape", "screenshot_or_logo", "corrupted_or_blank"].
+  Set "rejection_reason": A polite localized message in ${langName} explaining why it is not food and asking for a clear food photograph (e.g. in Bengali: "কোনো খাবার শনাক্ত করা যায়নি। অনুগ্রহ করে একটি পরিষ্কার খাবারের ছবি আপলোড করুন।", in English: "No recognizable food detected. Please upload a clear food photograph.").
+  Set "food_name": "Non-Food Item", "calories": 0, "protein": 0, "carbohydrates": 0, "fat": 0, "health_score": 0, "ingredients": [], "health_pros": [], "health_cons": [], "allergen_warnings": [], "dietary_tags": [].
+  DO NOT FABRICATE CALORIES, PROTEIN, INGREDIENTS, OR HEALTH SCORES FOR NON-FOOD IMAGES.
+
+- IF THE IMAGE DOES CONTAIN RECOGNIZABLE FOOD:
+  Set "is_food_related": true.
+  Set "detected_category": "prepared_dish" (or "raw_ingredient", "beverage", "dessert").
+  Set "is_artificial_or_illustration": true if illustration/drawing/AI art, false if real photograph.
+  Set "is_ambiguous": true if dish identity is uncertain, false if clearly identifiable.
+  Set "confidence_score": 0.0 to 1.0 based on visible evidence.
+  Provide accurate localized dish name, ingredients, macro/micronutrients based on standard USDA/clinical nutritional composition data, health score, pros, cons, and alternatives.
+
+Dietary Preferences / Allergies to monitor: ${preferences || 'None specified'}.
+
+MANDATORY LOCALIZATION:
+- Output ALL user-facing text (rejection_reason, food_name, portion_size, cuisine, ingredients, health_pros, health_cons, allergen_warnings, dietary_tags, confidence_explanation, ambiguity_clarification_prompt, healthier_alternatives) strictly in: ${langName}.
+- If ${langName} is Bengali, use authentic grammatically correct Bengali in Bengali script (বাংলা).
+- If ${langName} is Arabic, use natural Arabic (العربية).
+
+Respond ONLY with a single valid JSON object strictly matching this schema, without conversational preamble or markdown backticks:
+{
+  "is_food_related": true,
+  "detected_category": "prepared_dish",
+  "rejection_reason": null,
+  "is_artificial_or_illustration": false,
+  "is_ambiguous": false,
+  "ambiguity_clarification_prompt": null,
+  "confidence_score": 0.94,
+  "confidence_explanation": "Clear view of dish in ${langName}",
+  "food_name": "Accurate Name of Dish in ${langName}",
+  "is_verified_label": false,
+  "portion_size": "1 serving / bowl",
+  "cuisine": "Cuisine category in ${langName}",
+  "ingredients": ["Ingredient 1 in ${langName}", "Ingredient 2 in ${langName}"],
+  "calories": 485,
+  "protein": 28.5,
+  "carbohydrates": 42.0,
+  "fat": 18.0,
+  "saturated_fat": 4.5,
+  "fiber": 6.2,
+  "sugar": 5.0,
+  "sodium": 580,
+  "potassium": 450,
+  "calcium": 120,
+  "iron": 3.8,
+  "vitamin_c": 15.0,
+  "health_score": 82,
+  "health_pros": ["Pro 1 in ${langName}", "Pro 2 in ${langName}"],
+  "health_cons": ["Con 1 in ${langName}"],
+  "allergen_warnings": ["Allergen 1 in ${langName}"],
+  "dietary_tags": ["high-protein", "vegetarian"],
+  "disclaimer": "AI estimate disclaimer in ${langName}",
+  "healthier_alternatives": [
+    {
+      "name": "Alternative Dish in ${langName}",
+      "calorie_difference": -95,
+      "reason": "Health rationale in ${langName}"
+    }
+  ]
+}`;
+
+              sendToFlutter('ai_stage', { stage: 'analyzing', message: 'Computing macro & micronutrient profile...' }, requestId);
+
+              // Use streaming for instant TTFT feedback
+              let accumulatedText = '';
+              const responseStream = await puter.ai.chat(prompt, [base64Image], {
+                model: model,
+                stream: true,
+                signal: abortController.signal
+              });
+
+              if (responseStream && typeof responseStream[Symbol.asyncIterator] === 'function') {
+                for await (const chunk of responseStream) {
+                  const chunkText = chunk?.text || (typeof chunk === 'string' ? chunk : (chunk?.message?.content || ''));
+                  if (chunkText) {
+                    accumulatedText += chunkText;
+                    sendToFlutter('ai_chunk', { chunk: chunkText, length: accumulatedText.length }, requestId);
+                  }
+                }
+              } else {
+                accumulatedText = responseStream?.message?.content || responseStream?.text || (typeof responseStream === 'string' ? responseStream : JSON.stringify(responseStream));
+              }
+
+              sendToFlutter('ai_stage', { stage: 'recommending', message: 'Preparing dietary recommendations...' }, requestId);
+
+              const parsedData = extractJson(accumulatedText);
+              updateStatus('Analysis Complete', false);
+              sendToFlutter('food_analysis_result', parsedData, requestId);
+              break;
+            }
+
+            case 'analyze_menu': {
+              updateStatus('Analyzing Restaurant Menu...', false);
+              sendToFlutter('ai_stage', { stage: 'recognizing', message: 'Reading restaurant menu items & prices...' }, requestId);
+
+              const activeToken = puter.authToken || (puter.auth && puter.auth.isSignedIn() ? puter.authToken : null);
+              if (!activeToken && (!puter.auth || !puter.auth.isSignedIn())) {
+                throw {
+                  code: 'auth_required',
+                  status: 401,
+                  message: 'Puter account authentication required. Please connect your Puter account or token.'
+                };
+              }
+
+              const base64Image = params.image;
+              const currencySymbol = params.currency || '$';
+              const langName = resolveLanguageName(params.languageCode, params.languageName);
+              const model = params.model || 'gpt-4o-mini';
+
+              const prompt = `You are a culinary expert and restaurant analyst.
+Analyze the attached restaurant menu image. Extract dishes, descriptions, prices, estimated calories, and dietary categories.
+Preferred Currency Symbol: ${currencySymbol}
+MANDATORY: Output dish descriptions and dietary categories in: ${langName}.
+
+Respond ONLY with a single valid JSON object strictly matching this schema:
+{
+  "restaurant_name": "Detected Restaurant Name or 'Restaurant Menu'",
+  "cuisine_type": "Detected Cuisine in ${langName}",
+  "currency": "${currencySymbol}",
+  "dishes": [
+    {
+      "id": "item_1",
+      "name": "Dish Name",
+      "description": "Short description of dish in ${langName}",
+      "price_raw": "${currencySymbol} 14.50",
+      "price_value": 14.50,
+      "estimated_calories": 520,
+      "protein": 24,
+      "carbs": 45,
+      "fat": 16,
+      "dietary_tags": ["vegetarian", "gluten-free"],
+      "allergens": ["dairy"],
+      "health_rating": "A"
+    }
+  ]
+}`;
+
+              let accumulatedText = '';
+              const responseStream = await puter.ai.chat(prompt, [base64Image], {
+                model: model,
+                stream: true,
+                signal: abortController.signal
+              });
+
+              if (responseStream && typeof responseStream[Symbol.asyncIterator] === 'function') {
+                for await (const chunk of responseStream) {
+                  const chunkText = chunk?.text || (typeof chunk === 'string' ? chunk : (chunk?.message?.content || ''));
+                  if (chunkText) {
+                    accumulatedText += chunkText;
+                    sendToFlutter('ai_chunk', { chunk: chunkText, length: accumulatedText.length }, requestId);
+                  }
+                }
+              } else {
+                accumulatedText = responseStream?.message?.content || responseStream?.text || (typeof responseStream === 'string' ? responseStream : JSON.stringify(responseStream));
+              }
+
+              const parsedData = extractJson(accumulatedText);
+              updateStatus('Menu Analyzed', false);
+              sendToFlutter('menu_analysis_result', parsedData, requestId);
+              break;
+            }
+
+            case 'analyze_label': {
+              updateStatus('Scanning Nutrition Label...', false);
+              sendToFlutter('ai_stage', { stage: 'recognizing', message: 'Extracting verified nutrition table via OCR...' }, requestId);
+
+              const activeToken = puter.authToken || (puter.auth && puter.auth.isSignedIn() ? puter.authToken : null);
+              if (!activeToken && (!puter.auth || !puter.auth.isSignedIn())) {
+                throw {
+                  code: 'auth_required',
+                  status: 401,
+                  message: 'Puter account authentication required. Please connect your Puter account or token.'
+                };
+              }
+
+              const base64Image = params.image;
+              const langName = resolveLanguageName(params.languageCode, params.languageName);
+              const model = params.model || 'gpt-4o-mini';
+
+              const prompt = `You are a food regulatory scientist.
+Read the attached packaged food nutrition facts label and ingredient statement via OCR.
+Extract exact verified nutrition facts into JSON.
+Language for descriptions: ${langName}.
+
+Respond ONLY with a single valid JSON object strictly matching this schema:
+{
+  "product_name": "Product Name in ${langName}",
+  "brand": "Brand",
+  "serving_size": "Serving Size",
+  "confidence_score": 0.98,
+  "calories": 210,
+  "fat": 8.0,
+  "saturated_fat": 1.5,
+  "sodium": 140,
+  "carbohydrates": 26.0,
+  "fiber": 2.0,
+  "sugar": 22.0,
+  "added_sugars": 18.0,
+  "protein": 4.0,
+  "vitamin_d": 2.5,
+  "calcium": 180,
+  "iron": 1.1,
+  "potassium": 290,
+  "ingredients": ["Ingredient in ${langName}"],
+  "allergen_warnings": ["Allergens in ${langName}"],
+  "health_score": 68
+}`;
+
+              let accumulatedText = '';
+              const responseStream = await puter.ai.chat(prompt, [base64Image], {
+                model: model,
+                stream: true,
+                signal: abortController.signal
+              });
+
+              if (responseStream && typeof responseStream[Symbol.asyncIterator] === 'function') {
+                for await (const chunk of responseStream) {
+                  const chunkText = chunk?.text || (typeof chunk === 'string' ? chunk : (chunk?.message?.content || ''));
+                  if (chunkText) {
+                    accumulatedText += chunkText;
+                    sendToFlutter('ai_chunk', { chunk: chunkText, length: accumulatedText.length }, requestId);
+                  }
+                }
+              } else {
+                accumulatedText = responseStream?.message?.content || responseStream?.text || (typeof responseStream === 'string' ? responseStream : JSON.stringify(responseStream));
+              }
+
+              const parsedData = extractJson(accumulatedText);
+              updateStatus('Label Verified', false);
+              sendToFlutter('label_analysis_result', parsedData, requestId);
+              break;
+            }
+
+            case 'generate_meal_plan': {
+              updateStatus('Generating AI Meal Plan...', false);
+              sendToFlutter('ai_stage', { stage: 'analyzing', message: 'Balancing metabolic targets & macros...' }, requestId);
+
+              const activeToken = puter.authToken || (puter.auth && puter.auth.isSignedIn() ? puter.authToken : null);
+              if (!activeToken && (!puter.auth || !puter.auth.isSignedIn())) {
+                throw {
+                  code: 'auth_required',
+                  status: 401,
+                  message: 'Puter account authentication required. Please connect your Puter account or token.'
+                };
+              }
+
+              const targetCalories = params.targetCalories || 2000;
+              const dietType = params.dietType || 'Balanced';
+              const restrictions = params.restrictions || 'None';
+              const cuisine = params.cuisine || 'Global / Diverse';
+              const langName = resolveLanguageName(params.languageCode, params.languageName);
+              const model = params.model || 'gpt-4o-mini';
+
+              const prompt = `You are a clinical dietitian creating a personalized 1-day meal plan.
+Targets:
+- Daily Calorie Target: ${targetCalories} kcal
+- Diet Type: ${dietType}
+- Restrictions / Allergens: ${restrictions}
+- Cuisine Preference: ${cuisine}
+MANDATORY: Output the entire meal plan, plan title, dish names, ingredients, instructions, and summary in: ${langName}.
+
+Respond ONLY with a single valid JSON object matching this schema:
+{
+  "plan_title": "Plan title in ${langName}",
+  "total_calories": ${targetCalories},
+  "total_protein": 125,
+  "total_carbs": 210,
+  "total_fat": 65,
+  "meals": [
+    {
+      "meal_type": "Breakfast",
+      "dish_name": "Dish in ${langName}",
+      "portion": "1 serving",
+      "calories": 450,
+      "protein": 25,
+      "carbs": 50,
+      "fat": 12,
+      "prep_time_minutes": 15,
+      "ingredients": ["Ingredient in ${langName}"],
+      "instructions": "Instructions in ${langName}"
+    },
+    {
+      "meal_type": "Lunch",
+      "dish_name": "Dish in ${langName}",
+      "portion": "1 bowl",
+      "calories": 650,
+      "protein": 45,
+      "carbs": 65,
+      "fat": 20,
+      "prep_time_minutes": 25,
+      "ingredients": ["Ingredient in ${langName}"],
+      "instructions": "Instructions in ${langName}"
+    },
+    {
+      "meal_type": "Dinner",
+      "dish_name": "Dish in ${langName}",
+      "portion": "1 plate",
+      "calories": 600,
+      "protein": 40,
+      "carbs": 55,
+      "fat": 22,
+      "prep_time_minutes": 30,
+      "ingredients": ["Ingredient in ${langName}"],
+      "instructions": "Instructions in ${langName}"
+    },
+    {
+      "meal_type": "Snacks",
+      "dish_name": "Snack in ${langName}",
+      "portion": "1 cup",
+      "calories": 300,
+      "protein": 15,
+      "carbs": 30,
+      "fat": 10,
+      "prep_time_minutes": 5,
+      "ingredients": ["Ingredient in ${langName}"],
+      "instructions": "Instructions in ${langName}"
+    }
+  ],
+  "nutritional_summary": "Nutritional summary in ${langName}"
+}`;
+
+              let accumulatedText = '';
+              const responseStream = await puter.ai.chat(prompt, {
+                model: model,
+                stream: true,
+                signal: abortController.signal
+              });
+
+              if (responseStream && typeof responseStream[Symbol.asyncIterator] === 'function') {
+                for await (const chunk of responseStream) {
+                  const chunkText = chunk?.text || (typeof chunk === 'string' ? chunk : (chunk?.message?.content || ''));
+                  if (chunkText) {
+                    accumulatedText += chunkText;
+                    sendToFlutter('ai_chunk', { chunk: chunkText, length: accumulatedText.length }, requestId);
+                  }
+                }
+              } else {
+                accumulatedText = responseStream?.message?.content || responseStream?.text || (typeof responseStream === 'string' ? responseStream : JSON.stringify(responseStream));
+              }
+
+              const parsedData = extractJson(accumulatedText);
+              updateStatus('Meal Plan Ready', false);
+              sendToFlutter('meal_plan_result', parsedData, requestId);
+              break;
+            }
+
+            case 'compare_foods': {
+              updateStatus('Comparing Food Items...', false);
+
+              const activeToken = puter.authToken || (puter.auth && puter.auth.isSignedIn() ? puter.authToken : null);
+              if (!activeToken && (!puter.auth || !puter.auth.isSignedIn())) {
+                throw {
+                  code: 'auth_required',
+                  status: 401,
+                  message: 'Puter account authentication required. Please connect your Puter account or token.'
+                };
+              }
+
+              const foodA = params.foodA;
+              const foodB = params.foodB;
+              const langName = resolveLanguageName(params.languageCode, params.languageName);
+              const model = params.model || 'gpt-4o-mini';
+
+              const prompt = `Compare these two food items nutritionally:
+Item 1: ${JSON.stringify(foodA)}
+Item 2: ${JSON.stringify(foodB)}
+MANDATORY: Output verdict summary and comparison points in: ${langName}.
+
+Respond ONLY with a single valid JSON object strictly matching this schema:
+{
+  "winner": "${foodA.name || 'Item 1'}",
+  "verdict_summary": "Direct conclusion in ${langName}",
+  "calorie_diff": 80,
+  "protein_diff": 12,
+  "sugar_diff": -8,
+  "sodium_diff": -120,
+  "comparison_points": [
+    {
+      "category": "Protein Density",
+      "better_item": "${foodA.name || 'Item 1'}",
+      "explanation": "Explanation in ${langName}"
+    }
+  ],
+  "recommendation_by_goal": {
+    "weight_loss": "${foodA.name || 'Item 1'}",
+    "muscle_gain": "${foodA.name || 'Item 1'}",
+    "heart_health": "${foodB.name || 'Item 2'}"
+  }
+}`;
+
+              let accumulatedText = '';
+              const responseStream = await puter.ai.chat(prompt, {
+                model: model,
+                stream: true,
+                signal: abortController.signal
+              });
+
+              if (responseStream && typeof responseStream[Symbol.asyncIterator] === 'function') {
+                for await (const chunk of responseStream) {
+                  const chunkText = chunk?.text || (typeof chunk === 'string' ? chunk : (chunk?.message?.content || ''));
+                  if (chunkText) {
+                    accumulatedText += chunkText;
+                    sendToFlutter('ai_chunk', { chunk: chunkText, length: accumulatedText.length }, requestId);
+                  }
+                }
+              } else {
+                accumulatedText = responseStream?.message?.content || responseStream?.text || (typeof responseStream === 'string' ? responseStream : JSON.stringify(responseStream));
+              }
+
+              const parsedData = extractJson(accumulatedText);
+              updateStatus('Comparison Ready', false);
+              sendToFlutter('food_comparison_result', parsedData, requestId);
+              break;
+            }
+
+            default:
+              throw new Error('Unknown action: ' + action);
+          }
+        } catch (error) {
+          console.error('[PuterBridge Error]', error);
+          const rawErrMsg = extractErrorMessage(error);
+          const isInsufficientFunds = error?.code === 'insufficient_funds' ||
+                                      error?.code === 402 ||
+                                      error?.status === 402 ||
+                                      rawErrMsg.toLowerCase().includes('insufficient_funds') ||
+                                      rawErrMsg.toLowerCase().includes('allowance');
+
+          const isAuthError = !isInsufficientFunds && (
+            error?.code === 'auth_required' ||
+            error?.code === 401 ||
+            error?.code === 403 ||
+            error?.status === 401 ||
+            error?.status === 403 ||
+            rawErrMsg.toLowerCase().includes('unauthorized') ||
+            rawErrMsg.toLowerCase().includes('auth_required') ||
+            rawErrMsg.toLowerCase().includes('authentication required')
+          );
+
+          updateStatus(isInsufficientFunds ? 'Allowance Exhausted' : (isAuthError ? 'Auth Required' : 'Error Occurred'), true);
+
+          sendToFlutter('error', {
+            action: action,
+            code: isInsufficientFunds ? 'insufficient_funds' : (isAuthError ? 'auth_required' : (error?.code || 'error')),
+            message: isAuthError ? 'Puter account authentication required. Please connect your Puter account or token.' : rawErrMsg,
+            isAuthError: isAuthError,
+            isInsufficientFunds: isInsufficientFunds,
+            upgradeUrl: 'https://puter.com/account'
+          }, requestId);
+        } finally {
+          if (requestId) {
+            activeAbortControllers.delete(requestId);
+          }
+        }
+      }
+
+      // Export bridge objects with dual backward-compatible names
+      window.FoodLensBridge = {
+        executeCommand: handleBridgeCommand,
+        handleCommand: function(commandObj) {
+          if (typeof commandObj === 'string') {
+            try { commandObj = JSON.parse(commandObj); } catch(e) {}
+          }
+          if (commandObj && commandObj.action) {
+            handleBridgeCommand(commandObj.action, commandObj.params, commandObj.requestId);
+          }
+        }
+      };
+
+      // Exact alias for Dart bridge callers
+      window.FoodLensPuterBridge = window.FoodLensBridge;
+
+      // Notify Flutter that bridge is ready
+      window.addEventListener('DOMContentLoaded', () => {
+        sendToFlutter('bridge_ready', { ready: true }, null);
+      });
+    })();
+  </script>
+</body>
+</html>

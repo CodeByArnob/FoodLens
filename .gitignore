@@ -1,0 +1,53 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.build/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
+
+# IntelliJ / Android Studio related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Visual Studio Code
+.vscode/
+
+# Flutter / Dart / Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+/build/
+/coverage/
+
+# Symbolication and Obfuscation
+app.*.symbols
+app.*.map.json
+
+# Android build outputs and sensitive keys
+/android/app/debug
+/android/app/profile
+/android/app/release
+key.properties
+local.properties
+*.keystore
+*.jks
+
+# Secrets and environment variables
+.env
+.env.*
+
+# Temporary / Scratch files in root
+test_screen.png
+current_screen.png

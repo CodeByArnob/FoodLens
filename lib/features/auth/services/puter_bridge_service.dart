@@ -390,18 +390,21 @@ class PuterBridgeService {
   }
 
   Future<void> signOut() async {
+    // 1. Immediately wipe stored tokens and credentials from local storage
     try {
       await _storageService.clearAuth();
     } catch (e) {
       debugPrint('[PuterBridge] Error clearing local auth: $e');
     }
 
+    // 2. Clear WebView cookies
     try {
       await WebViewCookieManager().clearCookies();
     } catch (e) {
       debugPrint('[PuterBridge] Error clearing cookies: $e');
     }
 
+    // 3. Clear bridge JS session (with non-blocking timeout)
     try {
       if (_webViewController != null && _isBridgeReady) {
         await _executeCommand('sign_out', timeout: const Duration(seconds: 3));
@@ -410,6 +413,7 @@ class PuterBridgeService {
       debugPrint('[PuterBridge] Non-critical sign_out command error: $e');
     }
 
+    // 4. Force reset in WebView JS context directly to guarantee token revocation
     try {
       await _webViewController?.runJavaScript('''
         try {
@@ -430,10 +434,11 @@ class PuterBridgeService {
     } catch (_) {}
   }
 
+  // Direct REST token validation fallback
   Future<PuterUser?> validatePuterTokenViaRest(String token) async {
     final cleanToken = token
         .trim()
-        .replaceFirst(RegExp(r'^Bearer\\s+', caseSensitive: false), '')
+        .replaceFirst(RegExp(r'^Bearer\s+', caseSensitive: false), '')
         .replaceAll('"', '')
         .replaceAll("'", "");
 
@@ -555,7 +560,7 @@ class PuterBridgeService {
       if (res is Map<String, dynamic>) {
         return LabelAnalysisResult.fromJson(res);
       }
-      throw AppException('Unexpected AI response format');
+      throw AppException('Unexpected AI label response format');
     } catch (e) {
       if (e is PuterInsufficientFundsException) rethrow;
       debugPrint('[PuterBridge] analyzeNutritionLabel error: $e');

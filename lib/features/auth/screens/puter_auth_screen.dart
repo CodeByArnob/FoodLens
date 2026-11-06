@@ -48,7 +48,9 @@ class _PuterAuthScreenState extends ConsumerState<PuterAuthScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Could not open your default browser. Please try again.'),
+            content: Text(
+              'Could not open your default browser. Please try again.',
+            ),
           ),
         );
       }
